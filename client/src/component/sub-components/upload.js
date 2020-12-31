@@ -9,13 +9,18 @@ import "bootstrap/dist/js/bootstrap.min.js"
 
 
 class Upload extends React.Component{
-
+constructor({match}){
+    super()
+    this.match=match
+}
 
     render(){
+        let id=this.match.url.slice(8)
+        console.log(id)
         return(
             <div>
              <Uploadnav/>
-             <UploadBody/>
+             <UploadBody  id={id}/>
             </div> 
         )
     }

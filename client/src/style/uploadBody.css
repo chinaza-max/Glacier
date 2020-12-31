@@ -1,0 +1,41 @@
+.error{
+    border: 2px solid red ;
+    width: 100%;
+    height: fit-content;
+    padding: 2px ;
+    text-align: center;
+    color: red;
+}
+.Author{
+    margin-top: 25px;
+}
+.Author label {
+    padding-right: 14px;
+}
+.title{
+    margin-top: 25px;
+}
+.title label{
+    padding-right: 74px;
+}
+.Book-faculty{
+    margin-top: 25px;
+}
+.Book-faculty label{
+    padding-right: 15px;
+}
+.Description{
+    margin-top: 25px;
+}
+.Description label{
+    padding-right: 24px;
+}
+.Description textarea{
+    width: 187px;
+}
+.tel{
+    margin-top: 25px;
+}
+.tel label{
+    padding-right: 88px;
+}

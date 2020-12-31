@@ -1,3 +1,20 @@
+
 .navbar{
     z-index: 16;
+    
+}
+.signup{
+    padding-right: 10px;
+    padding-bottom: 60px;
+}
+.nav-item{
+    list-style: none;
+}
+@media(max-width:1024px){
+    .signup{
+        padding-right: 10px;;
+    }
+    .form-control{
+        margin-top: 20px;
+    }
 }

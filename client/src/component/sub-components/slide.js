@@ -1,9 +1,8 @@
 import React from "react";
-
 import img1 from "./img/about.jpeg"
 import img2 from "./img/background.jpg"
 import img3 from "./img/profile-image1.jpg"
-
+import "../../style/slide.css";
 //import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
 

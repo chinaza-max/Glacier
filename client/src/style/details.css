@@ -1,0 +1,126 @@
+.detailBodyContainer{
+    width: 100vw;
+    height:fit-content;
+    background-color: rgb(14, 12, 12);
+}
+.detailBody{
+    padding-top: 30px;
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.bookImgContainer{
+    flex: 1;
+    text-align: right;
+    padding-right: 20px;
+}
+.bookImg{
+    height: 450px;
+    width: 400px;
+    border-radius:10px;
+}
+.content{
+    flex: 1;
+    color: white;
+}
+
+.callContainer{
+    width:200px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+.call{
+    background-color:white;
+    border-radius: 12px;
+    width: 200px;
+    text-decoration: none;
+    padding: 8px 25px;
+    
+}
+.call:hover{
+    background-color: blue;
+    border: 2px solid white;
+    color: white;
+}
+@media(max-width:1024px){
+  .detailBodyContainer{
+    width: 100vw;
+    height:fit-content;
+    background-color: rgb(14, 12, 12);
+}
+    .detailBody{
+        padding-top: 30px;
+        width: 99%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .bookImgContainer{
+        flex: 1;
+        text-align: right;
+        padding-right: 0px;
+    }
+    .bookImg{
+        height: 280px;
+        width: 150px;
+        border-radius:10px;
+    }
+    .content{
+        flex: 1;
+        padding-left: 10px;
+    }
+    .callContainer{
+        width:200px;
+        padding-bottom: 25px;
+        padding-top: 25px;
+    }
+    .call{
+        background-color:white;
+        border-radius: 12px;
+        width: 200px;
+        text-decoration: none;
+        padding: 8px 25px;
+        
+    }
+    .call:hover{
+        background-color: blue;
+        border: 2px solid white;
+        color: white;
+    }
+}
+@media(max-width:430px){
+    .bookImgContainer{
+        text-align: center;
+        padding-right: 0px;
+        width:100%;
+    }
+    .bookImg{
+        height: 260px;
+        width: 170px;
+        border-radius:10px;
+    }
+    .content{
+        padding-left: 0px;
+        text-align: center;
+        width:100%;
+    }
+ .callContainer{
+     text-align: center;
+     width: 100%;
+ }
+  .call{
+      margin: 0 auto;
+  }
+  .detailBody{
+    padding-top: 30px;
+    width: 99%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+
+}
+}

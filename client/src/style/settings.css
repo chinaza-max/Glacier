@@ -1,0 +1,43 @@
+.settingsBody{
+    background-color: black;
+    padding-top: 10px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.before{
+    background-color: white;
+    width:100vw;
+    height: 20px;
+}
+.emptyPostSetting{
+    width: 100vw;
+    height: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight:1000;
+}
+.BodySettingContainer{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-grow: inherit;
+    border-bottom: 1px solid rgb(243, 240, 240);
+}
+.BodySettingContainer:hover{
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+.BodySettingContainer div{
+    text-align: center;
+}
+
+.BodySettingContainer div:nth-child(3):hover{
+    cursor: pointer;
+    color: blue;
+}
+.BodySettingContainer_sub{
+    flex: 1;
+    color: rgb(253, 250, 250);
+    padding: 10px;
+}
