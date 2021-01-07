@@ -20,8 +20,10 @@ const UploadBody=(props)=>{
 
 
     const onChange=(e)=>{
-        setFile(e.target.files[0]);
-        setFilename(e.target.files[0].name)
+        if(e.target.files[0].name){
+            setFile(e.target.files[0]);
+            setFilename(e.target.files[0].name)
+        }
     }
     
     const handleChange=(event)=>{
@@ -74,7 +76,7 @@ const UploadBody=(props)=>{
                     {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
                     <div className="Author">  
                         <label>Book Author :</label>
-                        {uploadedFile.filePath}
+                        
                         <input type="text" name="author" onChange={handleChange} required/>
                     </div>
                     <div className='title'>  
@@ -97,9 +99,9 @@ const UploadBody=(props)=>{
                 </form>
                 {
                 uploadedFile.fileName   ? 
-                    <div className="row mt-5">
-                        <div className="col-md-6 m-auto"> 
-                        <img  style={{width:'100%'}} src={uploadedFile.filePath} alt="file cant show"/>
+                    <div className="row mt-5 uploadedImg" >
+                        <div className="col-md-6 m-auto"  > 
+                        <img  style={{width:'50%'}} src={uploadedFile.filePath} alt="file cant show"/>
                      </div>
                    </div> : null
                 }

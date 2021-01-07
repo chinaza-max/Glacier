@@ -7,7 +7,7 @@
   pointer-events: none;
 }
 .firstBody{
-  background-color: black;
+  background-color:#121111;;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

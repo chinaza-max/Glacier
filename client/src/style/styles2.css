@@ -1,0 +1,35 @@
+.section1 {
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -5px;
+    padding-top: 10px;
+    z-index: 30;
+  }
+  div.sc-fubCfw.bngCLd{
+    width: 250px;
+    height: 190px;
+    border-radius: 20px;
+}
+.categories-title{
+    color: white;
+    width: 100px;
+    height: 16px;
+    margin-left: 70px;
+}
+button.rec-dot{
+    box-shadow: 0 0 1px 3px  #0000FF;
+    
+  }
+@media(max-width:1024px){
+    div.sc-fubCfw.eBAoSG{
+        width: 140px;
+        height: 200px;
+        border-radius: 20px;
+    }
+ /*   .rec{
+        width: 170px;
+        border-radius: 12px;
+    }*/
+}

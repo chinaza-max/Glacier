@@ -7,6 +7,7 @@ import Signup from "./component/signup"
 import Login from "./component/login"
 import Settings from "./component/settings"
 import Detail from "./component/detail"
+import UploadPDF from "./component/uploadPDF"
 import "./style/firstbody.css"
 
 function App() {
@@ -17,8 +18,9 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/signup" component={Signup}/>
           <Route path="/upload/:id" component={Upload}/>
+          <Route path="/uploadPDF/:id" component={UploadPDF}/>
           <Route path="/home/:id" component={Home}/>
-          <Route path="/details/:id/:name" component={Detail}/>
+          <Route path="/details/:name" component={Detail}/>
           <Route path="/settings/:id" component={Settings}/>
         </Switch>
       </Router>

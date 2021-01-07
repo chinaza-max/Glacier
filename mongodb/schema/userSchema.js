@@ -22,7 +22,8 @@ let userSchema= new mongoose.Schema({
         required:"this field is required",
         minimum:11
     },
-    details:[]
+    details:[],
+    pdfs:[]
 });
 
 module.exports=mongoose.model("user",userSchema);

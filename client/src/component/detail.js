@@ -9,16 +9,15 @@ import "../style/details.css"
 function Detail(){
     const[post,setposts]=useState([])
     const[Books,setBooks]=useState([])
-   /* const[loader,setLoader]=useState('loader2')*/
-    const {id}=useParams();
+
     const {name}=useParams();
-  async  function onclickHandle(route){
-    }
+ 
 
     useEffect(()=>{
     
         const init=async ()=>{
-            const response=fetch("/details/"+id+"/"+name)
+            const response=fetch("/details/"+name)
+            console.log(name)
             const body=await response.then(res=>res.json())
             setposts(body.express)
             
@@ -29,7 +28,7 @@ function Detail(){
         init()
  
       return ()=>{}
-    },[])
+    },[name])
 
             console.log(post)
         return(
@@ -67,7 +66,7 @@ function Detail(){
                               )
 
                           })}
-                        <Details data={Books} id={id}/>
+                        <Details data={Books} />
                     </div>
                 </div>
         )
