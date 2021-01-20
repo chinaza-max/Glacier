@@ -9,7 +9,8 @@ const port=5000;
 const bodyParser=require("body-parser")
 const path=require("path")
 const crypto=require("crypto");
-const mongoose=require("mongoose")
+const mongoConnection=require('mongoose')
+const connection=mongoConnection.connection;
 const passport=require('passport')
 const bcrypt=require('bcrypt');
 const methodOverride=require("method-override")
@@ -17,11 +18,12 @@ const passportContol=require("./config/passport-config")
 const session=require('express-session')
 const flash=require('express-flash')
 const User=require("./mongodb/schema/userSchema")
+const Book=require("./mongodb/schema/allBooks")
 const fs=require('fs');
 const { findById } = require('./mongodb/schema/userSchema');
 const pdf = require('pdf-parse');
 
-
+const {nameOfFiles}=require("./deletefiles")
 app.use(bodyParser.json())
 app.use(fileUpload());
 
@@ -39,9 +41,15 @@ app.use(methodOverride('_method'))
 
 
 app.delete('/logout',(req,res)=>{
-    req.logout()
-    res.redirect('/login')
+    
+    if(req.logout()==undefined){
+        res.redirect('/login')
+    }
+    else{
+         res.redirect('/signup')
+    }
 })
+
 app.get('/posts/:id',(req,res)=>{
     User.findById({_id:req.params.id},async(err,data)=>{
     await    res.send({express:data})
@@ -79,16 +87,39 @@ app.get("/details/:name",(req,res)=>{
     })
 })
 app.get('/Books',(req,res)=>{
+
+    /*former code that i used to return all books in my db
     let mainData=[]
     User.find(async(err,data)=>{
     await    data.forEach(async(data)=>{
-    await       data.details.forEach((data)=>{
+    await    data.details.forEach((data)=>{
              mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
            })
         })
         await    res.send({express:mainData})
+    })*/
+    let mainData=[]
+    let reArrangeMainData=[]
+    Book.find(async(err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log(data[0])
+            data[0].bookDetails.forEach((data)=>{
+                if(data.name){
+                    mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
+                }
+            })
+            let len=mainData.length-1
+            for(let i=len; 0<=i; i--){
+                reArrangeMainData.push(mainData[i])
+            }
+           await res.send({express:reArrangeMainData})
+        }
     })
 })
+
 app.get("/names/:id",(req,res)=>{
     
     if(req.params.id){
@@ -98,9 +129,13 @@ app.get("/names/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                console.log("chinaza")
-                console.log(data.name)
-                res.send({express:data.name})
+                
+                if(data){
+                    res.send({express:data.name,express2:data.tel})
+                }
+                else{
+                    res.send({express:"redirect"})
+                }
             }
         })
     }
@@ -109,21 +144,234 @@ app.get("/names/:id",(req,res)=>{
     }
    
 })
+/*app.post("/deleteSingleAcc",(req,res)=>{
+     
+})*/
+app.get('/pdfAPI',(req,res)=>{
 
-app.post('/deletePost/:id/:name',(req,res)=>{
+    User.find((err,data)=>{
+        data.forEach((data)=>{
+            if(data.pdfs.length!==0){
+
+                res.send({express:data.pdfs})
+                console.log(data.pdfs)
+                return;
+               
+            }
+        })
+    })
+})
+
+//settings route
+app.get('/deleteAllAcc',(req,res)=>{
+    connection.db.listCollections().toArray((err,names)=>{
+        if(err){
+            console.log("check route deleteAllAcc ")
+            console.log(err)
+        }
+        else{
+            for(i=0;i<names.length; i++){
+                console.log("current collection "+names[i].name)
+                if(names[i].name=="users"){
+                    mongoConnection.connection.db.dropCollection("users", function (err, result) {
+                            if (err) {
+                                console.log(err)
+                                
+                            }
+                            else{
+                                res.send({express:"all account has been deleted"})
+                            }
+                        }
+
+                    )
+                }
+                else{
+                    res.send({express:"No collection of account was found in the dataBase"})
+                }
+            }
+        }
+    })
+})
+
+app.get("/deleteSingleAcc/:name",(req,res)=>{
+    let listofPostTodelete=[];
+    User.find({"details.name":req.params.name},async(err,data)=>{
+        
+        if(err){
+            console.log("err")
+            console.log(err)
+        }
+        else if(data.length!==0){
+            let id=data[0]._id
+            let name=data[0].name
+            let tel=data[0].tel
+            data[0].details.forEach((data)=>{
+                listofPostTodelete.push(data.name)
+            })
+            for(let i=0; i<listofPostTodelete.length; i++){
+                deletePostFromBookCollection(listofPostTodelete[i])
+            }
+            //this function send file name to be deleted from the directory
+          await  nameOfFiles(listofPostTodelete);
+            
+            if(id){
+                User.findOneAndRemove({_id:id},(err)=>{
+                    if(err){
+                        console.log(err)
+                      return  res.status(500).send('no')
+                    }
+                    return res.status(200).send({"name":name,"tel":tel})
+                })
+            }
+        }
+        else{
+            return res.status(200).send({"name":"No user found"})
+        }
+    })
+})
+
+
+app.get("/deleteAllPDF/:id",(req,res)=>{
+    
+    User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log(affected)
+            res.send({express:"All PDF removed"})
+        }
+    })
+})
+
+app.get('/DropSinglePDF/:name/:id',(req,res)=>{
     let id=req.params.id
     let imgName=req.params.name
+   
     User.findById(id,async(err,user)=>{
        if(err){
            console.log("check post route /deletePost/:id/:name")
            console.log(err)
        }
        else{
-        console.log(user) 
+            if(user){
+                
+                let obj=user.pdfs.find((va)=>{    
+                    return  va.name==imgName
+                })
+              
+                if(obj){
+                    await User.findOneAndUpdate({_id:req.params.id},
+                        {$pull:{pdfs:obj}})
+                    
+                    try{
+                        
+                        fs.unlinkSync("./client/public/uploadPDFs/"+imgName)
+                        console.log("response")
+                        res.send({express:"succefully Deleted"})
+                    }
+                    catch(err){
+                        console.log("err"+  err)
+                    }
+                }
+                else{
+                    res.send({express:"not found in db"})
+                }
+            }
+       }
+    })
+
+
+})
+
+app.get("/deleteAllPost",(req,res)=>{
+    deleteAllPostFromBook();
+    User.find((err,data)=>{
+       if(err){
+            console.log(err)
+       }
+       else{
+        for(let i=0; i<data.length;i++){
+            
+            User.updateMany({_id:data[i]._id},{ $set: { details: [] }},function(err, affected){
+                if(err){
+                    console.log(err)
+                    return 
+                }
+            })
+        }
+        res.send({express:"All post removed"})
+       }
+    })
+})
+
+
+app.get("/deleteSinglePost/:name",(req,res)=>{
+    let imgName=req.params.name
+    deletePostFromBookCollection(imgName)
+    User.find({"details.name":req.params.name},async (err,user)=>{
+        if(err){
+            console.log("err")
+            console.log(err)
+        }
+        else if(user.length!==0){
+            let obj=await user[0].details.find((va)=>{    
+                return  va.name==imgName
+            })
+          
+            if(obj){
+                await User.findOneAndUpdate({_id:user[0]._id},
+                    {$pull:{details:obj}})
+                
+                try{
+                    console.log(4)
+                    fs.unlinkSync("./client/public/uploads/"+imgName)
+                    res.send({express:"succefully Deleted"})
+                }
+                catch(err){
+                    console.log("err"+  err)
+                }
+            
+            }
+
+        }
+        else{
+            console.log(2)
+           
+             res.status(200).send({"express":"does not exit"})
+        }
+    
+    })
+})
+
+app.get("/generateAccDetails/:name",(req,res)=>{
+    User.find({"details.name":req.params.name},(err,user)=>{
+        if(err){
+            console.log(err)
+        }
+        else if(user.length!==0){
+            res.send({express:user[0].name,express2:user[0].tel})
+        }
+        else{
+            res.send({express:"no user found"})
+        }
+    })
+})
+//this route is public  . it is use by every one ;
+app.post('/deletePost/:id/:name',(req,res)=>{
+    let id=req.params.id;
+    let imgName=req.params.name;
+    deletePostFromBookCollection(imgName);
+    User.findById(id,async(err,user)=>{
+       if(err){
+           console.log("check post route /deletePost/:id/:name")
+           console.log(err)
+       }
+       else{
+        
         let obj=user.details.find((va)=>{    
             return  va.name==imgName
            })
-           console.log(obj) 
           
           if(obj){
             await User.findOneAndUpdate({_id:req.params.id},
@@ -136,7 +384,7 @@ app.post('/deletePost/:id/:name',(req,res)=>{
             }
           }
        }
-       })
+    })
 
 
 })
@@ -145,7 +393,7 @@ app.post('/signup',checkNotAuthenticated,async(req,res)=>{
     let user=new User( )
 
     User.find((err,data)=>{
-        console.log(data)
+        //console.log(data)
     })
     try{
         const hashedPassword=await bcrypt.hash(req.body.password,10)
@@ -175,7 +423,7 @@ app.post('/login',checkNotAuthenticated,
                         failureRedirect:'/login',
                         failureFlash:true}
     ),(req,res)=>{
-         console.log(req.body)
+         //console.log(req.body)
         User.findOne({email:req.body.email},async(err,user)=>{
             res.json({home:"/home/"+user._id})
         })
@@ -212,7 +460,7 @@ app.post("/uploadPDF/:id",(req,res)=>{
                         // PDF info
                         console.log(data.info);
                         // PDF metadata
-                        console.log(data.metadata); 
+                        console.log(data.metadata);
                         // PDF.js version
                         // check https://mozilla.github.io/pdf.js/getting_started/
                        // console.log(data.version);
@@ -234,8 +482,8 @@ app.post("/uploadPDF/:id",(req,res)=>{
                         file.size=0;
                        // console.log(file)
                         res.json({fileName:file.name,filePath:`/uploadPDFs/${file.name}`})
-                       /* await User.findOneAndUpdate({_id:id},
-                            {$push:{pdfs:file}})*/
+                        await User.findOneAndUpdate({_id:id},
+                            {$push:{pdfs:file}})
                     }
                 })
             }
@@ -245,6 +493,8 @@ app.post("/uploadPDF/:id",(req,res)=>{
         res.json({fileName:'',filePath:'',errMessage:'file extension not supported '});
     }
 })
+
+
 app.post('/upload/:id',(req,res)=>{
     const id=req.params.id
 
@@ -277,16 +527,46 @@ app.post('/upload/:id',(req,res)=>{
                         }
                         file.data='';
                         file.size=0;
-                            console.log(file)
+                            //console.log(file)
                             res.json({fileName:file.name,filePath:`/uploads/${file.name}`})
                         })
-        
-                        await User.findOneAndUpdate({_id:id},
-                              {$push:{details:file}})
-    
-                              /*User.findById({_id:id},(err,user)=>{
-                                  console.log(user)
-                              })*/
+                        
+                        await User.findOneAndUpdate({_id:id},{$push:{details:file}})
+                        //initializing book schema to actual get an ID
+                        Book.find(async(err,data)=>{
+                            
+                           if(err){
+                                console.log(err)
+                           }
+                           else{
+                                if(data.length>=1){
+                                    Book.find(async(err,data)=>{
+                                        if(err){
+                                            console.log(err)
+                                        }
+                                        else{
+                                            await Book.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                        }
+                                    
+                                    })
+                                }
+                                else{
+                                    await new Book({bookDetails:["test"]}).save()
+                                    Book.find(async(err,data)=>{
+                                        if(err){
+                                            console.log(err)
+                                        }
+                                        else{
+                                            await Book.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                        }
+                                    
+                                    })
+                                }
+                           }
+                        })
+                     
+                       
+                       
                 }
             }
            
@@ -307,6 +587,47 @@ function checkNotAuthenticated(req,res,next){
     
     next(); 
 }
- 
 
+function deletePostFromBookCollection(name){
+    console.log(name)
+    Book.find({"bookDetails.name":name},async (err,user)=>{
+        console.log(user)
+        if(err){
+            console.log("err")
+            console.log(err)
+        }
+        else if(user.length!==0){
+            let obj=await user[0].bookDetails.find((va)=>{    
+                return  va.name==name
+            })
+
+            if(obj){
+                await Book.findOneAndUpdate({_id:user[0]._id},
+                    {$pull:{bookDetails:obj}})
+            }
+
+        }
+       
+    })
+}
+function deleteAllPostFromBook(){
+    Book.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+             Book.updateMany({_id:data[0]._id},{ $set: {bookDetails: []}},function(err, affected){
+                 if(err){
+                     console.log(err)
+                     return 
+                 }
+                 else{
+                     console.log(affected)
+                    
+                 }
+             })
+        }
+    })
+}
 app.listen(port ,()=>console.log(`server started.... ${port}`))
+

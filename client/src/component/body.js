@@ -8,8 +8,8 @@ function Body(props){
         <div>
             <Section1/>
             {
-            props.viewP==' ' ? <Section2 id={props.id} searchString2={props.searchString}/> :
-              <Filler/>
+            props.viewP===' ' ? <Section2 id={props.id} searchString2={props.searchString}/> :
+              <Filler  searchString2={props.searchString}/>
              }
            
         </div>

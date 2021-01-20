@@ -2,15 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "../../style/nav.css"
-                                                                                                                                        
+import SubLinkForFiller from  "../sub-components/subLinkForFiller"                                                                                                                                        
 
 class Nav extends React.Component{
 constructor(props){
     super(props)
     this.filterTextHolder=this.filterTextHolder.bind(this)
     this.fillerFunc=this.fillerFunc.bind(this)
-    this.state={name:''}
+    this.state={name:'',tel:""}
     this.id=props.userId
+    
 }
 
 filterTextHolder(e){
@@ -20,15 +21,23 @@ fillerFunc(){
    this.props.mainFillerFuncP('yes')
 }
 
+
 componentDidMount(){
        
+       if(this.id){
         const init=async ()=>{
-        const  response= fetch("/names/"+this.id)
-        let body=await response.then(res=>res.json())
+            const  response= fetch("/names/"+this.id)
+            let body=await response.then(res=>res.json())
+            if(body.express==="redirect"){
+              this.props.history.push("/signup")
+            }
+            else{
+                this.setState({name:body.express,tel:body.express2})
+            }
             
-            this.setState({name:body.express})
-        }
+        };  
         init()
+       }
             
 }
 
@@ -46,7 +55,7 @@ componentDidMount(){
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
                         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li className="nav-item active">
-                            <a className="nav-link" href="/"  style={{color:"white"}}>Home <span className="sr-only">(current)</span></a>
+                            <div className="nav-link" onClick={this.handleHistory} style={{color:"white"}}>Home <span className="sr-only">(current)</span></div>
                         </li>
                         {this.props.userId ?
                                     ''
@@ -61,27 +70,41 @@ componentDidMount(){
                             </Link>     
                         </li>
                         {
-                            this.props.userId==="5fe33901fa281858e040aafc" ? 
-                            <li className="nav-item" >
-                                <Link style={{color:"white"}} className="nav-link" to={`/uploadPDF/${this.props.userId}`}>
-                                    uploadPDF
-                                </Link>     
-                             </li>  
+                            this.state.tel===8184724615 ? 
+                            
+                                <li className="nav-item" >
+                                    <Link style={{color:"white"}} className="nav-link" to={`/uploadPDF/${this.props.userId}`}>
+                                        uploadPDF
+                                    </Link>     
+                                </li>  
+                                
                         :
                          ' '
                         }
-                        <li className="nav-item" >
+                    
+                
+                           <SubLinkForFiller fillerFuncP={this.fillerFunc}/>
+                     
+                       {this.props.userId?
+                            <li className="nav-item">
+                                <Link style={{color:"white"}} className="nav-link" to={`/Dashboard/${this.props.userId}`}>
+                                    Dashboard
+                                </Link>  
+                            </li>
+                       :''}
+                       {
+                            this.state.tel===8184724615 ? 
+                            <li className="nav-item">
+                                <Link style={{color:"white"}} className="nav-link" to={`/Setting/${this.props.userId}`}>
+                                    Setting
+                                </Link>  
+                            </li>
+                            :''
+                       }
+                           <li className="nav-item" >
                             <a className="nav-link" href="/" style={{color:"white"}}>About</a>
                         </li>
-                        <li className="nav-item" >
-                            <span className="nav-link" style={{color:"white"}} onClick={this.fillerFunc}>Filler</span>
-                        </li>
-                        <li className="nav-item">
-                        
-                            <Link style={{color:"white"}} className="nav-link" to={`/settings/${this.props.userId}`}>
-                                settings
-                            </Link>  
-                        </li>
+                      
                         <li className="nav-item" >
                             <span className="nav-link" style={{color:"white"}}>{this.state.name}</span>
                         </li>

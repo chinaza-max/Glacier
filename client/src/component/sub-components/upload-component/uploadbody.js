@@ -44,8 +44,7 @@ const UploadBody=(props)=>{
             console.log(value)
         }
         try{
-            console.log('props')
-            console.log(props.id)
+          
             const res=await axios.post('/upload/'+props.id,formData,{
                 headers:{
                     'Content-Type':'multipart/form-data'

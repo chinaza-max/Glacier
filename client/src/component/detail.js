@@ -6,7 +6,7 @@ import NavDetail from './sub-components/navdetail';
 import Details from "../component/sub-components/detail-slider"
 import "../style/details.css"
 
-function Detail(){
+function Detail(props){
     const[post,setposts]=useState([])
     const[Books,setBooks]=useState([])
 
@@ -14,26 +14,26 @@ function Detail(){
  
 
     useEffect(()=>{
-    
+        const aboutController=new AbortController()
+        const signal=aboutController.signal
         const init=async ()=>{
-            const response=fetch("/details/"+name)
-            console.log(name)
+            const response=fetch("/details/"+name,{signal:signal})
             const body=await response.then(res=>res.json())
             setposts(body.express)
             
-            const response2=await fetch("/Books")
+            const response2=await fetch("/Books",{signal:signal})
             const body2=await response2.json()
             setBooks(body2.express)
         }
         init()
  
-      return ()=>{}
+        return ()=> aboutController.abort()
     },[name])
 
             console.log(post)
         return(
                 <div >
-                    <NavDetail/>
+                    <NavDetail  history={props.history} />
                     <div className="detailBodyContainer">
                         
                           {post.map((data)=>{
@@ -43,7 +43,7 @@ function Detail(){
                                       <div className="content"> 
                                       <div><h3>{data.title}</h3></div>
                                       <div className="callContainer">
-                                          <Link className="call" style={{textDecoration:"none"}} to={"tel"+data.tel}>call now</Link>
+                                          <a   className="call" style={{textDecoration:"none"}} href={"tel:"+data.tel}>call now</a>
                                       </div>
                                       <div>
                                           <h5>Description</h5>
@@ -58,7 +58,7 @@ function Detail(){
                                               <br/>
                                               Faculty : {data.faculty}
                                               <br/>
-                                              tel : {data.tel}
+                                              Tel : {data.tel}
                                           </div>
                                       </div>
                                       </div>

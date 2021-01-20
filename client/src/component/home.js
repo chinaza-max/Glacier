@@ -24,12 +24,12 @@ constructor({match}){
     }
     render(){
         let id=this.match.url.slice(6);
-        console.log(id)
     return(
         <div className='firstBody'>
-          <Nav userId={id} filterTextFunP={this.filterTextFun} mainFillerFuncP={this.mainFillerFunc} />
+          <Nav userId={id} filterTextFunP={this.filterTextFun} mainFillerFuncP={this.mainFillerFunc} history={this.props.history} />
           <Slide/>
           <Body  id={id} searchString={this.state.filteredText} viewP={this.state.view}/>
+          
           <Footer/>
         </div> 
     )

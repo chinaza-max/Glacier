@@ -1,0 +1,46 @@
+.mainBody-container-filler{
+    width: 100vw;
+    box-sizing: border-box;
+    height: auto;
+    padding: 40px;
+}
+.mainBody-filler{
+    width: 98%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    justify-items: left;
+}
+.mainBody-sub-filler{
+    width: 130px;
+    height: 200px;
+    margin-top: 10px;
+}
+.PDF{
+    margin-top: 20px;
+    position: relative;
+}
+.fillerImg{
+    width: 100%;
+    height:100%;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.bodyImg-filler{
+    width: 180px;
+    height: 220px;
+
+}
+.courseCode-filler{
+    position: absolute;
+    bottom: 0;
+    color: black;
+    width: 100%;
+    text-align: center;
+}
+.courseCode-filler-sub{
+    font-size: 20px;
+}

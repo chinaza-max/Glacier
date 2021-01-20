@@ -2,21 +2,19 @@ import React from "react";
 import {useParams,Link } from "react-router-dom";                                                                                                                
 
 
-function NavDetail(){
-
+function NavDetail(props){
+  let id=useParams()
+ 
+  function  goBack(){
+      props.history.goBack()
+  }
+  function  setting(){
+    props.history.push("/settings/"+id)
+  }
         return(
             <ul className="nav justify-content-center" style={{backgroundColor: "black",position:"fixed",width:"100vw"}}>
               <li className="nav-item">
-                <a className="nav-link active" href="/" style={{color: "white"}}>Active</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/" style={{color: "white"}}>Link</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/" style={{color: "white"}}>Link</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" href="/" tabIndex="-1" aria-disabled="true">Disabled</a>
+                <div className="nav-link active" onClick={goBack} style={{color: "white"}}>Back</div>
               </li>
             </ul>
         )

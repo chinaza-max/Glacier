@@ -66,7 +66,8 @@ const UploadBody=(props)=>{
                         <label className="custom-file-label" htmlFor="inputGroupFile03">{filename}</label>
                     </div>
                     {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
-                    <div className="Author">  
+                    <div className="Author"> 
+                    
                         <label>course code :</label>
                         <input type="text" name="courseCode" onChange={handleChange} required/>
                     </div>
@@ -76,7 +77,10 @@ const UploadBody=(props)=>{
                 uploadedFile.fileName   ? 
                     <div className="row mt-5 uploadedImg" >
                         <div className="col-md-6 m-auto"  > 
-                        <img  style={{width:'50%'}} src={uploadedFile.filePath} alt="file cant show"/>
+                        
+                        <iframe className="pdfImg" height={200} width={150}  src={uploadedFile.filePath} title={uploadedFile.filePath} style={{overflow:'hidden'}}>
+
+                        </iframe>
                      </div>
                    </div> : null
                 }

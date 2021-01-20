@@ -1,65 +1,193 @@
-import React,{useState,useEffect} from 'react';
-import {useParams,Link } from "react-router-dom";
-import NavSetting from "./sub-components/settings/settingsNav"
-import "../style/settings.css"
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/js/bootstrap.min.js"
+import React,{useState} from 'react';
+import {useParams} from "react-router-dom";
+import SetingsNav from "./sub-components/setingsNav"
+import "../style/setting.css"
 
 
+function Settings(props){
+    const[responses,setreponses]=useState({accOneResponse:'',accTwoResponse:'',PDFOneResponse:"",PDFTwoResponse:"",postOneResponse:"",postTwoResponse:"",postResponse:'',userName:'',userTel:''})
+    const[fileName,setFileName]=useState({bookName:'',pdfName:''});
+    const {id}=useParams()
 
-function Settings(){
-    const[post,setposts]=useState([])
-    const[loader,setLoader]=useState('loader2')
-    const {id}=useParams();
-
-
-
-  async  function onclickHandle(route){
- 
-    await fetch(route, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        },setLoader(route))
-      
+  function handleChange(e){
+    const {name,value}=e.target
+    setFileName({...fileName,[name]:value});
+    console.log(fileName.bookName)
+  }
+  function empty(){
+      console.log("ran")
+    setFileName({...fileName,bookName:'',pdfName:''});
+  }
+    async  function deleteAllAccount(){
+            const response=await fetch("/deleteAllAcc")
+            const body=await response.json()
+            setreponses({...responses,accOneResponse:body.express})
+            empty();
+    }
+    async  function deleteSingleAccount(){
+        
+       if(fileName.bookName){
+            const response=await fetch("/deleteSingleAcc/"+fileName.bookName)
+            const body=await response.json()
+            if(body.name=== "No user found"){
+                setreponses({...responses,accTwoResponse:body.name})
+            }
+            else{
+                setreponses({...responses,accTwoResponse:body.name+" account has been deleted"})
+            }
+            empty()
+       }
     }
 
-    useEffect(()=>{
+    async  function deleteAllPDF(){
+        const response=await fetch("/deleteAllPDF/"+id)     
+        let body=await response.json()
+        setreponses({...responses,PDFOneResponse:body.express})
+        empty()
+     }
+    async function DropSinglePDF(){
+        console.log(fileName.pdfName)
+        if(fileName.pdfName){
+            const response=await fetch("/DropSinglePDF/"+fileName.pdfName+"/"+id)
+            let body=await response.json()
+            console.log(body.express)
+            setreponses({...responses,PDFTwoResponse:body.express})
+
+        }
+    }
+    async function deleteSinglePost(){
     
-    const init =async ()=>{
-        const response= fetch('/posts/'+id)
-        const body = await response.then((res)=>res.json())
-        setposts(body.express.details)
-      }
-      init();
-      return ()=>{}
-    },[post,loader,id])
-
-    let data=post.map((data)=>{
-        return(
-            <div  key={data.name} className="BodySettingContainer" >
-                    <div className="BodySettingContainer_sub">Title :{data.title}</div>
-                    <div className="BodySettingContainer_sub">Author : {data.author}</div>
-                    <div className="BodySettingContainer_sub" onClick={()=>{onclickHandle("/deletePost/"+id+"/"+data.name)}}>Delete</div>
-             </div>
-        )
-    })
-        return(
-                <div >
-                    <NavSetting/>
-                    
-                    <div className='before'></div>
-
-                    {
-                        post.length>0  ? 
-                        <div className='settingsBody'>
-                            {data}
-                        </div> :
-                        <div className='emptyPostSetting'>NO UPLOAD YET</div>
-                     }
-
-                </div>
-        )
+       if(fileName.bookName){
+            const response=await fetch("/deleteSinglePost/"+fileName.bookName)
+            let body=await response.json()
+            console.log(body.express)
+            setreponses({...responses,postTwoResponse:body.express})
+       }
+    }
+    async function deleteAllPost(){
+             const response=await fetch("/deleteAllPost");
+             let body=await response.json();
+             console.log(body.express)
+             setreponses({...responses,postResponse:body.express})
+        
+     }
+     async function generateAccDetails(){
+         console.log(fileName.bookName)
+        if(fileName.bookName){
+            const response=await fetch("/generateAccDetails/"+fileName.bookName);
+            let body=await response.json();
+            console.log(body.express)
+            setreponses({...responses,userName:body.express,userTel:body.express2})
+            empty()
+        }
 }
-export default Settings;
+
+    return(
+        <div className="SetingsContainer">
+            
+            <SetingsNav history={props.history}/>
+            <div className="SetingsBody">
+                <div className="SetingsBody-sub">
+
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Authorize Free Upload All  </p>
+                        </div>
+                        <div className="input-container">
+                                <input type="checkbox" name="" className="checkbox" />
+                        </div>
+                    </div>
+
+
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Authorize Free Upload Single</p>
+                        </div>
+                        <div className="input-container">
+                                <p className="add">add</p>
+                        </div>
+                    </div>
+
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Clear All Account</p>
+                            <div><h3>{responses.accOneResponse}</h3></div>
+                        </div>
+                        <div className="input-container">
+                                <button onClick={deleteAllAccount}>clear</button>
+                        </div>
+                    </div>
+
+                    <div className="responses" >{responses.accTwoResponse}</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Drop Single Account</p>
+                        </div>
+                        <div className="input-container" id="DropSingle">
+                                <div> <input type="text"  onChange={handleChange} placeholder="paste book name" name="bookName" /></div>
+                                <div> <button className="add" onClick={deleteSingleAccount}>Drop</button></div>
+                        </div>
+                    </div>
+               
+                    <div className="responses" >{responses.PDFOneResponse}</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Clear All PDF</p>
+                        </div>
+                        <div className="input-container">
+                                <button onClick={deleteAllPDF}>clear</button>
+                        </div>
+                    </div>
+
+                    <div className="responses">{responses.PDFTwoResponse}</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Drop Single PDF</p>
+                        </div>
+                        <div className="input-container" id="singlePDF">
+                                <div> <input type="text"  onChange={handleChange} name='pdfName' placeholder="PDF name"/></div>
+                                <div> <button className="add"  onClick={DropSinglePDF}>Drop</button></div>
+                        </div>
+                    </div>
+
+                    <div className="responses"> {responses.postResponse}</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>clear all post</p>
+                        </div>
+                        <div className="input-container"  id="post">
+                                <div> <button className="add" onClick={deleteAllPost}>clear</button></div>
+                        </div>
+                    </div>
+
+                    <div className="responses">{responses.postTwoResponse}</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Drop Single Post</p>
+                        </div>
+                        <div className="input-container"  id="post">
+                                <div> <input type="text"   placeholder="paste name of book"  name="bookName" onChange={handleChange}/></div>
+                                <div> <button className="add" onClick={deleteSinglePost}>Drop</button></div>
+                        </div>
+                    </div>
+                   
+                    <div className="responses"> {
+                      responses.userName  ? <div>Name: {responses.userName} Tel: {responses.userTel}</div>:''
+                    }</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>Generate acc Details</p>
+                        </div>
+                        <div className="input-container"  id="post">
+                                <div> <input type="text" placeholder="name of book posted from url" onChange={handleChange} name="bookName"/></div>
+                                <div> <button className="add" onClick={generateAccDetails}>Generate</button></div>
+                               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Settings

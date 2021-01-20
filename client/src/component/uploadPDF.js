@@ -9,12 +9,12 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 
 
-function UploadPDF(){
+function UploadPDF(props){
     const {id}=useParams();
     return(
         <div>
              <div className="uploadContainer">
-                 <Uploadnav/>
+                 <Uploadnav history={props.history} id={id}/>
                  <UploadBody2  id={id}/>
               </div> 
               <Footer/>

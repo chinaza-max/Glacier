@@ -18,11 +18,11 @@ constructor({match}){
 
     render(){
         let id=this.match.url.slice(8)
-        console.log(id)
+    
         return(
            <div>
                 <div className="uploadContainer">
-                    <Uploadnav/>
+                    <Uploadnav history={this.props.history} id={id}/>
                     <UploadBody  id={id}/>
                  </div> 
                  <Footer/>
