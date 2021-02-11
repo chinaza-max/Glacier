@@ -5,7 +5,9 @@ function  goBack(){
     props.history.goBack()
 }
 function  dashboard(){
-  props.history.push("/Dashboard/"+props.id)
+ 
+  props.history.replace("/home/"+props.id+"/Dashboard")
+  
 }
 
     return (
@@ -15,9 +17,11 @@ function  dashboard(){
                     <div className="nav-link active" onClick={goBack} style={{color: "white"}}>Back</div>
                   </li>
                   {
-                  props.id ?   <li className="nav-item">
-                  <div className="nav-link" onClick={dashboard} style={{color: "white"}}>Dashboard</div>
-                </li>:
+                  props.id ?  
+                   <li className="nav-item">
+                      <div className="nav-link" onClick={dashboard} style={{color: "white"}}>Dashboard</div>
+                   </li>
+                   :
                  ''
                  }
                  

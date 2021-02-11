@@ -1,0 +1,87 @@
+.nav{
+    position: fixed;
+    height: 50px;
+}
+.container_of_Accomodation_Upload{
+    width: 100vw;
+    height: fit-content;
+   
+}
+.Footer_accomodation{
+    height: 100px ;
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    background-color: black;
+    color: blanchedalmond;
+}
+.body_of_Accomodation_Upload{
+    width: 100%;
+    height: auto;
+    padding-top: 100px;
+}
+.center{
+    width: 95%;
+    margin: 0 auto;
+}
+.price,.Address,.tel,.selection_container{
+    padding-top: 20px;
+}
+.btn{
+    margin-top: 100px;
+}
+.price input{
+    width: 165px;
+}
+.price label{
+    padding-right: 130px;
+}
+.Address,label{
+    padding-right: 20px;
+}
+.tel label{
+    padding-right: 145px;
+}
+.tel input{
+    width:165px;
+}
+.selection_container label{
+    padding-right: 122px;
+}
+
+@media(max-width:400px){
+    .container_of_Accomodation_Upload{
+        width: 100vw;
+        height: 800px;
+        overflow: hidden;
+    }
+    .Footer_accomodation{
+        height: 100px;
+        width: 100vw;
+        position: absolute;
+        top: 750px;
+        text-align: center;
+        background-color: black;
+        color: blanchedalmond;
+    }
+    .price input{
+        width: 165px;
+    }
+    .price label{
+        padding-right: 70px;
+    }
+    .Address,label{
+        padding-right: 10px;
+    }
+    .tel label{
+        padding-right: 80px;
+    }
+    .tel input{
+        width:165px;
+    }
+    .selection_container label{
+        padding-right: 55px;
+    }
+}
+

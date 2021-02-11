@@ -16,7 +16,7 @@ function Details(props) {
   let data=props.data.map((data)=>{
  
       return(
-        <Item key={data.name}> <a className="books" href={"/details/"+data.name}>  <img className="bodyImg" src={"/uploads/"+data.name} alt="file cant show"/>  </a></Item>
+        <Item key={data.name}> <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={"/uploads/"+data.name} alt="file cant show"/> </Link></Item>
       )
   })
   return (

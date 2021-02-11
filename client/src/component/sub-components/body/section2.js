@@ -1,7 +1,6 @@
 import {useEffect,useState } from 'react';
 import { Link } from "react-router-dom";
-
-import '../../../style/section2.css' 
+import '../../../style/section2.css';
 
 
 function Section2(props){
@@ -21,10 +20,9 @@ function Section2(props){
     },[])
     let data=books.map((data)=>{
        if(data==='test'){
-            return ''
+            return '' 
        }
        else{
-           console.log(data.name)
             if(data.name.indexOf(props.searchString2)===-1 && data.title.indexOf(props.searchString2)===-1 && data.author.indexOf(props.searchString2)===-1 && data.faculty.indexOf(props.searchString2)===-1){
                 return ' '
             }

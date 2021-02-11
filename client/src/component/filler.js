@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../style/filler.css"
 
 function Filler(props){
-    const[post,setposts]=useState([])
+   // const[post,setposts]=useState([])
     const[PDFs,setPDF]=useState([])
 
 
@@ -51,10 +51,3 @@ function Filler(props){
 export default Filler;
 
 
-/*
-<a href="/images/myw3schoolsimage.jpg" download>
-  <img src="/images/myw3schoolsimage.jpg" alt="W3Schools" width="104" height="142">
-</a>
-*/
-/*
-<embed src="files/Brochure.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="600px" />*/

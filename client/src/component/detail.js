@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect,useRef} from 'react';
 import {useParams,Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -12,34 +12,35 @@ function Detail(props){
 
     const {name}=useParams();
  
-
+    const isMounted = useRef(false);
     useEffect(()=>{
-        const aboutController=new AbortController()
-        const signal=aboutController.signal
-        const init=async ()=>{
-            const response=fetch("/details/"+name,{signal:signal})
-            const body=await response.then(res=>res.json())
-            setposts(body.express)
-            
-            const response2=await fetch("/Books",{signal:signal})
-            const body2=await response2.json()
-            setBooks(body2.express)
-        }
-        init()
- 
-        return ()=> aboutController.abort()
-    },[name])
+      
+        isMounted.current = true;
 
-            console.log(post)
+        const init=async ()=>{
+            const response=fetch("/details/"+name)
+            const body=await response.then(res=>res.json())
+            setposts(body.express);
+            
+            const response2=await fetch("/Books");
+            const body2=await response2.json();
+            setBooks(body2.express);
+        }
+        init();
+ 
+        return () => isMounted.current = false;
+    },[name])
+    
         return(
-                <div >
-                    <NavDetail  history={props.history} />
-                    <div className="detailBodyContainer">
+                <div  className="firstDetailBody">
+                    <NavDetail  history={props.history}  setposts={setposts}/>
+                    
+                    <div className="detailBodyContainer" id="detailBodyContainer">
                         
                           {post.map((data)=>{
                               return(
                                   <div key={data.name} className="detailBody">
-                                      <div className="bookImgContainer"><img  className="bookImg" src={"/uploads/"+data.name} /> </div>
+                                      <div className="bookImgContainer"><img  className="bookImg" src={"/uploads/"+data.name} alt="file cant show"/> </div>
                                       <div className="content"> 
                                       <div><h3>{data.title}</h3></div>
                                       <div className="callContainer">
@@ -70,6 +71,7 @@ function Detail(props){
                     </div>
                 </div>
         )
+        return isMounted;
 }
 export default Detail;
 

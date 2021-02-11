@@ -2,7 +2,7 @@ import React,{Fragment,useState} from 'react';
 import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "../../../style/uploadBody.css"
+import "../../../style/uploadBody.css";
 
 
 
@@ -78,7 +78,7 @@ const UploadBody=(props)=>{
                         
                         <input type="text" name="author" onChange={handleChange} required/>
                     </div>
-                    <div className='title'>  
+                    <div className='title1'>  
                         <label>Title : </label>
                         <input type="text"  name="title" onChange={handleChange} required />
                     </div>

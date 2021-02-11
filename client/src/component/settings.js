@@ -5,24 +5,21 @@ import "../style/setting.css"
 
 
 function Settings(props){
-    const[responses,setreponses]=useState({accOneResponse:'',accTwoResponse:'',PDFOneResponse:"",PDFTwoResponse:"",postOneResponse:"",postTwoResponse:"",postResponse:'',userName:'',userTel:''})
+    const[responses,setreponses]=useState({accOneResponse:'',accTwoResponse:'',PDFOneResponse:"",PDFTwoResponse:"",postOneResponse:"",postTwoResponse:"",postResponse:'',userName:'',userTel:'',accomodationPostRespond:""})
     const[fileName,setFileName]=useState({bookName:'',pdfName:''});
     const {id}=useParams()
 
   function handleChange(e){
     const {name,value}=e.target
-    setFileName({...fileName,[name]:value});
-    console.log(fileName.bookName)
+    setFileName({...fileName,[name]:value})
   }
   function empty(){
-      console.log("ran")
     setFileName({...fileName,bookName:'',pdfName:''});
   }
     async  function deleteAllAccount(){
             const response=await fetch("/deleteAllAcc")
             const body=await response.json()
             setreponses({...responses,accOneResponse:body.express})
-            empty();
     }
     async  function deleteSingleAccount(){
         
@@ -46,7 +43,6 @@ function Settings(props){
         empty()
      }
     async function DropSinglePDF(){
-        console.log(fileName.pdfName)
         if(fileName.pdfName){
             const response=await fetch("/DropSinglePDF/"+fileName.pdfName+"/"+id)
             let body=await response.json()
@@ -69,8 +65,14 @@ function Settings(props){
              let body=await response.json();
              console.log(body.express)
              setreponses({...responses,postResponse:body.express})
-        
      }
+    async function  deleteAllAccomodationPost(){
+           const response=await fetch("/deleteAllAccomodationPost")
+           let body=await response.json();
+           console.log(body.express)
+           setreponses({...responses,accomodationPostRespond:body.express})
+       
+    }
      async function generateAccDetails(){
          console.log(fileName.bookName)
         if(fileName.bookName){
@@ -78,10 +80,10 @@ function Settings(props){
             let body=await response.json();
             console.log(body.express)
             setreponses({...responses,userName:body.express,userTel:body.express2})
-            empty()
         }
-}
-
+    }
+  
+   
     return(
         <div className="SetingsContainer">
             
@@ -153,7 +155,7 @@ function Settings(props){
                     <div className="responses"> {responses.postResponse}</div>
                     <div className="flex-container">
                         <div className="text1">
-                            <p>clear all post</p>
+                            <p>clear all post (Books)</p>
                         </div>
                         <div className="input-container"  id="post">
                                 <div> <button className="add" onClick={deleteAllPost}>clear</button></div>
@@ -163,14 +165,24 @@ function Settings(props){
                     <div className="responses">{responses.postTwoResponse}</div>
                     <div className="flex-container">
                         <div className="text1">
-                            <p>Drop Single Post</p>
+                            <p>Drop Single Post (Book)</p>
                         </div>
                         <div className="input-container"  id="post">
                                 <div> <input type="text"   placeholder="paste name of book"  name="bookName" onChange={handleChange}/></div>
                                 <div> <button className="add" onClick={deleteSinglePost}>Drop</button></div>
                         </div>
                     </div>
-                   
+
+                    <div className="responses"> {responses.accomodationPostRespond}</div>
+                    <div className="flex-container">
+                        <div className="text1">
+                            <p>clear all accomodation post</p>
+                        </div>
+                        <div className="input-container"  id="post">
+                                <div> <button className="add" onClick={deleteAllAccomodationPost}>clear</button></div>
+                        </div>
+                    </div>
+                    
                     <div className="responses"> {
                       responses.userName  ? <div>Name: {responses.userName} Tel: {responses.userTel}</div>:''
                     }</div>

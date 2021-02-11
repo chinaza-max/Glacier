@@ -23,6 +23,7 @@ let userSchema= new mongoose.Schema({
         minimum:11
     },
     details:[],
+    AccomodationImg:[],
     pdfs:[]
 });
 

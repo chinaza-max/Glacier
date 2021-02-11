@@ -18,12 +18,12 @@ const passportContol=require("./config/passport-config")
 const session=require('express-session')
 const flash=require('express-flash')
 const User=require("./mongodb/schema/userSchema")
-const Book=require("./mongodb/schema/allBooks")
+const allImg=require("./mongodb/schema/allImg")
 const fs=require('fs');
 const { findById } = require('./mongodb/schema/userSchema');
 const pdf = require('pdf-parse');
 
-const {nameOfFiles}=require("./deletefiles")
+const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=require("./deletefiles")
 app.use(bodyParser.json())
 app.use(fileUpload());
 
@@ -75,7 +75,7 @@ app.get("/details/:name",(req,res)=>{
                         if(obj){
                             details.push({"name":obj.name,"tel":obj.tel,"author":obj.author,
                             "title":obj.title,"faculty":obj.faculty,"description":obj.Description})
-                            console.log(details)
+                            
                             res.send({express:details})
                             return;
                         }
@@ -100,12 +100,11 @@ app.get('/Books',(req,res)=>{
     })*/
     let mainData=[]
     let reArrangeMainData=[]
-    Book.find(async(err,data)=>{
+    allImg.find(async(err,data)=>{
         if(err){
             console.log(err)
         }
         else{
-            console.log(data[0])
             data[0].bookDetails.forEach((data)=>{
                 if(data.name){
                     mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
@@ -164,6 +163,7 @@ app.get('/pdfAPI',(req,res)=>{
 
 //settings route
 app.get('/deleteAllAcc',(req,res)=>{
+    deleteAllFiles()
     connection.db.listCollections().toArray((err,names)=>{
         if(err){
             console.log("check route deleteAllAcc ")
@@ -232,7 +232,7 @@ app.get("/deleteSingleAcc/:name",(req,res)=>{
 
 
 app.get("/deleteAllPDF/:id",(req,res)=>{
-    
+    deleteAllPDFFiles()
     User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
         if(err){
             console.log(err)
@@ -286,6 +286,8 @@ app.get('/DropSinglePDF/:name/:id',(req,res)=>{
 
 app.get("/deleteAllPost",(req,res)=>{
     deleteAllPostFromBook();
+    //this function below helps to delete all file in the directory;
+    deleteAllFiles()
     User.find((err,data)=>{
        if(err){
             console.log(err)
@@ -324,7 +326,6 @@ app.get("/deleteSinglePost/:name",(req,res)=>{
                     {$pull:{details:obj}})
                 
                 try{
-                    console.log(4)
                     fs.unlinkSync("./client/public/uploads/"+imgName)
                     res.send({express:"succefully Deleted"})
                 }
@@ -343,6 +344,28 @@ app.get("/deleteSinglePost/:name",(req,res)=>{
     
     })
 })
+app.get("/deleteAllAccomodationPost",(req,res)=>{
+    deleteAllAccomodationPost();
+    deleteAllAccomodationFiles();
+    console.log("ddddddddddddd")
+    User.find((err,data)=>{
+        if(err){
+             console.log(err)
+        }
+        else{
+         for(let i=0; i<data.length;i++){
+             
+             User.updateMany({_id:data[i]._id},{ $set: { AccomodationImg: [] }},function(err, affected){
+                 if(err){
+                     console.log(err)
+                     return 
+                 }
+             })
+         }
+         res.send({express:"All AccomodationPost removed"})
+        }
+     })
+})
 
 app.get("/generateAccDetails/:name",(req,res)=>{
     User.find({"details.name":req.params.name},(err,user)=>{
@@ -356,6 +379,36 @@ app.get("/generateAccDetails/:name",(req,res)=>{
             res.send({express:"no user found"})
         }
     })
+})
+
+app.get("/accomodations",(req,res)=>{
+    let mainData=[]
+    let reArrangeMainData=[]
+    allImg.find(async(err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            data[0].AccomodationImg.forEach((data)=>{
+                if(data.name){
+                    console.log(data.Price)
+                    console.log("data.Price")
+                    mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel})
+                }
+            })
+            let len=mainData.length-1
+            for(let i=len; 0<=i; i--){
+                reArrangeMainData.push(mainData[i])
+                if(i==0){
+                        resfunction()
+                }
+            }
+        
+        }
+    })
+ async   function  resfunction(){
+        await res.send({express:reArrangeMainData})
+    }
 })
 //this route is public  . it is use by every one ;
 app.post('/deletePost/:id/:name',(req,res)=>{
@@ -533,31 +586,31 @@ app.post('/upload/:id',(req,res)=>{
                         
                         await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                         //initializing book schema to actual get an ID
-                        Book.find(async(err,data)=>{
+                        allImg.find(async(err,data)=>{
                             
                            if(err){
                                 console.log(err)
                            }
                            else{
                                 if(data.length>=1){
-                                    Book.find(async(err,data)=>{
+                                    allImg.find(async(err,data)=>{
                                         if(err){
                                             console.log(err)
                                         }
                                         else{
-                                            await Book.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
                                         }
                                     
                                     })
                                 }
                                 else{
-                                    await new Book({bookDetails:["test"]}).save()
-                                    Book.find(async(err,data)=>{
+                                    await new allImg({bookDetails:["test"]}).save()
+                                    allImg.find(async(err,data)=>{
                                         if(err){
                                             console.log(err)
                                         }
                                         else{
-                                            await Book.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
                                         }
                                     
                                     })
@@ -567,6 +620,124 @@ app.post('/upload/:id',(req,res)=>{
                      
                        
                        
+                }
+            }
+           
+        })
+    }
+    else{
+        res.json({fileName:'',filePath:'',errMessage:'file extension not supported '});
+    }
+       
+})
+
+app.post('/Accomodation_upload/:id',async(req,res)=>{
+    let id=req.params.id
+    if(req.files===null){
+    let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',
+                Price: '',Address: '',selection: '',tel: ''}
+                file.name="firstImg.jpg";
+                file.Price=req.body.Price;
+                file.Address=req.body.Address.toLowerCase();
+                file.selection=req.body.selection.toLowerCase();
+                file.tel=req.body.tel;
+
+                res.json({fileName:file.name,filePath:`/accomodationImg/${file.name}`})
+                await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
+                //initializing book schema to actual get an ID
+                allImg.find(async(err,data)=>{
+                    
+                    if(err){
+                            console.log(err)
+                    }
+                    else{
+                        if(data.length>=1){
+                            allImg.find(async(err,data)=>{
+                                if(err){
+                                    console.log(err)
+                                }
+                                else{
+                                    await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
+                                }
+                            })
+                        }
+                        else{
+                            await new allImg({AccomodationImg:["test"]}).save()
+                            allImg.find(async(err,data)=>{
+                                if(err){
+                                    console.log(err)
+                                }
+                                else{
+                                    await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
+                                }
+                            
+                            })
+                        }
+                    }
+                })
+        return
+    }
+    const file=req.files.file;
+   
+    if(file.mimetype=="image/jpeg"||file.mimetype=="image/PNG"||file.mimetype=="image/jpeg"||file.mimetype=="image/jpg"){
+        crypto.randomBytes(16,async (err,buf) => {
+            if (err) {
+                return   console.log(err)
+            }
+            else{
+                const filename =await buf.toString('hex') + path.extname(file.name);
+          
+               
+                if(filename){
+                    file.name=filename
+                    file.Price=req.body.Price
+                    file.Address=req.body.Address.toLowerCase()
+                    file.selection=req.body.selection.toLowerCase()
+                    file.tel=req.body.tel
+                    file.mv( `${__dirname}/client/public/Accomodation_upload/${file.name}`,async(err)=>{
+                        if(err){
+                            console.log(err)
+                            return res.status(500).send(err)
+                        }
+                        file.data='';
+                        file.size=0;
+    
+                            res.json({fileName:file.name,filePath:`/Accomodation_upload/${file.name}`})
+                        })
+                        
+                        await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
+                        //initializing book schema to actual get an ID
+                        allImg.find(async(err,data)=>{
+                            
+                           if(err){
+                                console.log(err)
+                           }
+                           else{
+                                if(data.length>=1){
+                                    allImg.find(async(err,data)=>{
+                                        if(err){
+                                            console.log(err)
+                                        }
+                                        else{
+                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
+                                        }
+                                    
+                                    })
+                                }
+                                else{
+                                    await new allImg({AccomodationImg:["test"]}).save()
+                                    allImg.find(async(err,data)=>{
+                                        if(err){
+                                            console.log(err)
+                                        }
+                                        else{
+                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
+                                        }
+                                    
+                                    })
+                                }
+                           }
+                        })
                 }
             }
            
@@ -589,8 +760,8 @@ function checkNotAuthenticated(req,res,next){
 }
 
 function deletePostFromBookCollection(name){
-    console.log(name)
-    Book.find({"bookDetails.name":name},async (err,user)=>{
+    
+    allImg.find({"bookDetails.name":name},async (err,user)=>{
         console.log(user)
         if(err){
             console.log("err")
@@ -602,7 +773,7 @@ function deletePostFromBookCollection(name){
             })
 
             if(obj){
-                await Book.findOneAndUpdate({_id:user[0]._id},
+                await allImg.findOneAndUpdate({_id:user[0]._id},
                     {$pull:{bookDetails:obj}})
             }
 
@@ -611,12 +782,31 @@ function deletePostFromBookCollection(name){
     })
 }
 function deleteAllPostFromBook(){
-    Book.find((err,data)=>{
+    allImg.find((err,data)=>{
         if(err){
             console.log(err)
         }
         else{
-             Book.updateMany({_id:data[0]._id},{ $set: {bookDetails: []}},function(err, affected){
+            allImg.updateMany({_id:data[0]._id},{ $set: {bookDetails: []}},function(err, affected){
+                 if(err){
+                     console.log(err)
+                     return 
+                 }
+                 else{
+                     console.log(affected)
+                    
+                 }
+             })
+        }
+    })
+}
+function deleteAllAccomodationPost(){
+    allImg.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            allImg.updateMany({_id:data[0]._id},{ $set: {AccomodationImg: []}},function(err, affected){
                  if(err){
                      console.log(err)
                      return 

@@ -29,13 +29,13 @@ function Dashboard(props){
     const aboutController=new AbortController()
     const signal=aboutController.signal
     const init =async ()=>{
-        const response= fetch('/posts/'+id,{signal:signal})
-        const body = await response.then((res)=>res.json())
+        const response=await fetch('/posts/'+id,{signal:signal})
+        const body = await response.json()
         setposts(body.express.details)
-      }
-      init();
+    }
+    init();
       return ()=> aboutController.abort()
-    },[post,loader,id])
+    },[loader,id])
 
     let data=post.map((data)=>{
         return(
@@ -49,7 +49,6 @@ function Dashboard(props){
         return(
                 <div >
                     <NavDashboard history={props.history} id={id}/>
-                    
                     <div className='before'></div>
 
                     {
@@ -58,9 +57,8 @@ function Dashboard(props){
                             {data}
                         </div> :
                         <div className='emptyPostSetting'>NO UPLOAD YET</div>
-                     }
-
-                </div>
+                    }
+                    </div>
         )
 }
 export default Dashboard;

@@ -1,0 +1,165 @@
+.Accomodation_nav-container{
+    height: 250px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+}
+.Accomodation_nav_body{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 85%;
+    background-color: black;
+    color: rgb(223, 221, 217);
+}
+.title{
+    text-align: center;
+    font-size: 30px;
+    height: 60px;
+}
+.search{
+    display: flex;
+    justify-content:center;
+}
+.form-control{
+    width: 50%
+}
+.select{
+    text-align: center;
+    padding-top: 25px;
+}
+.Accomodation_nav2{
+   width: 100vw;
+   height: 30px;
+   position: absolute;
+   bottom: 0px;
+   display: flex;
+   flex-direction: row;
+   flex-wrap: nowrap;
+   color: black;
+}
+.back{
+    flex: 1;
+    padding-left: 50px;
+    
+}
+.Upload-accomodation_container{
+    flex: 3;
+    text-align: end;
+    padding-right: 50px;
+
+}
+.accomodation_body_container{
+    width: 100vw;
+}
+
+.accomodation_body{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin: 0 auto;
+    height: 200px;
+    width: 70%;
+    border-bottom: 1px solid black;
+    border-bottom-right-radius: 2%;
+    border-bottom-left-radius: 2%;
+    margin-top: 15px;
+}
+.accomodation_body_container_sub{
+    margin-top: 250px;
+    width: 100%;
+    height: auto;
+}
+.img_container{
+    width: 30px;
+    height: 200px;
+    flex: 1;
+    padding-bottom: 5px;
+}
+.info1{
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    padding-left: 15px;
+}
+.info2{
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.info1 div{
+    height: 50px;
+}
+
+.remove_container{
+    flex: 2;
+    text-align: center;
+    padding: 30px;
+}
+.price_container{
+    flex: 1;
+}
+.bodyImg{
+    width: 100%;
+    height: 100%;
+}
+@media(max-width:1024px){
+    .title{
+        text-align: center;
+        font-size: 25px;
+        height: 60px;
+    }
+    .accomodation_body{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin: 0 auto;
+        height: 200px;
+        width: 97%;
+        margin-top: 15px;
+    }       
+    .img_container{
+        width: 200px;
+        height: 200px;
+        flex: 1.5;
+    }
+}
+.back:hover{
+    cursor: pointer;
+}
+.Upload-accomodation:hover{
+    cursor: pointer;
+}
+@media(max-width:550px){
+    .accomodation_body{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin: 0 auto;
+        height: 100px;
+        width: 98%;
+        margin-top: 15px;
+    }
+    .img_container{
+        width: 30px;
+        height: 100px;
+        flex: 1.5;
+    }
+    .form-control{
+        width: 70%
+    }
+    .back{
+        flex: 1;
+        padding-left: 10px;
+    
+    }
+    .Upload-accomodation_container{
+        flex: 3;
+        text-align: end;
+        padding-right: 10px;
+    
+    }
+}

@@ -9,23 +9,28 @@ import Dashboard from "./component/dashboard"
 import Detail from "./component/detail"
 import UploadPDF from "./component/uploadPDF"
 import downloadPDF from "./component/downloadPDF"
-import Setting from "./component/settings"
-import "./style/firstbody.css"
+import Setting from "./component/settings";
+import Accomodation_Upload from "./component/Accomodation_Upload";
+import Accomodation from "./component/Accomodation"
+import "./style/firstbody.css";
 
 function App() {
     return (
       <Router>
         <Switch>
-          <Route path="/"exact component={Home}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/signup" component={Signup}/>
-          <Route path="/upload/:id" component={Upload}/>
-          <Route path="/uploadPDF/:id" component={UploadPDF}/>
-          <Route path="/home/:id" component={Home}/>
-          <Route path="/details/:name" component={Detail}/>
-          <Route path="/downloadPDF/:name" component={downloadPDF}/>
-          <Route path="/dashboard/:id" component={Dashboard}/>
-          <Route path="/setting/:id" component={Setting}/>
+            <Route path="/"exact component={Home}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/signup" component={Signup}/>
+            <Route path="/home/:id/setting" component={Setting}/>
+            <Route path="/home/:id/dashboard" component={Dashboard}/>
+            <Route path="/home/:id/Accomodation" component={Accomodation}/>
+            <Route path="/home/:id/uploadPDF" component={UploadPDF}/>
+            <Route path="/home/:id/Accomodation_Upload" component={Accomodation_Upload}/>
+            <Route path="/home/:id/:upload" component={Upload}/>
+            <Route path="/home/:id/:upload/:dashboard" component={Dashboard}/>
+            <Route path="/home/:id" component={Home}/>
+            <Route path="/details/:name" component={Detail}/>
+            <Route path="/downloadPDF/:name" component={downloadPDF}/>
         </Switch>
       </Router>
     )

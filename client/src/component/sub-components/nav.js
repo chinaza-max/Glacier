@@ -9,7 +9,7 @@ constructor(props){
     super(props)
     this.filterTextHolder=this.filterTextHolder.bind(this)
     this.fillerFunc=this.fillerFunc.bind(this)
-    this.state={name:'',tel:""}
+    this.state={name:'',tel:"",navName:"Filler"}
     this.id=props.userId
     
 }
@@ -18,7 +18,16 @@ filterTextHolder(e){
     this.props.filterTextFunP(e.target.value)
 }
 fillerFunc(){
-   this.props.mainFillerFuncP('yes')
+  
+   if(this.state.navName==='Filler'){
+        this.props.mainFillerFuncP('Book')
+        this.setState({navName:"Book"})
+   }
+   else{
+    this.props.mainFillerFuncP('Filler')
+    this.setState({navName:"Filler"})
+
+   }
 }
 
 
@@ -42,8 +51,7 @@ componentDidMount(){
 }
 
     render(){
-
-
+  
     return(
         <div>
             <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "black",position: "fixed", width: "100%"}}>
@@ -65,15 +73,25 @@ componentDidMount(){
                                  </li>
                         }
                         <li className="nav-item" >
-                            <Link style={{color:"white"}} className="nav-link" to={`/upload/${this.props.userId}`}>
+                            <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/upload`}>
                                 upload
                             </Link>     
                         </li>
                         {
+                            this.props.userId ?
+                            <li className="nav-item" >
+                                <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/Accomodation_Upload`}>
+                                    Upload-accomodation
+                                </Link>     
+                             </li>
+                            :""
+                        }
+                       
+                        {
                             this.state.tel===8184724615 ? 
                             
                                 <li className="nav-item" >
-                                    <Link style={{color:"white"}} className="nav-link" to={`/uploadPDF/${this.props.userId}`}>
+                                    <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/uploadPDF`}>
                                         uploadPDF
                                     </Link>     
                                 </li>  
@@ -81,25 +99,30 @@ componentDidMount(){
                         :
                          ' '
                         }
-                    
-                
-                           <SubLinkForFiller fillerFuncP={this.fillerFunc}/>
-                     
-                       {this.props.userId?
+                           <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.state.navName}/>
+                           <li className="nav-item">
+                                <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/Accomodation/`}>
+                                    Accomodation
+                                </Link>  
+                            </li>
+                        
+                       {
+                       this.props.userId?
                             <li className="nav-item">
-                                <Link style={{color:"white"}} className="nav-link" to={`/Dashboard/${this.props.userId}`}>
+                                <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/Dashboard/`}>
                                     Dashboard
                                 </Link>  
                             </li>
-                       :''}
+                       :''
+                       }
                        {
-                            this.state.tel===8184724615 ? 
-                            <li className="nav-item">
-                                <Link style={{color:"white"}} className="nav-link" to={`/Setting/${this.props.userId}`}>
-                                    Setting
-                                </Link>  
-                            </li>
-                            :''
+                        this.state.tel===8184724615 ? 
+                        <li className="nav-item">
+                            <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/Setting`}>
+                                Setting
+                            </Link>  
+                        </li>
+                        :''
                        }
                            <li className="nav-item" >
                             <a className="nav-link" href="/" style={{color:"white"}}>About</a>
