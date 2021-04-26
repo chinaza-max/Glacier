@@ -1,5 +1,6 @@
 import React from "react";
-import Carousel from "react-elastic-carousel";
+//import Carousel from "react-elastic-carousel";
+import MyCarousel from '../Carousel'
 import Item from "../sub-components/item";
 import "../../style/styles.css";
 import { Link } from "react-router-dom";
@@ -20,12 +21,11 @@ function Details(props) {
       )
   })
   return (
-<>
-
+    <>
       <div className="detailSliderContainer">
-        <Carousel breakPoints={breakPoints} enableAutoPlay={true} autoPlaySpeed={2000} >
+        <MyCarousel breakPoints={breakPoints} >
           {data}
-        </Carousel>
+        </MyCarousel>
       </div>
     </>
   );

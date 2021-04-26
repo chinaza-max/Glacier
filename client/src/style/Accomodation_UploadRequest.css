@@ -1,0 +1,95 @@
+.request_container{
+    width: 100%;
+    height: 100vh;
+}
+.request_uploadcontainer{
+    width: 100%;
+    height: 100%;  
+}
+.request_uploadBody{
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    background-color:  #dad9dc;;
+}
+.navRequest_container{
+    position: relative;
+}
+.Description2{
+    margin-top: 0px;
+    padding-top: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+.Description2 textarea{
+    width: 250px ;
+    height: 100px;
+}
+.Description2 div{
+    width: 100%;
+}
+.requestContainer{
+    text-align: right;
+}
+.textAreaContainer{
+    text-align: left;
+}
+.selection_container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 100px;
+}
+.selection_container div{
+    width: 100%;
+}
+.label_select_container{
+    text-align: right;
+}
+#select{
+    text-align: left;
+}
+.submitDiv{
+    margin-top: 50%;
+}
+.textAreaContainer textarea{
+    width:100%;
+    height: 140%;
+}
+@media(max-width:1024px){
+    .request_uploadBody{
+        width: 100%;
+        height: 100%;
+    }
+    .submitDiv{
+        margin-top: 50%;
+    }
+    .select_container{
+        width: 100%;
+        text-align: center; 
+    }
+    .Description2{
+        flex-direction: column;
+    }
+    .Description2 textarea{
+        margin: 0 auto;
+        
+    }
+    .requestContainer{
+        text-align: center;
+    }
+    .textAreaContainer{
+        text-align: center;
+    }
+    .selection_container{
+        margin-top: 20px;
+        flex-direction: column;
+    }
+    .label_select_container{
+        text-align:center;
+    }
+    .textAreaContainer textarea{
+        width:90%;
+        height:130px
+    }
+}

@@ -115,6 +115,12 @@ componentDidMount(){
                             </li>
                        :''
                        }
+
+                        <li className="nav-item">
+                            <Link style={{color:"white"}} className="nav-link" to={`/home/${this.props.userId}/notification`}>
+                                Notification
+                            </Link>  
+                        </li>
                        {
                         this.state.tel===8184724615 ? 
                         <li className="nav-item">

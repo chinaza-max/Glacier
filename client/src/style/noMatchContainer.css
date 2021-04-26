@@ -1,0 +1,15 @@
+.noMatchContainer{
+    padding-top: 30px;
+    height: 80px;
+    width: 100%;
+    text-align: center;
+}
+.noMatchContainer h6{
+    color: rgb(151, 150, 150);
+}
+.noMatchContainer h5{
+    color: rgb(90, 89, 89);
+}
+#sub_noMatchContainer_click:hover{
+    cursor: pointer;
+}

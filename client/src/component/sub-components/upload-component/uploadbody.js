@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "../../../style/uploadBody.css";
 
-
+ 
 
 
 
@@ -49,8 +49,7 @@ const UploadBody=(props)=>{
                 headers:{
                     'Content-Type':'multipart/form-data'
                 }
-            });
-
+            })
             const{fileName,filePath,errMessage}=res.data
             setUploadedFile({fileName,filePath,errMessage})
         }
@@ -88,7 +87,7 @@ const UploadBody=(props)=>{
                     </div>
                     <div className='Description'>  
                         <label>Description :</label>
-                        <textarea type="text"  name="Description" onChange={handleChange} required/>
+                        <textarea type="text"  placeholder="tell us little about the book to attract buyers" name="Description" onChange={handleChange} required/>
                     </div>
                     <div className='tel'>  
                         <label>tel :</label>
@@ -98,8 +97,8 @@ const UploadBody=(props)=>{
                 </form>
                 {
                 uploadedFile.fileName   ? 
-                    <div className="row mt-5 uploadedImg" >
-                        <div className="col-md-6 m-auto"  > 
+                    <div className="row mt-5 uploadedImg">
+                        <div className="col-md-6 m-auto"> 
                         <img  style={{width:'50%'}} src={uploadedFile.filePath} alt="file cant show"/>
                      </div>
                    </div> : null

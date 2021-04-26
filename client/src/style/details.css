@@ -50,6 +50,12 @@
     border: 2px solid white;
     color: white;
 }
+.color{
+    color: #adadad;
+}
+.color2{
+    color: #d6d2d2;
+}
 @media(max-width:1024px){
   .detailBodyContainer{
     width: 100vw;

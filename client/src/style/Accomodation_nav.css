@@ -1,5 +1,4 @@
 .Accomodation_nav-container{
-    height: 250px;
     width: 100vw;
     position: fixed;
     top: 0;
@@ -41,13 +40,11 @@
 .back{
     flex: 1;
     padding-left: 50px;
-    
 }
 .Upload-accomodation_container{
     flex: 3;
     text-align: end;
     padding-right: 50px;
-
 }
 .accomodation_body_container{
     width: 100vw;

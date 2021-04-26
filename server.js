@@ -19,6 +19,7 @@ const session=require('express-session')
 const flash=require('express-flash')
 const User=require("./mongodb/schema/userSchema")
 const allImg=require("./mongodb/schema/allImg")
+const Notification=require("./mongodb/schema/notificationSchema")
 const fs=require('fs');
 const { findById } = require('./mongodb/schema/userSchema');
 const pdf = require('pdf-parse');
@@ -280,8 +281,6 @@ app.get('/DropSinglePDF/:name/:id',(req,res)=>{
             }
        }
     })
-
-
 })
 
 app.get("/deleteAllPost",(req,res)=>{
@@ -347,7 +346,6 @@ app.get("/deleteSinglePost/:name",(req,res)=>{
 app.get("/deleteAllAccomodationPost",(req,res)=>{
     deleteAllAccomodationPost();
     deleteAllAccomodationFiles();
-    console.log("ddddddddddddd")
     User.find((err,data)=>{
         if(err){
              console.log(err)
@@ -389,25 +387,92 @@ app.get("/accomodations",(req,res)=>{
             console.log(err)
         }
         else{
-            data[0].AccomodationImg.forEach((data)=>{
-                if(data.name){
-                    console.log(data.Price)
-                    console.log("data.Price")
-                    mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel})
-                }
-            })
-            let len=mainData.length-1
-            for(let i=len; 0<=i; i--){
-                reArrangeMainData.push(mainData[i])
-                if(i==0){
-                        resfunction()
+            if(data.length==0){
+                return
+            }
+            else{
+                data[0].AccomodationImg.forEach((data)=>{
+                    if(data.name){
+                        mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel})
+                    }
+                })
+                let len=mainData.length-1
+                for(let i=len; 0<=i; i--){
+                    reArrangeMainData.push(mainData[i])
+                    if(i==0){
+                            resfunction()
+                    }
                 }
             }
-        
         }
     })
  async   function  resfunction(){
         await res.send({express:reArrangeMainData})
+    }
+})
+//this get and also remove due notipfication from database ;
+app.get("/notifications",(req,res)=>{
+   //deleteAllPostFromNotificattion()
+  /* Notification.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log(data[0].notification)
+        }
+    })*/
+
+    let mainData=[]
+    let reArrangeMainData=[]
+    let num=0;
+   /* User.find((err,data)=>{
+        console.log(data[1].notification)
+    })*/
+    Notification.find(async(err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            if(data.length==0){
+                return
+            }
+            else{
+                data[0].notification.forEach((data)=>{
+                   // console.log(data.title)
+                   console.log(data.title)
+                    if(data.notification||data.title){
+                        //remTime=new Date("july 9,2021 9:00:00").getTime()-data.time;
+                        let remTime=data.time-new Date().getTime()
+                        let second=1000;
+                        let minute=second*60;
+                        let hour=minute*60;
+                        let day=hour*24;
+                        let d=Math.floor(remTime/(day));
+                       
+                        if(d<1){
+                            deletePostFromNotification(data.notificationID,data.userID)
+                        }
+                       else{
+                            mainData.push({'notification':data.notification,"requestType":data.requestType,"name":data.name,
+                            "tel":"contact:"+data.phone,"expiringDate":d+" days","monthPosted":data.monthPosted,"datePosted":data.datePosted,
+                            "notificationID":data.notificationID,"title":data.title,"faculty":data.faculty,"bookURL":data.bookURL})
+                       }
+                    }
+                })
+            }
+            let len=mainData.length-1
+            for(let i=len; 0<=i; i--){
+                reArrangeMainData.push(mainData[i])
+                if(i==0){
+                        num=reArrangeMainData.length
+                        resfunction()
+                }
+            }
+        }
+    })
+ async   function  resfunction(){
+     console.log(reArrangeMainData)
+        await res.send({express:reArrangeMainData,express2:num})
     }
 })
 //this route is public  . it is use by every one ;
@@ -443,7 +508,7 @@ app.post('/deletePost/:id/:name',(req,res)=>{
 })
 
 app.post('/signup',checkNotAuthenticated,async(req,res)=>{
-    let user=new User( )
+    let user=new User()
 
     User.find((err,data)=>{
         //console.log(data)
@@ -501,7 +566,7 @@ app.post("/uploadPDF/:id",(req,res)=>{
             
             if(filename){
                 file.name=filename
-                file.courseCode=req.body.courseCode.toLowerCase()
+                file.courseCode=capitalize(req.body.courseCode)
                 file.mv( `${__dirname}/client/public/uploadPDFs/${file.name}`,async(err)=>{
                     let dataBuffer = fs.readFileSync( `${__dirname}/client/public/uploadPDFs/${file.name}`)
                     pdf(dataBuffer).then(function(data) {
@@ -522,10 +587,6 @@ app.post("/uploadPDF/:id",(req,res)=>{
                             
                     });
 
-
-
-
-
                     if(err){
                         console.log(err)
                         return res.status(500).send(err)
@@ -534,6 +595,7 @@ app.post("/uploadPDF/:id",(req,res)=>{
                         file.data='';
                         file.size=0;
                        // console.log(file)
+                       uploadRequest2(req.body.courseCode,"PDF",filename,id)
                         res.json({fileName:file.name,filePath:`/uploadPDFs/${file.name}`})
                         await User.findOneAndUpdate({_id:id},
                             {$push:{pdfs:file}})
@@ -550,9 +612,8 @@ app.post("/uploadPDF/:id",(req,res)=>{
 
 app.post('/upload/:id',(req,res)=>{
     const id=req.params.id
-
     if(req.files===null){
-    return res.status(400).json({msg:"No file uploaded"});
+        return res.status(400).json({msg:"No file uploaded"});
     }
     const file=req.files.file;
    
@@ -583,7 +644,7 @@ app.post('/upload/:id',(req,res)=>{
                             //console.log(file)
                             res.json({fileName:file.name,filePath:`/uploads/${file.name}`})
                         })
-                        
+                        uploadRequest2(req.body.title,req.body.faculty,filename,id)
                         await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                         //initializing book schema to actual get an ID
                         allImg.find(async(err,data)=>{
@@ -617,9 +678,6 @@ app.post('/upload/:id',(req,res)=>{
                                 }
                            }
                         })
-                     
-                       
-                       
                 }
             }
            
@@ -630,12 +688,78 @@ app.post('/upload/:id',(req,res)=>{
     }
        
 })
+//this route handles users request base on accomodation 
+app.post("/uploadRequest/:id",(req,res)=>{
+    const {id}=req.params;
+  //deleteAllPostFromNotificattion()
+    User.findById(id,async(err,user)=>{
+        if(err){
+            console.log("/uploadRequest/:id")
+            console.log(err)
+            res.status(500)
+        }
+        else{
+            crypto.randomBytes(16,async (err,buf) => {
+                if (err) {
+                    return   console.log(err)
+                }
+                else{
+                    const notificationID = buf.toString('hex') + path.extname(id)
+                    let endEvent=new Date()
+                    endEvent.setDate(new Date().getDate()+10)
+                    const file={"title":'',"faculty":'',"bookURL":'',"notificationID":'',
+                        "userID":'',"notification":'',"requestType":'',"name":'',"phone":'',
+                        "time":'',"monthPosted":'',"datePosted":''}
+                    let months=["jan","feb","mar","apr","may","jun","july","aug","sep","oct","nov","dec"]
+                    file.notificationID=notificationID
+                    file.userID=id
+                    file.notification=req.body.notification
+                    file.requestType=req.body.selection
+                    file.name=await user.name
+                    file.phone=await user.tel
+                    file.time=endEvent.getTime()
+                    file.monthPosted=months[new Date().getMonth()]
+                    file.datePosted=new Date().getDate()
+                    Notification.find(async(err,data)=>{
+                        if(err){
+                                console.log(err)
+                        }
+                        else{
+                            await User.findOneAndUpdate({_id:id},{$push:{notification:file}})
+                            if(data.length>0){
+                                Notification.find(async(err,data)=>{
+                                    if(err){
+                                        console.log(err)
+                                    }
+                                    else{
+                                        await Notification.findOneAndUpdate({_id:data[0].id},{$push:{notification:file}})
+                                    }
+                                })
+                            }
+                            else{
+                                await new Notification({notification:["test"]}).save()
+                                Notification.find(async(err,data)=>{
+                                    if(err){
+                                        console.log(err)
+                                    }
+                                    else{
+                                        await Notification.findOneAndUpdate({_id:data[0].id},{$push:{notification:file}})
+                                    }
+                                
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    })
+})
 
 app.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
     if(req.files===null){
-    let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',
-                Price: '',Address: '',selection: '',tel: ''}
+    let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
                 file.name="firstImg.jpg";
                 file.Price=req.body.Price;
                 file.Address=req.body.Address.toLowerCase();
@@ -746,23 +870,78 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
     else{
         res.json({fileName:'',filePath:'',errMessage:'file extension not supported '});
     }
-       
 })
 
+//this function help you upload notification when a user upload text book or pdf
+function uploadRequest2(title,faculty,bookURL,id){
+    crypto.randomBytes(16,async (err,buf) => {
+        if (err) {
+            return   console.log(err)
+        }
+        else{
+          
+            const notificationID = buf.toString('hex') + path.extname(id)
+            const file={"title":'',"faculty":'',"bookURL":'',"notificationID":'',
+                "userID":'',"notification":'',"requestType":'',"name":'',"phone":'',
+                "time":'',"monthPosted":'',"datePosted":''}
+            let months=["jan","feb","mar","apr","may","jun","july","aug","sep","oct","nov","dec"]
+            let endEvent=new Date()
+            endEvent.setDate(new Date().getDate()+10)
+            file.notificationID=notificationID
+            file.title=title
+            file.faculty=faculty
+            file.bookURL=bookURL
+            file.userID=id
+            file.time=endEvent.getTime()
+            file.monthPosted=months[new Date().getMonth()]
+            file.datePosted=new Date().getDate()
+            Notification.find(async(err,data)=>{
+                if(err){
+                        console.log(err)
+                }
+                else{
+                    await User.findOneAndUpdate({_id:id},{$push:{notification:file}})
+                    if(data.length>0){
+                        Notification.find(async(err,data)=>{
+                            if(err){
+                                console.log(err)
+                            }
+                            else{
+                                await Notification.findOneAndUpdate({_id:data[0].id},{$push:{notification:file}})
+                              /*  Notification.find((err,data)=>{
+                                    console.log(data[0].notification[5])
+                                })*/
+                            }
+                        })
+                    }
+                    else{
+                        await new Notification({notification:["test"]}).save()
+                        Notification.find(async(err,data)=>{
+                            if(err){
+                                console.log(err)
+                            }
+                            else{
+                                await Notification.findOneAndUpdate({_id:data[0].id},{$push:{notification:file}})
+                            }
+                        
+                        })
+                    }
+                }
+            })
+        }
+    })
+}
 
 
 function checkNotAuthenticated(req,res,next){
     if(req.isAuthenticated()){
        return  res.redirect('/home/'+req.user._id)
     }
-    
     next(); 
 }
 
 function deletePostFromBookCollection(name){
-    
     allImg.find({"bookDetails.name":name},async (err,user)=>{
-        console.log(user)
         if(err){
             console.log("err")
             console.log(err)
@@ -771,15 +950,104 @@ function deletePostFromBookCollection(name){
             let obj=await user[0].bookDetails.find((va)=>{    
                 return  va.name==name
             })
-
             if(obj){
                 await allImg.findOneAndUpdate({_id:user[0]._id},
                     {$pull:{bookDetails:obj}})
             }
-
         }
-       
     })
+}
+
+function capitalize(value){
+    value=value.toLowerCase().split(' ');
+    let capitalize=[];
+    for(let i=0;i<value.length;i++){
+        capitalize.push(value[i][0].toUpperCase()+value[i].split('').splice(1).join(''));
+    } 
+   
+    return  capitalize
+}
+function deletePostFromNotification(notificationID,id){
+    Notification.find({"notification.notificationID":notificationID},async (err,notifications)=>{
+        if(err){
+            console.log("err")
+            console.log(err)
+        }
+        else if(notifications.length!==0){
+            let obj=await notifications[0].notification.find((va)=>{    
+                return  va.notificationID==notificationID
+            })
+
+            if(obj){
+                await Notification.findOneAndUpdate({_id:notifications[0]._id},
+                    {$pull:{bookDetails:obj}})
+            }
+        }
+    })
+
+
+
+    //this delete all single post from user schema
+    User.findById(id,async(err,user)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+             if(user){ 
+                 let obj=await user.notification.find((va)=>{    
+                     return  va.notificationID==notificationID
+                 })
+               
+                 if(obj){
+                     await User.findOneAndUpdate({_id:id},
+                            {$pull:{notification:obj}})
+                }
+                else{
+                    return
+                }
+            }
+        }
+     })
+}
+function deleteAllPostFromNotificattion(){
+
+    Notification.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+         //   console.log(data)
+            Notification.updateMany({_id:data[0]._id},{ $set: {notification:[]}},function(err, affected){
+                 if(err){
+                     console.log(err)
+                     return 
+                 }
+                 else{
+                     console.log(affected)
+                    
+                 }
+             })
+        }
+    })
+    User.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            
+          User.updateMany({_id:data[0]._id},{ $set: {notification: []}},function(err, affected){
+                 if(err){
+                     console.log(err)
+                     return 
+                 }
+                 else{
+                     console.log(affected)
+                    
+                 }
+             })
+        }
+    })
+
 }
 function deleteAllPostFromBook(){
     allImg.find((err,data)=>{

@@ -1,18 +1,26 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import "../style/noMatchContainer.css"
 import {useEffect,useState } from 'react';
+import {useParams} from "react-router-dom";
+import AccomodationNav from "./sub-components/AccomodationNav";
 
-import AccomodationNav from "./sub-components/AccomodationNav"
+
 function Accomodation(props){
-    const[accomodation,setaccomodation]=useState([])
-    const[search,setsearch]=useState([])
-    const[search2,setsearch2]=useState("All")
-
+    const[accomodation,setaccomodation]=useState([]);
+    const[search,setsearch]=useState([]);
+    const[search2,setsearch2]=useState("All");
+    const {id}=useParams(); 
+    let searchResult="filled";
+  
+    function requestAccomodation(){
+        props.history.push("/home/"+id+"/Accomodation_UploadRequest")
+    }
     function filterFunc(value){
-        setsearch(value)
+        setsearch(value);
     }
     function accomodationFunc(value){
-        setsearch2(value)
+        setsearch2(value);
     }
     useEffect(()=>{
             const aboutController=new AbortController()
@@ -27,17 +35,27 @@ function Accomodation(props){
         init()
         return ()=> aboutController.abort()
     },[])
-    let datas=accomodation.map((data,index)=>{
+  
+    let NoResultFound=()=>{
+        return(
+            <div className="noMatchContainer">
+                <h6 className="sub_noMatchContainer">Does not match any results!</h6>
+                <h5 className="sub_noMatchContainer"  id="sub_noMatchContainer_click"onClick={()=>requestAccomodation()}>request accomodation or roommate</h5>
+            </div>
+        )
+    }
+    let resultFound=accomodation.map((data,index)=>{
         if(data==='test'){
              return '' 
         }
         else{
             if(data.name.indexOf(search)===-1 && data.selection.indexOf(search)===-1 && data.Address.indexOf(search)===-1 && data.price.indexOf(search)===-1){
-                return ' '
+                searchResult="empty"
+                return ''
             }
         
             else if(search2==="All"){
-                console.log(search2)
+                searchResult="filled";
                 return(
                 <div key={index} className="accomodation_body">
                     <div className="img_container">
@@ -66,6 +84,7 @@ function Accomodation(props){
                 )
             }
             else if(data.selection===search2){
+                searchResult="filled";
                 return(
                     <div key={index} className="accomodation_body">
                         <div className="img_container">
@@ -99,13 +118,15 @@ function Accomodation(props){
         }
  
      })
+  
     return(
     
         <div className="Accomodation">
             <AccomodationNav filterFunc={filterFunc} accomodationFunc={accomodationFunc} history={props.history}/>
             <div className="accomodation_body_container">
                 <div  className="accomodation_body_container_sub">
-                {datas}
+                  {searchResult!=="empty"?resultFound:
+                  <NoResultFound/>}
                 </div>
             </div>
         </div>

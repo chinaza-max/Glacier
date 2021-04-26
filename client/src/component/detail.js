@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react';
-import {useParams,Link } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import NavDetail from './sub-components/navdetail';
@@ -30,7 +30,6 @@ function Detail(props){
  
         return () => isMounted.current = false;
     },[name])
-    
         return(
                 <div  className="firstDetailBody">
                     <NavDetail  history={props.history}  setposts={setposts}/>
@@ -42,17 +41,17 @@ function Detail(props){
                                   <div key={data.name} className="detailBody">
                                       <div className="bookImgContainer"><img  className="bookImg" src={"/uploads/"+data.name} alt="file cant show"/> </div>
                                       <div className="content"> 
-                                      <div><h3>{data.title}</h3></div>
+                                      <div><h3 className="color2">{data.title}</h3></div>
                                       <div className="callContainer">
                                           <a   className="call" style={{textDecoration:"none"}} href={"tel:"+data.tel}>call now</a>
                                       </div>
                                       <div>
-                                          <h5>Description</h5>
-                                          <p>{data.description}</p>
+                                          <h5 className="color2">Description</h5>
+                                          <p className="color">{data.description}</p>
                                       </div>
                                       <div>
-                                          <h5>Product Details</h5>
-                                          <div>
+                                          <h5 className="color2">Product Details</h5>
+                                          <div className="color">
                                               Author  : {data.author}
                                               <br/>
                                               Title : {data.title}
