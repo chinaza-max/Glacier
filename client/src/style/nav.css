@@ -1,8 +1,16 @@
-
 .navbar{
     z-index: 16;
 }
-.nav-link:hover{
+.navContent .remove_linkStyle{
+    text-decoration: none;
+}
+.navContainer-sz{
+    min-width: 95px;
+}
+
+
+
+/*.nav-link:hover{
     cursor: pointer;
 }
 .signup{
@@ -29,4 +37,4 @@
     .form-control{
         margin-top: 20px;
     }
-}
+}*/

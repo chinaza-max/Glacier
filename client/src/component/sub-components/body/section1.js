@@ -2,7 +2,7 @@ import '../../../style/section1.css';
 // import Carousel from "react-elastic-carousel";
 import Item from "../../sub-components/body/item2";
 import "../../../style/styles2.css";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import MyCarousel from '../../Carousel';
 
 
@@ -15,7 +15,6 @@ const breakPoints = [
 
 ];
 function Section1(props){
-console.log(props)
     return(
       <div>
         <h5 className="categories-title" style={{zIndex:900000}}>categories</h5>

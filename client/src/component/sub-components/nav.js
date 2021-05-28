@@ -1,45 +1,56 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import "../../style/nav.css"
 import SubLinkForFiller from  "../sub-components/subLinkForFiller"                                                                                                                                        
 
 class Nav extends React.Component{
-constructor(props){
-    super(props)
-    this.filterTextHolder=this.filterTextHolder.bind(this)
-    this.fillerFunc=this.fillerFunc.bind(this)
-    this.state={name:'',tel:"",navName:"Filler"}
-    this.id=props.userId
+    constructor(props){
+        super(props)
+        this.filterTextHolder=this.filterTextHolder.bind(this)
+        this.fillerFunc=this.fillerFunc.bind(this)
+        this.toggle=this.toggle.bind(this)
+        this.state={name:'',tel:"",navName:"Filler"}
+        this.id=props.userId
+        
+    }
+
+    filterTextHolder(e){
+        this.props.filterTextFunP(e.target.value)
+    }
+    fillerFunc(){
     
-}
-
-filterTextHolder(e){
-    this.props.filterTextFunP(e.target.value)
-}
-fillerFunc(){
-  
-   if(this.state.navName==='Filler'){
-        this.props.mainFillerFuncP('Book')
-        this.setState({navName:"Book"})
-   }
-   else{
-    this.props.mainFillerFuncP('Filler')
-    this.setState({navName:"Filler"})
-
-   }
-}
-
+    if(this.state.navName==='Filler'){
+            this.props.mainFillerFuncP('Book')
+            this.setState({navName:"Book"})
+    }
+    else{
+        this.props.mainFillerFuncP('Filler')
+        this.setState({navName:"Filler"})
+    }
+    }
+    toggle(){
+        let element=document.getElementById("small-siz-naz")
+        element.classList.toggle("toggle")
+    }
+    toggle2(){
+        let element=document.getElementById("dropDown")
+        element.classList.toggle("toggle1")
+    }
 
 componentDidMount(){
-       
-       if(this.id){
+        document.getElementById("menu_position").addEventListener("click",this.toggle)
+        document.getElementById("menu_position4").addEventListener("click",this.toggle)
+        
+        
+        if(this.id){
+            document.getElementById("upload2").addEventListener("click",this.toggle2)
         const init=async ()=>{
             const  response= fetch("/names/"+this.id)
             let body=await response.then(res=>res.json())
             if(body.express==="redirect"){
               this.props.history.push("/signup")
             }
+
             else{
                 this.setState({name:body.express,tel:body.express2})
             }
@@ -49,11 +60,180 @@ componentDidMount(){
        }
             
 }
+componentWillUnmount(){
+   /* document.getElementById("menu_position").removeEventListener("click",this.toggle)
+    document.getElementById("menu_position4").removeEventListener("click",this.toggle)
+    document.getElementById("upload2").removeEventListener("click",this.toggle2)*/
 
+}
     render(){
-  
-    return(
-        <div>
+        return(
+            <div>
+            <nav className="navbar" style={{backgroundColor: "black",position: "fixed", width: "100%"}}>              
+                <div className="navContainer third">
+                    <div className="navContent">
+                        <input  onChange={this.filterTextHolder} className="form-control1 mr-sm-2" type="search" placeholder="Search"/>
+                    </div>
+                    {this.props.userId ? 
+                    <div className="navContent">
+                          <form  action="/logout?_method=DELETE" method="POST">
+                                <button className="logout"  style={{textDecoration:"none"}}>logout</button>
+                          </form>
+                    </div>:
+                        <div>    
+                              <div className="navContent">
+                                    <a className="login" href="/login" style={{color:"white",textDecoration:"none"}}>login</a>
+                              </div>
+                              <div className="navContent">
+                                    <a className="signup" href="/signup" style={{color:"white",textDecoration:"none"}}>signup</a>
+                              </div>
+                        </div>
+                    }
+                  
+                    
+                </div>
+               <div className="navbarSubContainer">
+                    <div className="navContainer-sz">
+                        <div className="navContainer first">logo</div>
+                        <div className="search"> <input onChange={this.filterTextHolder} className="form-control2 mr-sm-2" type="search" placeholder="Search ......"/></div>
+                        <div className="menu">
+                            <div id="menu_position" >
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="navContainer second">
+                        <div className="navContent resize">Home</div>
+                        { this.props.userId ?
+                            <div className="navContent resize" id="upload">Upload
+                                <ul id="navContent_upLoad_sub">
+                                    <li>  
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/uploadPDF`}>
+                                            PDF
+                                        </Link>  
+                                    </li>
+                                    <li> 
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/upload`}>
+                                            Book
+                                        </Link>  
+                                    </li>
+                                    <li> notification</li>
+                                    <li> 
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/Accomodation_Upload`}>
+                                            Accomodation
+                                        </Link> 
+                                    </li>
+                                </ul>
+                            </div>
+                            :""
+                        }
+                        <div className="navContent resize">Filler</div>
+                        <div className="navContent resize">Accomodation</div>
+                        {   this.props.userId?
+                             <div className="navContent resize">
+                                <Link className="remove_linkStyle" style={{color:"white"}} to={`/home/${this.props.userId}/Dashboard/`}>
+                                    Dashboard
+                                </Link>
+                             </div>
+                             :""
+
+                        }
+                       
+                        <div className="navContent resize">Notification</div>
+                        {this.state.tel===8184724615 ? 
+                            <div className="navContent resize">
+                                <Link className="remove_linkStyle"  style={{color:"white"}}   to={`/home/${this.props.userId}/Setting`}>
+                                    Setting
+                                </Link>  
+                            </div>
+                            :
+                            ""
+                        }
+                  
+                        <div className="navContent resize">About</div>
+                        <div className="navContent name resize">chinaza</div>
+                    </div>
+                </div>
+
+               
+            </nav> 
+                  <div id="small-siz-naz" className="pre_toggle">
+                        <div className="menu_position2">
+                            <div className="menu_position3" id="menu_position4">
+                                    <div id="bar1"></div>     
+                                    <div id="bar3"></div>
+                            </div>
+                        </div>
+                        {this.props.userId ?
+                             <div className="navContent">
+                                      <button className="logout"  style={{textDecoration:"none"}}>logout</button>
+                             </div>
+                             : 
+                            
+                            <div>
+                                <div className="navContent">signUp</div>
+                                <div className="navContent">login</div>
+                            </div>
+                             }
+                       
+                        <div className="navContent">Home</div>
+                        {this.props.userId?
+                            <div className="navContent" id="upload2">Upload
+                                <ul id="dropDown" className="dropDown_class">
+                                    <li> 
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/uploadPDF`}>
+                                            PDF
+                                        </Link>  
+                                    </li>
+                                    <li> 
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/upload`}>
+                                            Book
+                                        </Link>  
+                                    </li>
+                                    <li> notification</li>
+                                    <li id="dropDown_accomodation"> 
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/Accomodation_Upload`}>
+                                            Accomodation
+                                        </Link> 
+                                    </li>
+                                </ul>
+                            </div>
+                        :
+                            ""
+                        }
+                        <div className="navContent">Filler</div>
+                        <div className="navContent">Accomodation</div>
+                        {this.props.userId?
+                            <div className="navContent">
+                                 <Link style={{color:"white"}} to={`/home/${this.props.userId}/Dashboard/`}>
+                                    Dashboard
+                                </Link>
+                            </div>
+                            :
+                            ""
+                        }
+                        
+                        <div className="navContent">Notification</div>
+                        {this.state.tel===8184724615 ? 
+                             <div className="navContent">Setting</div>
+                        :
+                        ''
+                        }
+                       
+                        <div className="navContent">About</div>
+                    
+                    </div>
+            </div>
+        )
+    }
+}
+export default Nav;          
+
+
+/*
+  <div>
             <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: "black",position: "fixed", width: "100%"}}>
                     <a className="navbar-brand" href="/" style={{color:"white"}}>Bright Mind</a>
                     <button className="navbar-toggler" type="button"   data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -157,8 +337,4 @@ componentDidMount(){
                         </form>
                     </div>
                     </nav>  
-              </div>
-    )
-    }
-}
-export default Nav;          
+              </div>*/

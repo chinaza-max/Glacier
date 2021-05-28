@@ -1,5 +1,348 @@
-
 .firstBody{
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+#firstBody_sub{
+    min-height: 100vh;
+    
+}
+.navbarSubContainer{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.navbar{
+    display: block;
+    height: 100px;
+}
+.first{
+    flex-shrink:2;
+    flex: 1;
+    color: white;
+    font-weight: 1000;
+    font-size: 40px;
+}
+.second{
+    flex: 3;
+    flex-shrink:0;
+    flex-basis: 630px;
+    line-height: 60px;
+}
+.third{
+    height: 30px;
+}
+.second{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.navContent{
+    color: white;
+}
+.resize{
+    margin-right: 50px;
+    padding-right: 10px;
+}
+.third .navContent{
+  float: right;
+  padding-left: 20px;
+}
+.form-control1{
+    width: 200px;
+    border: none;
+    border-bottom: 2px solid black;
+}
+.form-control1:focus{
+    outline: none;
+}
+.menu{
+    display: none;
+}
+.name{
+    color: white;
+}
+#small-siz-naz{
+    display: none;
+    width: 200px;
+    z-index: 100;
+}
+.search{
+    display: none;
+}
+.form-control2{
+    display: none;
+}
+#menu_position{
+    padding: 10px 5px 10px 15px;
+    margin: 0 auto;
+    width: 70px;
+    height: 60px;
+}
+#menu_position div{
+    background-color: blue;
+    width: 35px;
+    height: 1.5px;
+    margin-top: 6px;
+}
+.menu_position2{
+    height: 55px;
+    position: relative;
+}
+.menu_position3{
+    position: absolute;
+    right: -20px;
+    width: 60px;
+    height: 55px;
+}
+.menu_position3 div{
+    background-color: blue;
+    width: 35px;
+    height: 1.5px;
+    margin-top: 10px;
+}
+#bar1{
+    transform: translateY(6px) rotateZ(-45deg);
+}
+#bar3{
+    transform: translateY(-6px) rotatez(45deg);
+ }
+#menu_position{
+    cursor: pointer;
+ }
+.navContent{
+    position: relative;
+}
+.navContent:hover{
+    cursor: pointer;
+}
+.name:hover{
+    cursor:text;
+}
+#navContent_upLoad_sub{
+    position: absolute;
+    left: -45px;
+    top: 60px;
+    text-align: left;
+}
+#navContent_upLoad_sub li{
+   background-color: black;
+   width: 120px;
+   height: 45px;
+   list-style: none;
+   text-align: left;
+   line-height: 40px;
+   padding: 0px 12px 0px 12px;
+}
+#navContent_upLoad_sub li:hover{
+    background: linear-gradient(to right,rgb(2, 1, 10),#3b4e69);
+}
+#navContent_upLoad_sub{
+    display: none;
+}
+#navContent_upLoad_sub li:nth-child(4){
+    padding-bottom: 10px;
+}
+.navContent:hover #navContent_upLoad_sub{
+    display: inline;
+}
+#upload{
+    text-align: left;
+}
+#dropDown{
+    list-style: none;
+}
+@media(max-width:1024px){
+    .navbar{
+        position: relative;
+        height: 100px;
+    }    
+    .navContainer-sz{
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        width: 100vw;
+        left: 0;
+    }
+    .second{
+        display: none;
+    }
+    .third{
+        display: none;
+    }
+    .menu{
+        display: inline;
+        color: white;
+    }
+    #small-siz-naz{
+        z-index: 20;
+        position: fixed;
+        left: 0px;
+        top: 80px;
+        display: block;
+        background-color: black;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        width:200px;
+        border-bottom-right-radius: 20px;
+    }
+    .pre_toggle{
+        height:0px;
+        transition: height 0.15s ease-in;
+    }
+    .toggle{
+        height: 700px;
+        transition: height 0.25s ease-out;
+
+    }
+    .navContent{
+        padding: 15px;
+        font-size: 17px;
+        font-family:'Arial';
+    }
+    .form-control1{
+       width:100%;
+       border-radius: 10px;
+       padding-top: 5px;
+       height: 60px;
+    }
+    .navContent:hover{
+        border-bottom: 1px solid  rgba(143, 142, 142, 0.76);
+        transform: scale(0.9);
+        border-bottom-left-radius: 6px;       
+    }
+    .first{
+        flex: 1;
+    }
+    .search{
+        padding-top: 12px;
+        font-size: 30px;
+        flex: 2;
+        text-align: center;
+        line-height: 60px;
+    }
+    .menu{
+        flex: 0.5;
+    }
+    .form-control2{
+        display: inline;
+        width: 100%;
+        height: 45px;
+        border: 0px;
+        border-radius: 5px;
+        font-size: 20px;
+    }
+    .form-control2:focus{
+       outline: none;
+    }
+    #upload ul li{
+        list-style: none;
+        padding-top: 12px;
+    }
+    .dropDown_class{
+        height: 0px;
+        overflow-y: hidden;
+        transition: height 0.15s ease-in;
+    }
+    .toggle1{
+        height: 170px;
+        list-style: none;
+        transition: height 0.25s ease-out;
+    }
+    .toggle1 li{
+        padding-top: 15px;
+    }
+    #upload2{
+        padding-bottom: 0px;
+    }
+    #dropDown li:hover{
+        color: rgb(18, 18, 136);
+    }
+    .firstBody_sub{
+        min-height: 100vh;
+        border: 6px solid red;
+    }
+}
+@media(max-width:500px){
+    .menu_position2 {
+        height: 30px
+    }
+    #menu_position {
+        padding-top: 5px;
+    }
+    #menu_position div{
+        background-color: blue;
+        width: 35px;
+        height: 2px;
+        margin-top: 7px;
+        margin-left: 12px;
+    }
+    .menu_position3 div{
+        background-color: blue;
+        width: 35px;
+        height: 2px;
+        margin-top: 10px
+    }
+    .navbar{
+        position: relative;
+        height: 100px;
+    }    
+    .navContainer-sz{
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        width: 100vw;
+        left: 0;
+    }
+    .second{
+        display: none;
+    }
+    .third{
+        display: none;
+    }
+    .menu{
+        display: inline;
+        color: white;
+    }
+    #small-siz-naz{
+        position: fixed;
+        left: 0px;
+        top: 80px;
+        display: block;
+        background-color: black;
+        overflow-y: scroll;
+        width: 160px;
+        border-bottom-right-radius: 20px;
+    }
+    .pre_toggle{
+        height:0px;
+        transition: height 0.15s ease-in;
+    }
+    .toggle{
+        height: 460px;
+        transition: height 0.25s ease-out;
+    }
+    .navContent{
+        padding: 10px;
+        font-size: 15px;
+    }
+    .form-control1{
+        margin-bottom: 6px;
+        margin-left: 10px;
+    }
+    .form-control2{
+        height: 35px;
+        font-size: 15px;
+    }
+}
+@media(max-width:300px){
+    .firstBody{
+        min-width: 300px;
+    }
+}
+
+/*.firstBody{
     height: auto;
     width: 100vw;
     position: relative;
@@ -7,15 +350,14 @@
 .firstBody-sub{
     height: fit-content;
     width: 100%;
-    padding-bottom:120px;
 }
 @media(max-width:1024px){
     .firstBody{
-        height: 100vh;
+        height: 100%;
     }
 }
 
-@media(max-width:910px){
+/*@media(max-width:910px){
     .firstBody{
         height: 100%;
     }
@@ -24,4 +366,4 @@
     .firstBody{
         height: 100vh;
     }
-}
+}*/
