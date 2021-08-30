@@ -1,5 +1,5 @@
 import React from "react";
-import Uploadnav from "./upload-component/upload-nav"
+import Uploadnav from "./setingsNav"
 import UploadBody from "./upload-component/uploadbody"
 import {useParams,Link } from "react-router-dom";
 //import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
@@ -16,7 +16,7 @@ function  Upload(props){
         return(
            <div>
                 <div className="uploadContainer">
-                    <Uploadnav history={props.history} id={id}/>
+                    <Uploadnav history={props.history} idP={id}/>
                     <UploadBody  id={id}/>
                  </div> 
            </div>

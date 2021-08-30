@@ -1,7 +1,7 @@
 import  "../style/notification.css"
 import {useEffect,useState } from 'react';
 import {Link } from "react-router-dom";
-
+import {ArrowBackIcon} from "./materialUI/icons"
 function Notification(props){
     const[changeNavStyle,setChangeNavStyle]=useState({"height":"100px","transition":"height 0.4s ease-out","flexDirection":"column"})
     const[Notification,setNotification]=useState([])
@@ -87,7 +87,7 @@ async   function init(){
         <div  className="notificationContainer">
             <div className="notificationContainerSub">
                     <div className="notificationNavContainer" style={changeNavStyle}>
-                        <div className="homeTag" ><h6 onClick={goBack} className="Home">Home</h6></div>
+                        <div className="homeTag" ><h6 onClick={goBack} className="Home"> <ArrowBackIcon style={{fontSize: 34 + 'px'}}/></h6></div>
                         <div className="notificationTag"><h4>Notification({NotificationAmount})</h4></div>
                     </div>
                 <div className="notificationBody">

@@ -1,5 +1,5 @@
 import React from "react";
-import {useParams,Link } from "react-router-dom";                                                                                                                
+import {useParams } from "react-router-dom";                                                                                                                
 
 
 function NavDetail(props){
@@ -14,7 +14,7 @@ function NavDetail(props){
         return(
             <ul className="nav justify-content-center" style={{backgroundColor: "black",position:"fixed",width:"100vw"}}>
               <li className="nav-item">
-                <div className="nav-link active" onClick={goBack} style={{color: "white"}}>Back</div>
+                <div className="nav-link active detailBack" onClick={goBack} style={{color: "white"}}>Back</div>
               </li>
             </ul>
         )

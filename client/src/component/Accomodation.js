@@ -45,6 +45,7 @@ function Accomodation(props){
         )
     }
     let resultFound=accomodation.map((data,index)=>{
+        console.log(data)
         if(data==='test'){
              return '' 
         }
@@ -59,7 +60,7 @@ function Accomodation(props){
                 return(
                 <div key={index} className="accomodation_body">
                     <div className="img_container">
-                        <img className="bodyImg" src={"/Accomodation_upload/"+data.name} alt="file cant show"/> 
+                        <img className="bodyImg" src={"/Accomodation_upload/"+data.name} alt={"/Accomodation_upload/firstImg.jpg"} /> 
                     </div>
                     <div className="info1">
                         <div className="accomodation_type">

@@ -9,7 +9,7 @@ function Accomodation_Upload_Nav(props){
       props.history.push("Dashboard")
     }
     return(
-        <div>
+        <div> 
             <ul className="nav justify-content-center" style={{backgroundColor: "black",zIndex:200}}>
                 <li className="nav-item">
                 <div className="nav-link active" onClick={goBack} style={{color: "white"}}>Back</div>

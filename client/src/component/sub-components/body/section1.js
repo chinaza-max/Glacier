@@ -8,8 +8,8 @@ import MyCarousel from '../../Carousel';
 
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
-  { width: 340, itemsToShow: 3 },
-  { width: 550, itemsToShow: 3 },
+  { width: 340, itemsToShow: 2 },
+  { width: 550, itemsToShow: 2 },
   { width: 768, itemsToShow: 3 },
   { width: 1200, itemsToShow: 4 },
 
@@ -20,11 +20,25 @@ function Section1(props){
         <h5 className="categories-title" style={{zIndex:900000}}>categories</h5>
           <div  className='section1'>
               <MyCarousel breakPoints={breakPoints} autoPlaySpeed={5000} >
-                  <Item style={{height:160,width:250,}}>Books</Item>
-                  <Item style={{height:160,width:250,}}>School Filler</Item>
-                  <Item style={{height:160,width:250,}}>Project Helper</Item>
-                  <Item style={{height:160,width:250,}}>Term Paper Writer</Item>
-                  <Item style={{height:160,width:250,}}>Advert Placement</Item>
+                  <Item style={{height:160,width:250,}}>
+                    <div id="section1Book"  className="divCategory"><h3 className="h3Categories">Books</h3>  </div>
+                  </Item>
+                  <Item style={{height:160,width:250,}}>
+                      <div id="section1Filler"  className="divCategory"><h4 className="h3Categories">School Filler</h4>  </div>
+                  </Item>
+                  <Item style={{height:160,width:250,}} >
+                      <div id="section1Accomodation"  className="divCategory"><h4 className="h3Categories"> Accomodation</h4>  </div>
+                  </Item>
+                  <Item style={{height:160,width:250,}} >
+                      <div id="section1Project"  className="divCategory"><h4 className="h3Categories"> Project Helper</h4>  </div>
+                  </Item>
+                  <Item style={{height:160,width:250,}}>
+                      <div id="section1Term"  className="divCategory"><h4 className="h3Categories">Term Paper Writer</h4>  </div>
+                  </Item>
+                  <Item style={{height:160,width:250,}}>
+                      <div id="section1Advert"  className="divCategory"><h4 className="h3Categories"> Advert Placement</h4>  </div>
+
+                  </Item>
               </MyCarousel>
           </div>
       </div>

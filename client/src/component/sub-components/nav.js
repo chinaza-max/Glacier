@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../style/nav.css"
-import SubLinkForFiller from  "../sub-components/subLinkForFiller"                                                                                                                                        
+import SubLinkForFiller from  "../sub-components/subLinkForFiller";                                                                                                                                      
 
-class Nav extends React.Component{
+class  Nav extends React.Component{
     constructor(props){
         super(props)
         this.filterTextHolder=this.filterTextHolder.bind(this)
@@ -11,7 +11,6 @@ class Nav extends React.Component{
         this.toggle=this.toggle.bind(this)
         this.state={name:'',tel:"",navName:"Filler"}
         this.id=props.userId
-        
     }
 
     filterTextHolder(e){
@@ -19,14 +18,14 @@ class Nav extends React.Component{
     }
     fillerFunc(){
     
-    if(this.state.navName==='Filler'){
-            this.props.mainFillerFuncP('Book')
-            this.setState({navName:"Book"})
-    }
-    else{
-        this.props.mainFillerFuncP('Filler')
-        this.setState({navName:"Filler"})
-    }
+        if(this.state.navName==='Filler'){
+                this.props.mainFillerFuncP('Book')
+                this.setState({navName:"Book"})
+        }
+        else{
+            this.props.mainFillerFuncP('Filler')
+            this.setState({navName:"Filler"})
+        }
     }
     toggle(){
         let element=document.getElementById("small-siz-naz")
@@ -69,7 +68,7 @@ componentWillUnmount(){
     render(){
         return(
             <div>
-            <nav className="navbar" style={{backgroundColor: "black",position: "fixed", width: "100%"}}>              
+            <nav className="navbar" style={{backgroundColor:"white",position: "fixed", width: "100%"}}>              
                 <div className="navContainer third">
                     <div className="navContent">
                         <input  onChange={this.filterTextHolder} className="form-control1 mr-sm-2" type="search" placeholder="Search"/>
@@ -82,10 +81,10 @@ componentWillUnmount(){
                     </div>:
                         <div>    
                               <div className="navContent">
-                                    <a className="login" href="/login" style={{color:"white",textDecoration:"none"}}>login</a>
+                                    <a className="login" href="/login" style={{color:"black",textDecoration:"none"}}>login</a>
                               </div>
                               <div className="navContent">
-                                    <a className="signup" href="/signup" style={{color:"white",textDecoration:"none"}}>signup</a>
+                                    <a className="signup" href="/signup" style={{color:"black",textDecoration:"none"}}>signup</a>
                               </div>
                         </div>
                     }
@@ -94,7 +93,7 @@ componentWillUnmount(){
                 </div>
                <div className="navbarSubContainer">
                     <div className="navContainer-sz">
-                        <div className="navContainer first">logo</div>
+                        <div className="navContainer first" style={{color:"black"}}>logo</div>
                         <div className="search"> <input onChange={this.filterTextHolder} className="form-control2 mr-sm-2" type="search" placeholder="Search ......"/></div>
                         <div className="menu">
                             <div id="menu_position" >
@@ -105,23 +104,27 @@ componentWillUnmount(){
                         </div>
                     </div>
                     <div className="navContainer second">
-                        <div className="navContent resize">Home</div>
+                        <div className="navContent resize active">Home</div>
                         { this.props.userId ?
                             <div className="navContent resize" id="upload">Upload
                                 <ul id="navContent_upLoad_sub">
                                     <li>  
-                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/uploadPDF`}>
+                                        <Link className="remove_linkStyle pdID"  style={{color:"white"}}  to={`/home/${this.props.userId}/uploadPDF`}>
                                             PDF
                                         </Link>  
                                     </li>
                                     <li> 
-                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/upload`}>
+                                        <Link className="remove_linkStyle pdID" id="bookID" style={{color:"white"}}  to={`/home/${this.props.userId}/upload`}>
                                             Book
                                         </Link>  
                                     </li>
-                                    <li> notification</li>
+                                    <li>
+                                    <Link style={{color:"white"}} id="NotificationID" className="pdID" to={`/home/${this.props.userId}/Accomodation_UploadRequest`}>
+                                        Notification
+                                    </Link>  
+                                    </li>
                                     <li> 
-                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/Accomodation_Upload`}>
+                                        <Link className="remove_linkStyle pdID" id="AccomodationID"  style={{color:"white"}}  to={`/home/${this.props.userId}/Accomodation_Upload`}>
                                             Accomodation
                                         </Link> 
                                     </li>
@@ -129,11 +132,17 @@ componentWillUnmount(){
                             </div>
                             :""
                         }
-                        <div className="navContent resize">Filler</div>
-                        <div className="navContent resize">Accomodation</div>
+                        <div className="navContent resize">
+                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.state.navName}/>
+                        </div>
+                        <div className="navContent resize">
+                            <Link className="nav-link" to={`/home/${this.props.userId}/Accomodation/`}>
+                                Accomodation
+                            </Link>  
+                        </div>
                         {   this.props.userId?
                              <div className="navContent resize">
-                                <Link className="remove_linkStyle" style={{color:"white"}} to={`/home/${this.props.userId}/Dashboard/`}>
+                                <Link className="remove_linkStyle navContent"  to={`/home/${this.props.userId}/dashboard`}>
                                     Dashboard
                                 </Link>
                              </div>
@@ -141,10 +150,14 @@ componentWillUnmount(){
 
                         }
                        
-                        <div className="navContent resize">Notification</div>
+                        <div className="navContent resize">
+                            <Link id="NotificationView" className="navContent" to={`/home/${this.props.userId}/notification`}>
+                                Notification
+                            </Link> 
+                        </div>
                         {this.state.tel===8184724615 ? 
                             <div className="navContent resize">
-                                <Link className="remove_linkStyle"  style={{color:"white"}}   to={`/home/${this.props.userId}/Setting`}>
+                                <Link className="remove_linkStyle navContent"     to={`/home/${this.props.userId}/Setting`}>
                                     Setting
                                 </Link>  
                             </div>
@@ -153,7 +166,7 @@ componentWillUnmount(){
                         }
                   
                         <div className="navContent resize">About</div>
-                        <div className="navContent name resize">chinaza</div>
+                        <div className="navContent name resize" style={{color:"black"}}>chinaza</div>
                     </div>
                 </div>
 
@@ -166,9 +179,14 @@ componentWillUnmount(){
                                     <div id="bar3"></div>
                             </div>
                         </div>
+
+
+                        
                         {this.props.userId ?
                              <div className="navContent">
-                                      <button className="logout"  style={{textDecoration:"none"}}>logout</button>
+                                    <form  action="/logout?_method=DELETE" method="POST">
+                                        <button className="logout2"  style={{textDecoration:"none"}}>logout</button>
+                                    </form>
                              </div>
                              : 
                             
@@ -178,7 +196,6 @@ componentWillUnmount(){
                             </div>
                              }
                        
-                        <div className="navContent">Home</div>
                         {this.props.userId?
                             <div className="navContent" id="upload2">Upload
                                 <ul id="dropDown" className="dropDown_class">
@@ -192,7 +209,11 @@ componentWillUnmount(){
                                             Book
                                         </Link>  
                                     </li>
-                                    <li> notification</li>
+                                    <li style={{color:"white"}}>
+                                        <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/Accomodation_UploadRequest`}>
+                                            Notification
+                                        </Link> 
+                                      </li>
                                     <li id="dropDown_accomodation"> 
                                         <Link className="remove_linkStyle" style={{color:"white"}}  to={`/home/${this.props.userId}/Accomodation_Upload`}>
                                             Accomodation
@@ -203,11 +224,17 @@ componentWillUnmount(){
                         :
                             ""
                         }
-                        <div className="navContent">Filler</div>
-                        <div className="navContent">Accomodation</div>
+                        <div className="navContent filler2">
+                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.state.navName}/>
+                        </div>
+                        <div className="navContent navphone">
+                            <Link className="nav-link" to={`/home/${this.props.userId}/Accomodation/`}>
+                                Accomodation
+                            </Link> 
+                        </div>
                         {this.props.userId?
-                            <div className="navContent">
-                                 <Link style={{color:"white"}} to={`/home/${this.props.userId}/Dashboard/`}>
+                            <div className="navContent navphone">
+                                 <Link   className="nav-link" style={{color:"white"}} to={`/home/${this.props.userId}/Dashboard/`}>
                                     Dashboard
                                 </Link>
                             </div>
@@ -215,9 +242,16 @@ componentWillUnmount(){
                             ""
                         }
                         
-                        <div className="navContent">Notification</div>
+                        <div className="navContent navphone">
+                            <Link className="nav-link" to={`/home/${this.props.userId}/notification`}> Notification</Link>
+                        </div>
                         {this.state.tel===8184724615 ? 
-                             <div className="navContent">Setting</div>
+                            
+                        <div className="navContent navphone">
+                            <Link className="nav-link"     to={`/home/${this.props.userId}/Setting`}>
+                                Setting
+                            </Link>
+                        </div>
                         :
                         ''
                         }

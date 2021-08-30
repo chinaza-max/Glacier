@@ -4,25 +4,39 @@ import NavDashboard from "./sub-components/dashboard/dashboardNav"
 import "../style/dashBoardSettings.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
-
-
+import DashboardUI from "./materialUI/dashBoardUI";
 
 function Dashboard(props){
     const[post,setposts]=useState([])
     const[loader,setLoader]=useState('loader2')
+    const[fliterText,setFliterText]=useState('')
+    const[numberOfItem,setNumberOfItem]=useState('')
     const {id}=useParams();
 
-
+    function dashBoardSort(text){
+       // setFliterText(text)
+    }
+    let newPost=post.map((data,index)=>{
+        
+        if(data.title.toLowerCase().indexOf(fliterText.toLowerCase())===-1&&data.author.toLowerCase().indexOf(fliterText.toLowerCase())===-1){
+            return(
+                ""
+            )
+        }
+        else{
+            return(
+                data
+            )
+        }
+    })
 
   async  function onclickHandle(route){
- 
     await fetch(route, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         },setLoader(route))
-      
     }
 
     useEffect(()=>{
@@ -30,8 +44,9 @@ function Dashboard(props){
     const signal=aboutController.signal
     const init =async ()=>{
         const response=await fetch('/posts/'+id,{signal:signal})
-        const body = await response.json()
+        const body = await response.json() 
         setposts(body.express.details)
+        setNumberOfItem(body.express.details.length)
     }
     init();
       return ()=> aboutController.abort()
@@ -47,18 +62,13 @@ function Dashboard(props){
         )
     })
         return(
-                <div >
-                    <NavDashboard history={props.history} id={id}/>
-                    <div className='before'></div>
-
-                    {
-                        post.length>0  ? 
-                        <div className='settingsBody'>
-                            {data}
-                        </div> :
-                        <div className='emptyPostSetting'>NO UPLOAD YET</div>
-                    }
+                <div id="dashBoardContainer">
+                    <NavDashboard history={props.history} numberOfItemP={numberOfItem} id={id} dashBoardSortP={dashBoardSort}/>
+                    <div id="dashBoardContainer__content">
+                        <DashboardUI uploadP={newPost} setLoaderP={setLoader}/>
                     </div>
+                </div>
         )
 }
-export default Dashboard;
+
+export default Dashboard;   

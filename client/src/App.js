@@ -43,8 +43,6 @@ function App() {
            
             <Route path="/home/:id/upload" component={Upload}/>
            
-            <Route path="/home/:id/:upload/:dashboard" component={Dashboard}/>
-           
             <Route path="/home/:id" component={Home}/>
        
             <Route path="/details/:name" component={Detail}/>
@@ -57,3 +55,5 @@ function App() {
 }
 
 export default App;
+//   <Route path="/home/:id/:upload/:dashboard" component={Dashboard}/>
+//allow an app through Windows Firewall

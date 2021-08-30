@@ -8,7 +8,7 @@ function Settings(props){
     const[responses,setreponses]=useState({accOneResponse:'',accTwoResponse:'',PDFOneResponse:"",PDFTwoResponse:"",postOneResponse:"",postTwoResponse:"",postResponse:'',userName:'',userTel:'',accomodationPostRespond:""})
     const[fileName,setFileName]=useState({bookName:'',pdfName:''});
     const {id}=useParams()
-
+ 
   function handleChange(e){
     const {name,value}=e.target
     setFileName({...fileName,[name]:value})
@@ -87,7 +87,7 @@ function Settings(props){
     return(
         <div className="SetingsContainer">
             
-            <SetingsNav history={props.history}/>
+            <SetingsNav history={props.history} idP={id}/>
             <div className="SetingsBody">
                 <div className="SetingsBody-sub">
 

@@ -1,11 +1,29 @@
 .navbar{
     z-index: 16;
 }
+
+.logout2{
+    background-color: white;
+    color: black;
+    border: none;
+}
+.remove_linkStyle{
+    display: inline-block;
+    width: 100%;
+}
+.logout2:focus{
+    outline: none;
+}
 .navContent .remove_linkStyle{
     text-decoration: none;
+    
 }
 .navContainer-sz{
     min-width: 95px;
+}
+#navContent_upLoad_sub li Link{
+        border: 1px solid red;
+        width: 100px;
 }
 
 

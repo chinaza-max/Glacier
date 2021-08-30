@@ -1,4 +1,7 @@
 require('./mongodb/db')
+const Time=require("./Time");
+console.log(Time().year)
+
 if(process.env.NODE_ENV !=='production'){
     require('dotenv').config()
 }
@@ -24,7 +27,8 @@ const fs=require('fs');
 const { findById } = require('./mongodb/schema/userSchema');
 const pdf = require('pdf-parse');
 
-const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=require("./deletefiles")
+const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=require("./deletefiles");
+const { response } = require('express');
 app.use(bodyParser.json())
 app.use(fileUpload());
 
@@ -89,33 +93,29 @@ app.get("/details/:name",(req,res)=>{
 })
 app.get('/Books',(req,res)=>{
 
-    /*former code that i used to return all books in my db
-    let mainData=[]
-    User.find(async(err,data)=>{
-    await    data.forEach(async(data)=>{
-    await    data.details.forEach((data)=>{
-             mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
-           })
-        })
-        await    res.send({express:mainData})
-    })*/
     let mainData=[]
     let reArrangeMainData=[]
     allImg.find(async(err,data)=>{
         if(err){
             console.log(err)
         }
-        else{
-            data[0].bookDetails.forEach((data)=>{
-                if(data.name){
-                    mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
-                }
-            })
-            let len=mainData.length-1
-            for(let i=len; 0<=i; i--){
-                reArrangeMainData.push(mainData[i])
+        else{ 
+            if(data[0]==undefined){
+                await res.send({express:[]})
             }
-           await res.send({express:reArrangeMainData})
+            else{
+                data[0].bookDetails.forEach((data)=>{
+                    if(data.name){
+                        mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
+                    }
+                })
+                let len=mainData.length-1
+                for(let i=len; 0<=i; i--){
+                    reArrangeMainData.push(mainData[i])
+                }
+               await res.send({express:reArrangeMainData})
+            }
+           
         }
     })
 })
@@ -148,18 +148,36 @@ app.get("/names/:id",(req,res)=>{
      
 })*/
 app.get('/pdfAPI',(req,res)=>{
-
+  
+    let reArrangeMainData=[]
     User.find((err,data)=>{
-        data.forEach((data)=>{
-            if(data.pdfs.length!==0){
-
-                res.send({express:data.pdfs})
-                console.log(data.pdfs)
-                return;
+        if(err){
+            console.log("check route for error debuging '/pdfAPI'")
+            console.log(err)
+        }
+        else{
                
-            }
-        })
+                if(data[0].pdfs.length!=0){
+                   
+                    let len=data[0].pdfs.length-1
+                    for(let i=len; 0<=i; i--){
+                        reArrangeMainData.push(data[0].pdfs[i])
+                        if(i==0){
+                            console.log("data[0].pdfs")
+                            console.log(reArrangeMainData)
+                            res.send({express:reArrangeMainData})
+                        }
+                    }   
+                    
+                }
+                else{
+                    res.send({express:reArrangeMainData})
+                    console.log("data.pdfs")
+                }
+            
+        }
     })
+
 })
 
 //settings route
@@ -478,33 +496,46 @@ app.get("/notifications",(req,res)=>{
 //this route is public  . it is use by every one ;
 app.post('/deletePost/:id/:name',(req,res)=>{
     let id=req.params.id;
-    let imgName=req.params.name;
-    deletePostFromBookCollection(imgName);
+    let imgNames=req.params.name.split(",");
+    let imgSize=imgNames.length-1
+    //console.log(imgName)
+    
+    for(imgName in imgNames ){
+    
+        deletePostFromBookCollection(imgNames[imgName]);
+    }
+
     User.findById(id,async(err,user)=>{
        if(err){
            console.log("check post route /deletePost/:id/:name")
            console.log(err)
        }
        else{
-        
-        let obj=user.details.find((va)=>{    
-            return  va.name==imgName
-           })
-          
-          if(obj){
-            await User.findOneAndUpdate({_id:req.params.id},
-                {$pull:{details:obj}})
-            
-            try{
-                fs.unlinkSync("./client/public/uploads/"+imgName)
-            }catch(err){
-                console.log("err"+  err)
+            for(imgName in imgNames ){
+                let obj=user.details.find((va)=>{    
+                    return  va.name== imgNames[imgName]
+                })
+                if(obj){
+                    await User.findOneAndUpdate({_id:req.params.id},
+                        {$pull:{details:obj}})
+                    
+                    try{
+                        fs.unlinkSync("./client/public/uploads/"+imgNames[imgName])
+                        if(imgName==imgSize){
+                            response()
+                        }
+                       
+                    }catch(err){
+                        console.log("err"+  err)
+                        res({message:"error form server tring to delete file"})
+                    }
+                }
             }
-          }
        }
     })
-
-
+    function response(){
+        res.json({message:"successful"})
+    }
 })
 
 app.post('/signup',checkNotAuthenticated,async(req,res)=>{
@@ -566,7 +597,7 @@ app.post("/uploadPDF/:id",(req,res)=>{
             
             if(filename){
                 file.name=filename
-                file.courseCode=capitalize(req.body.courseCode)
+                file.courseCode=req.body.courseCode.toLowerCase()
                 file.mv( `${__dirname}/client/public/uploadPDFs/${file.name}`,async(err)=>{
                     let dataBuffer = fs.readFileSync( `${__dirname}/client/public/uploadPDFs/${file.name}`)
                     pdf(dataBuffer).then(function(data) {
@@ -616,8 +647,9 @@ app.post('/upload/:id',(req,res)=>{
         return res.status(400).json({msg:"No file uploaded"});
     }
     const file=req.files.file;
-   
-    if(file.mimetype=="image/jpeg"||file.mimetype=="image/PNG"||file.mimetype=="image/jpeg"||file.mimetype=="image/jpg"){
+    console.log(file.mimetype.toLowerCase())
+
+    if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase()=="image/jpg"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {
                 return   console.log(err)
@@ -633,6 +665,7 @@ app.post('/upload/:id',(req,res)=>{
                     file.faculty=req.body.faculty.toLowerCase()
                     file.Description=req.body.Description.toLowerCase()
                     file.tel=req.body.tel
+                    file.date=Time().year + "-" + Time().month + "-" +Time().date
     
                     file.mv( `${__dirname}/client/public/uploads/${file.name}`,async(err)=>{
                         if(err){
@@ -758,8 +791,10 @@ app.post("/uploadRequest/:id",(req,res)=>{
 
 app.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
-    if(req.files===null){
-    let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
+    console.log(req.files)
+    
+    if(req.files==null){
+        let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
                 file.name="firstImg.jpg";
                 file.Price=req.body.Price;
                 file.Address=req.body.Address.toLowerCase();
@@ -802,8 +837,8 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
         return
     }
     const file=req.files.file;
-   
-    if(file.mimetype=="image/jpeg"||file.mimetype=="image/PNG"||file.mimetype=="image/jpeg"||file.mimetype=="image/jpg"){
+   console.log(file.mimetype)
+    if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase=="image/jpg"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {
                 return   console.log(err)
@@ -957,7 +992,7 @@ function deletePostFromBookCollection(name){
         }
     })
 }
-
+/*
 function capitalize(value){
     value=value.toLowerCase().split(' ');
     let capitalize=[];
@@ -966,7 +1001,7 @@ function capitalize(value){
     } 
    
     return  capitalize
-}
+}*/
 function deletePostFromNotification(notificationID,id){
     Notification.find({"notification.notificationID":notificationID},async (err,notifications)=>{
         if(err){

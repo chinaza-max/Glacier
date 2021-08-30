@@ -2,24 +2,23 @@ import  "../style/Accomodation_Upload_Nav.css";
 import {useParams} from "react-router-dom";
 import React,{useState} from 'react';
 import axios from 'axios'
-import AccomodationUploadNav from "./sub-components/AccomodationUploadNav"
-import FooteraccomodatonUpload from "../component/sub-components/FooteraccomodatonUpload"
+import AccomodationUploadNav from "../component/sub-components/setingsNav"
+
 function Accomodation_Upload(props){
     const [file,setFile]=useState('');
     const [filename,setFilename]=useState('upload image of building');
     const [uploadedFile,setUploadedFile]=useState({});
     const [eventInfo,setEventInfo]=useState({Price:0,Address:'',selection:'lodge',tel:''});
-    const{Price,Address,selection,tel}=eventInfo
+    const {Price,Address,selection,tel}=eventInfo
     const {id}=useParams()
 
     const onChange=(e)=>{
         if(e.target.files[0].name){
             setFile(e.target.files[0]);
             setFilename(e.target.files[0].name)
-            
         }
-        
     }
+
     const handleChange=(event)=>{
         const {name,value}=event.target
         console.log(name+' '+value)
@@ -59,7 +58,7 @@ function Accomodation_Upload(props){
     }
     return(
         <div className="container_of_Accomodation_Upload">
-            <AccomodationUploadNav  history={props.history} id={id}/>
+            <AccomodationUploadNav  history={props.history} idP={id}/>
             <div className="center">
                 <div className="body_of_Accomodation_Upload">
                     <form onSubmit={onSubmit}  encType="multipart/form-data">
@@ -100,7 +99,6 @@ function Accomodation_Upload(props){
                 }
                 </div>
             </div>
-            <FooteraccomodatonUpload/>
         </div>
     )
 }

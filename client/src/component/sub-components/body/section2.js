@@ -30,14 +30,20 @@ function Section2(props){
             else{
                 return(
                     <div key={data.name} className="mainBody-sub">
-                        <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={"/uploads/"+data.name} alt="file cant show"/>  </Link>
+                        
+                            <div className="mainBody-subCenter">
+                                <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={"/uploads/"+data.name} alt="file cant show"/>  </Link>
+                            </div>
+                            <div className="booksTitle">
+                                {data.title}
+                            </div>
                     </div>
                 )
             }
        }
     })
     return(
-        <div className="mainBody-container">
+        <div className="mainBody-container" id="filler">
             <div className="mainBody">
             {data}
             </div>

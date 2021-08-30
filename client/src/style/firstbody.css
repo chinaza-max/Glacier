@@ -1,11 +1,50 @@
+#root{
+    min-width: 280px;
+    width: 100%;
+}
+.shapeHome{
+    position: absolute;
+    top: 800px;
+    z-index: -1;
+}
+
 .firstBody{
     height: 100vh;
     width: 100vw;
     position: relative;
 }
+.firstBody:after{
+    content:"";
+    background-image: url('../component/sub-components/img/background6.jpg');
+    display: inline-block;
+    background-size: 200% 93%;
+    width:100%;
+    background-blend-mode:normal;
+    height:900px;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    z-index: -1;
+}
+.remove_linkStyle{
+    color: black;
+    display: inline-block;
+    width: 100%;
+}
+.pdID{
+    display: block;
+    width:120px;
+    padding-left: 10px;
+    text-decoration: none;
+}
+#NotificationID{
+    text-decoration: none;
+    
+}
 #firstBody_sub{
     min-height: 100vh;
-    
+    min-width: 280px;
+    background-color: #e7e7e961;
 }
 .navbarSubContainer{
     display: flex;
@@ -14,6 +53,8 @@
 .navbar{
     display: block;
     height: 100px;
+    min-width: 280px;
+    box-shadow: 0px 1px  20px   black;
 }
 .first{
     flex-shrink:2;
@@ -37,16 +78,38 @@
     justify-content: flex-end;
 }
 .navContent{
-    color: white;
+    color: black;
+}
+.active{
+    color:#007bff;
+}
+.name{
+    color: black;
 }
 .resize{
     margin-right: 50px;
     padding-right: 10px;
 }
+.resize ul {
+    text-align: center;
+    list-style: none;
+    color: black;
+    margin: 0px;
+    padding: 0px;
+}
+.resize ul li{
+    list-style: none;
+}
+
+.filler-link{
+    color: black;
+    text-decoration: none;
+ }
 .third .navContent{
   float: right;
   padding-left: 20px;
 }
+
 .form-control1{
     width: 200px;
     border: none;
@@ -55,6 +118,7 @@
 .form-control1:focus{
     outline: none;
 }
+
 .menu{
     display: none;
 }
@@ -79,11 +143,12 @@
     height: 60px;
 }
 #menu_position div{
-    background-color: blue;
+    background-color: black;
     width: 35px;
     height: 1.5px;
-    margin-top: 6px;
+    margin-top: 5.5px;
 }
+
 .menu_position2{
     height: 55px;
     position: relative;
@@ -95,7 +160,7 @@
     height: 55px;
 }
 .menu_position3 div{
-    background-color: blue;
+    background-color: rgb(0, 0, 0);
     width: 35px;
     height: 1.5px;
     margin-top: 10px;
@@ -114,27 +179,28 @@
 }
 .navContent:hover{
     cursor: pointer;
+    color: #007bff;;
 }
 .name:hover{
     cursor:text;
 }
 #navContent_upLoad_sub{
     position: absolute;
-    left: -45px;
-    top: 60px;
+    left: -4px;
+    top: 61px;
     text-align: left;
 }
 #navContent_upLoad_sub li{
-   background-color: black;
+   background-color: rgba(0, 0, 0, 0.534);
    width: 120px;
-   height: 45px;
+   height: 45px; 
    list-style: none;
    text-align: left;
    line-height: 40px;
-   padding: 0px 12px 0px 12px;
+  
 }
 #navContent_upLoad_sub li:hover{
-    background: linear-gradient(to right,rgb(2, 1, 10),#3b4e69);
+    background: linear-gradient(to right,rgba(2, 1, 10, 0.562),#3b4e699f);
 }
 #navContent_upLoad_sub{
     display: none;
@@ -145,13 +211,54 @@
 .navContent:hover #navContent_upLoad_sub{
     display: inline;
 }
+#NotificationView{
+    text-decoration: none;
+}
+.logout{
+    background: rgba(249, 249, 250, 0);
+}
+
+
+.nav-link{
+    color: black;
+    padding: 0px;
+}
 #upload{
     text-align: left;
 }
 #dropDown{
     list-style: none;
 }
+.logout:focus{
+    outline: none;
+}
+.logout{
+    border-radius: 5px;
+    
+}
 @media(max-width:1024px){
+    .firstBody{
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+    }
+    .firstBody:after{
+        content:"";
+        background-image: url('../component/sub-components/img/background6.jpg');
+        display: inline-block;
+        background-size: 200% 650px;
+        width:100%;
+        height:900px;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0px;
+        z-index: -1;
+    }
+    .shapeHome{
+        position: absolute;
+        top: 650px;
+        z-index: -1;
+    }
     .navbar{
         position: relative;
         height: 100px;
@@ -163,6 +270,7 @@
         justify-content: space-between;
         width: 100vw;
         left: 0;
+     
     }
     .second{
         display: none;
@@ -178,9 +286,9 @@
         z-index: 20;
         position: fixed;
         left: 0px;
-        top: 80px;
+        top: 100px;
         display: block;
-        background-color: black;
+        background-color: #0000009e;
         overflow-y: scroll;
         overflow-x: hidden;
         width:200px;
@@ -191,7 +299,9 @@
         transition: height 0.15s ease-in;
     }
     .toggle{
-        height: 700px;
+        max-height: 700px;
+        height: auto;
+        padding-bottom: 40px;
         transition: height 0.25s ease-out;
 
     }
@@ -231,6 +341,12 @@
         border: 0px;
         border-radius: 5px;
         font-size: 20px;
+        border-bottom: 1px solid black;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+        max-width: 340px;
+        min-width: 90px;
+      
     }
     .form-control2:focus{
        outline: none;
@@ -260,10 +376,35 @@
     }
     .firstBody_sub{
         min-height: 100vh;
-        border: 6px solid red;
+    }
+    .navContent{
+        color: white;
     }
 }
 @media(max-width:500px){
+    .firstBody{
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+    }
+    .firstBody:after{
+        content:"";
+        background-image: url('../component/sub-components/img/background6.jpg');
+        display: inline-block;
+        background-size: 200% 65%;
+        width:100%;
+        background-blend-mode:normal;
+        height:900px;
+        background-repeat: no-repeat;
+        position: absolute;
+        top: 0px;
+        z-index: -1;
+    }
+    .shapeHome{
+        position: absolute;
+        top: 560px;
+        z-index: -1;
+    }
     .menu_position2 {
         height: 30px
     }
@@ -271,21 +412,22 @@
         padding-top: 5px;
     }
     #menu_position div{
-        background-color: blue;
+        background-color: black;
         width: 35px;
         height: 2px;
         margin-top: 7px;
         margin-left: 12px;
     }
     .menu_position3 div{
-        background-color: blue;
+        background-color: black;
         width: 35px;
         height: 2px;
         margin-top: 10px
     }
     .navbar{
         position: relative;
-        height: 100px;
+        height: 68px;
+      
     }    
     .navContainer-sz{
         position: absolute;
@@ -294,6 +436,10 @@
         justify-content: space-between;
         width: 100vw;
         left: 0;
+        flex-wrap: wrap-reverse;
+        height:auto ;
+        background-color:#FFFFFF;
+        min-width: 280px;
     }
     .second{
         display: none;
@@ -308,9 +454,9 @@
     #small-siz-naz{
         position: fixed;
         left: 0px;
-        top: 80px;
+        top: 68px;
         display: block;
-        background-color: black;
+        background-color: #0000009e;
         overflow-y: scroll;
         width: 160px;
         border-bottom-right-radius: 20px;
@@ -320,7 +466,9 @@
         transition: height 0.15s ease-in;
     }
     .toggle{
-        height: 460px;
+        height:auto;
+        max-height: 460px;
+        padding-bottom: 40px;
         transition: height 0.25s ease-out;
     }
     .navContent{
@@ -334,6 +482,7 @@
     .form-control2{
         height: 35px;
         font-size: 15px;
+        
     }
 }
 @media(max-width:300px){

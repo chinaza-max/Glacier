@@ -4,8 +4,7 @@
 }
 .container_of_Accomodation_Upload{
     width: 100vw;
-    height: fit-content;
-   
+    height: fit-content;   
 }
 .Footer_accomodation{
     height: 100px ;
@@ -41,7 +40,7 @@
     padding-right: 20px;
 }
 .tel label{
-    padding-right: 88px;
+    padding-right: 145px;
 }
 .tel input{
     width:165px;

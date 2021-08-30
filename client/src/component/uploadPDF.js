@@ -1,8 +1,7 @@
 import React from "react";
 import {useParams,Link } from "react-router-dom";
-import Uploadnav from "./sub-components/upload-component/upload-nav"
-import UploadBody2 from "../component/uploadBody2"
-import Footer from "./sub-components/footer"
+import Uploadnav from "./sub-components/setingsNav"
+import UploadBody2 from "../component/uploadBody2"  
 import "../style/footer3.css"
 //import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -14,10 +13,9 @@ function UploadPDF(props){
     return(
         <div>
              <div className="uploadContainer">
-                 <Uploadnav history={props.history} id={id}/>
+                 <Uploadnav history={props.history} idP={id}/>
                  <UploadBody2  id={id}/>
               </div> 
-              <Footer/>
         </div>
      )
 }

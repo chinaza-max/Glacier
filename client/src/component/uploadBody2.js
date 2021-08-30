@@ -28,6 +28,7 @@ const UploadBody=(props)=>{
     
     const handleChange=(event)=>{
         const {name,value}=event.target
+        console.log(value)
         setEventInfo({...eventInfo,[name]:value})
     }
 

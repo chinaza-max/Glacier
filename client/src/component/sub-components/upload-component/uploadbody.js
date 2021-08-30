@@ -20,7 +20,8 @@ const UploadBody=(props)=>{
 
 
     const onChange=(e)=>{
-        if(e.target.files[0].name){
+        console.log()
+        if(e.target.files[0]!==undefined){
             setFile(e.target.files[0]);
             setFilename(e.target.files[0].name)
         }

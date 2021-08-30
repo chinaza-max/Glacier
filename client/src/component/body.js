@@ -6,12 +6,10 @@ function Body(props){
     return(
         <div className="firstBody-sub">
             <Section1/>
-            
             {
             props.viewP==='Filler' ? <Section2 id={props.id} searchString2={props.searchString}/> :
               <Filler  searchString2={props.searchString}/>
             }
-           
         </div>
     )
 }
