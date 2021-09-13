@@ -2,10 +2,10 @@
     width: 100vw;
     box-sizing: border-box;
     height: auto;
-    padding: 40px;
+    padding: 10px;
 }
 .mainBody-filler{
-    width: 98%;
+    width: 99%;
     height: 100%;
     margin: 0 auto;
     display: flex;
@@ -30,8 +30,8 @@
     border-radius: 5px;
 }
 .bodyImg-filler{
-    width: 180px;
-    height: 220px;
+    width: 115px;
+    height: 180px;
 
 }
 .courseCode-filler{

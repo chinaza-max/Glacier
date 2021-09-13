@@ -13,6 +13,7 @@ function Section2(props){
             const response=await fetch("/Books",{signal:signal})
             const body=await response.json()
             setBooks(body.express)
+            localStorage.setItem('numberOfBook', JSON.stringify(body.express.length))
        }
       fetchData();
 

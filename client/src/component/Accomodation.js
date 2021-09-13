@@ -60,7 +60,7 @@ function Accomodation(props){
                 return(
                 <div key={index} className="accomodation_body">
                     <div className="img_container">
-                        <img className="bodyImg" src={"/Accomodation_upload/"+data.name} alt={"/Accomodation_upload/firstImg.jpg"} /> 
+                        <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} /> 
                     </div>
                     <div className="info1">
                         <div className="accomodation_type">
@@ -71,6 +71,7 @@ function Accomodation(props){
                         </div>
                         <div className="tel_display">
                             {data.tel}
+                            
                         </div>
                     </div>
                     <div className="info2">
@@ -89,7 +90,7 @@ function Accomodation(props){
                 return(
                     <div key={index} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={"/Accomodation_upload/"+data.name} alt="file cant show"/> 
+                            <img className="bodyImg" src={data.name} alt="file cant show"/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
@@ -97,9 +98,11 @@ function Accomodation(props){
                             </div>
                             <div className="address_display">
                                 {data.Address}
+                              
                             </div>
                                <div className="tel_display">
                                 {data.tel}
+                                
                             </div>
                         </div>
                         <div className="info2">

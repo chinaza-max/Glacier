@@ -26,12 +26,12 @@
     display: inline-block;
     width: 100%;
 }
-.filler2{
-    padding-left: 0px;
+.filler2 ul li .filler-link:hover{
+    color: #007bff;
 }
 .filler2 ul{
-    padding-left: 17px;
-    height: 7px;
+    padding-left: 10px;
+    height: 20px;
 }
 .navphone .nav-link{
     display: inline-block;
@@ -39,7 +39,9 @@
     color: white;
     padding:0px;
 }
-
+.navphone .nav-link:hover{
+   color: #007bff;
+}
 .SetingsContainer{
     width: 100%;
     height: 100vw;

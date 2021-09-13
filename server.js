@@ -144,9 +144,7 @@ app.get("/names/:id",(req,res)=>{
     }
    
 })
-/*app.post("/deleteSingleAcc",(req,res)=>{
-     
-})*/
+
 app.get('/pdfAPI',(req,res)=>{
   
     let reArrangeMainData=[]
@@ -163,8 +161,6 @@ app.get('/pdfAPI',(req,res)=>{
                     for(let i=len; 0<=i; i--){
                         reArrangeMainData.push(data[0].pdfs[i])
                         if(i==0){
-                            console.log("data[0].pdfs")
-                            console.log(reArrangeMainData)
                             res.send({express:reArrangeMainData})
                         }
                     }   
@@ -172,7 +168,6 @@ app.get('/pdfAPI',(req,res)=>{
                 }
                 else{
                     res.send({express:reArrangeMainData})
-                    console.log("data.pdfs")
                 }
             
         }
@@ -190,7 +185,7 @@ app.get('/deleteAllAcc',(req,res)=>{
         }
         else{
             for(i=0;i<names.length; i++){
-                console.log("current collection "+names[i].name)
+        
                 if(names[i].name=="users"){
                     mongoConnection.connection.db.dropCollection("users", function (err, result) {
                             if (err) {
@@ -431,14 +426,7 @@ app.get("/accomodations",(req,res)=>{
 //this get and also remove due notipfication from database ;
 app.get("/notifications",(req,res)=>{
    //deleteAllPostFromNotificattion()
-  /* Notification.find((err,data)=>{
-        if(err){
-            console.log(err)
-        }
-        else{
-            console.log(data[0].notification)
-        }
-    })*/
+
 
     let mainData=[]
     let reArrangeMainData=[]
@@ -456,8 +444,7 @@ app.get("/notifications",(req,res)=>{
             }
             else{
                 data[0].notification.forEach((data)=>{
-                   // console.log(data.title)
-                   console.log(data.title)
+                 
                     if(data.notification||data.title){
                         //remTime=new Date("july 9,2021 9:00:00").getTime()-data.time;
                         let remTime=data.time-new Date().getTime()
@@ -489,7 +476,6 @@ app.get("/notifications",(req,res)=>{
         }
     })
  async   function  resfunction(){
-     console.log(reArrangeMainData)
         await res.send({express:reArrangeMainData,express2:num})
     }
 })
@@ -791,18 +777,19 @@ app.post("/uploadRequest/:id",(req,res)=>{
 
 app.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
-    console.log(req.files)
+    
     
     if(req.files==null){
         let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
-                file.name="firstImg.jpg";
+                file.name="/accomodationImg/firstImg.jpg";
                 file.Price=req.body.Price;
                 file.Address=req.body.Address.toLowerCase();
                 file.selection=req.body.selection.toLowerCase();
                 file.tel=req.body.tel;
-
-                res.json({fileName:file.name,filePath:`/accomodationImg/${file.name}`})
+                    
+                res.json({fileName:file.name,filePath:`${file.name}`})
                 await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
+                
                 //initializing book schema to actual get an ID
                 allImg.find(async(err,data)=>{
                     
@@ -837,7 +824,7 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
         return
     }
     const file=req.files.file;
-   console.log(file.mimetype)
+
     if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase=="image/jpg"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {
@@ -848,12 +835,12 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
           
                
                 if(filename){
-                    file.name=filename
+                    file.name="/Accomodation_upload/"+filename
                     file.Price=req.body.Price
                     file.Address=req.body.Address.toLowerCase()
                     file.selection=req.body.selection.toLowerCase()
                     file.tel=req.body.tel
-                    file.mv( `${__dirname}/client/public/Accomodation_upload/${file.name}`,async(err)=>{
+                    file.mv( `${__dirname}/client/public${file.name}`,async(err)=>{
                         if(err){
                             console.log(err)
                             return res.status(500).send(err)
@@ -861,7 +848,7 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
                         file.data='';
                         file.size=0;
     
-                            res.json({fileName:file.name,filePath:`/Accomodation_upload/${file.name}`})
+                            res.json({fileName:file.name,filePath:`${file.name}`})
                         })
                         
                         await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})

@@ -18,11 +18,19 @@ function Notification(props){
         else{
             setChangeNavStyle({"height":"100px","transition":"height 0.4s ease-out","flexDirection":"column"})
         }
-    }   
+    }  
+    function resetNotificationAlert(){
+        let numberOfBook=JSON.parse(localStorage.getItem('numberOfBook'))
+        let numberOfPDF=JSON.parse(localStorage.getItem('numberOfPDF'))
+        let total=numberOfPDF+numberOfBook
+        localStorage.setItem('notificationNumber', JSON.stringify(total))
+    } 
+    resetNotificationAlert()
     useEffect(()=>{
         const aboutController=new AbortController()
-        document.querySelector(".notificationContainerSub").addEventListener('scroll',listenForScroll)
         const signal=aboutController.signal
+        document.querySelector(".notificationContainerSub").addEventListener('scroll',listenForScroll)
+
 async   function init(){
         const response=await fetch("/notifications",{signal:signal})
         const body=await response.json()
