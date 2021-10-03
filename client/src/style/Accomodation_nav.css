@@ -2,14 +2,16 @@
     width: 100vw;
     position: fixed;
     top: 0;
+    min-width: 320px;
 }
 .Accomodation_nav_body{
     position: absolute;
     top: 0px;
-    width: 100%;
+    width: 100vw;
     height: 65%;
     background-color: black;
     color: rgb(223, 221, 217);
+    min-width: 320px;
 }
 .title{
     text-align: center;
@@ -25,10 +27,11 @@
 }
 .select{
     text-align: center;
-    padding-top: 25px;
+    padding-top: 20px;
 }
 .Accomodation_nav2{
    width: 100vw;
+   min-width: 302px;
    height: 30px;
    position: absolute;
    bottom: 40px;
@@ -48,6 +51,7 @@
 }
 .accomodation_body_container{
     width: 100vw;
+    min-width:320px;
 }
 
 .accomodation_body{
@@ -67,6 +71,9 @@
     width: 100%;
     height: auto;
 }
+.Accomodation{
+    overflow: hidden;
+}
 .img_container{
     width: 30px;
     height: 200px;
@@ -82,28 +89,85 @@
 }
 .info2{
     flex: 1;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
-.info1 div{
-    height: 50px;
+
+.accomodation_type{
+    height: 40px;
+}
+.accomodation_type h3{
+    font-size: 20px;
+}
+.tel_display{
+    height: 30px;
+    font-size: 15px;
+    line-height: 30px;
+}
+.address_display{
+    width: 500px;
+    height: 100px;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    padding: 1px;
+    box-shadow: 0.5px 0.5px 0.5px rgb(223, 221, 217);
 }
 
 .remove_container{
     flex: 2;
-    text-align: center;
-    padding: 30px;
+    text-align: right;
+}
+.remove_container button{
+    background: transparent;
+    border: 3px solid blue;
+}
+
+.remove_container button:hover{
+   background-color: blue;
+   border: 3px solid black;
+   color: white;
+}
+.remove_container button:focus{
+    outline: none;
 }
 .price_container{
     flex: 1;
+    text-align: right;
+    position: relative;
+    z-index: -1;
+}
+.price_container h5{
+   font-size: 15px;
+   position: absolute;
+   right: 0px;
 }
 .bodyImg{
     width: 100%;
     height: 100%;
 }
+.price_container__money{
+    color: red;
+}
+
+
 @media(max-width:1024px){
+    .price_container{
+        z-index: -1;
+    }
+    .tel_display{
+        height: 30px;
+        font-size: 15px;
+        line-height: 15px;
+    }
+    .address_display{
+        width: 30em;
+        height: 100px;
+        overflow-y: auto;
+        overflow-wrap: break-word;
+        padding: 1px;
+        box-shadow: 0.5px 0.5px 0.5px rgb(223, 221, 217);
+    }
     .title{
         text-align: center;
         font-size: 25px;
@@ -130,7 +194,7 @@
 .Upload-accomodation:hover{
     cursor: pointer;
 }
-@media(max-width:550px){
+@media(max-width:700px){
     .accomodation_body{
         display: flex;
         flex-direction: row;
@@ -143,7 +207,7 @@
     .img_container{
         width: 40px;
         height: 100px;
-        flex: 2;
+        flex: 1;
     }
     .form-control{
         width: 70%
@@ -158,5 +222,22 @@
         text-align: end;
         padding-right: 10px;
     
+    }
+    .address_display{
+        width: 180px;
+        overflow-y: auto;
+        overflow-wrap: break-word;
+        padding: 1px;
+        box-shadow: 0.5px 0.5px 0.5px rgb(223, 221, 217);
+    }
+}
+@media(max-width:500px){
+    .price_container h5{
+        width: 110px;
+        padding: 3px;
+        font-size: 12px;
+        position: absolute;
+        bottom: -8px;
+        right: 0px;
     }
 }

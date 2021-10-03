@@ -10,9 +10,16 @@ function Section2(props){
         const aboutController=new AbortController()
         const signal=aboutController.signal
      async function fetchData(){
-            const response=await fetch("/Books",{signal:signal})
+            const response=await fetch("/Books",{signal:signal}, {
+                headers : { 
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                 }
+          
+              })
             const body=await response.json()
             setBooks(body.express)
+            console.log(body.express)
             localStorage.setItem('numberOfBook', JSON.stringify(body.express.length))
        }
       fetchData();

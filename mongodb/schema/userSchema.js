@@ -27,3 +27,5 @@ let userSchema= new mongoose.Schema({
 });
 
 module.exports=mongoose.model("user",userSchema);
+
+//details holds collection of book covers

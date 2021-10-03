@@ -12,7 +12,13 @@ function Filler(props){
 
         try{
             const init=async()=>{
-                const response=await fetch("/pdfAPI",{signal:signal})
+                const response=await fetch("/pdfAPI",{signal:signal}, {
+                    headers : { 
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json'
+                     }
+              
+                  })
                 const body=await response.json()
                 if(body.express.length===0){
                     return

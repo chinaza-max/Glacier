@@ -100,10 +100,12 @@ app.get('/Books',(req,res)=>{
             console.log(err)
         }
         else{ 
+           
             if(data[0]==undefined){
                 await res.send({express:[]})
             }
             else{
+                console.log(data[0].bookDetails.length)
                 data[0].bookDetails.forEach((data)=>{
                     if(data.name){
                         mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
@@ -123,6 +125,7 @@ app.get('/Books',(req,res)=>{
 app.get("/names/:id",(req,res)=>{
     
     if(req.params.id){
+
         User.findById(req.params.id,(err,data)=>{
             if(err){
                 console.log("check this route /name/:id")
@@ -178,6 +181,7 @@ app.get('/pdfAPI',(req,res)=>{
 //settings route
 app.get('/deleteAllAcc',(req,res)=>{
     deleteAllFiles()
+    deleteAllPostFromNotificattion()
     connection.db.listCollections().toArray((err,names)=>{
         if(err){
             console.log("check route deleteAllAcc ")
@@ -247,6 +251,7 @@ app.get("/deleteSingleAcc/:name",(req,res)=>{
 
 app.get("/deleteAllPDF/:id",(req,res)=>{
     deleteAllPDFFiles()
+    deleteAllPostFromNotificattion()
     User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
         if(err){
             console.log(err)
@@ -298,6 +303,7 @@ app.get('/DropSinglePDF/:name/:id',(req,res)=>{
 
 app.get("/deleteAllPost",(req,res)=>{
     deleteAllPostFromBook();
+    deleteAllPostFromNotificattion()
     //this function below helps to delete all file in the directory;
     deleteAllFiles()
     User.find((err,data)=>{
@@ -318,8 +324,46 @@ app.get("/deleteAllPost",(req,res)=>{
        }
     })
 })
+//Delete single accomodation upload
+app.get("/deleteSingleAccomodation/:name",(req,res)=>{
+    let imgName=req.params.name
+    deletePostFromAccomodationCollection(imgName)
+    User.find({"AccomodationImg.unique":req.params.name},async (err,user)=>{
+        if(err){
+            console.log(err)
+        }
+        else if(user.length!==0){
+            let obj=await user[0].AccomodationImg.find((va)=>{    
+                return  va.unique==imgName
+            })
+          
+            if(obj){
+                await User.findOneAndUpdate({_id:user[0]._id},
+                    {$pull:{AccomodationImg:obj}})
+                
+                try{
+                    if(obj.name=="/accomodationImg/firstImg.jpg"){
+                          res.send({express:"succefully Deleted"})
+                    }
+                    else{
+                        fs.unlinkSync("./client/public"+obj.name)
+                        res.send({express:"succefully Deleted"})
+                    }
+                }
+                catch(err){
+                    console.log("err"+  err)
+                }
+            
+            }
 
-
+        }
+        else{
+            res.status(200).send({"express":"does not exit"})
+        }
+    
+    })
+})
+//Delete single book cover
 app.get("/deleteSinglePost/:name",(req,res)=>{
     let imgName=req.params.name
     deletePostFromBookCollection(imgName)
@@ -349,8 +393,6 @@ app.get("/deleteSinglePost/:name",(req,res)=>{
 
         }
         else{
-            console.log(2)
-           
              res.status(200).send({"express":"does not exit"})
         }
     
@@ -406,7 +448,7 @@ app.get("/accomodations",(req,res)=>{
             else{
                 data[0].AccomodationImg.forEach((data)=>{
                     if(data.name){
-                        mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel})
+                        mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel,"id":data.id,"unique":data.unique})
                     }
                 })
                 let len=mainData.length-1
@@ -423,7 +465,7 @@ app.get("/accomodations",(req,res)=>{
         await res.send({express:reArrangeMainData})
     }
 })
-//this get and also remove due notipfication from database ;
+//this get and also remove due notification from database ;
 app.get("/notifications",(req,res)=>{
    //deleteAllPostFromNotificattion()
 
@@ -572,8 +614,8 @@ app.post("/uploadPDF/:id",(req,res)=>{
     return res.status(400).json({msg:"No file uploaded"});
     }
     const file=req.files.file;
-   
-    if(file){
+
+    if(file.mimetype.toLowerCase()=="application/pdf"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {
                 return   console.log(err)
@@ -589,18 +631,18 @@ app.post("/uploadPDF/:id",(req,res)=>{
                     pdf(dataBuffer).then(function(data) {
  
                         // number of pages
-                        console.log(data.numpages);
+                       // console.log(data.numpages);
                         // number of rendered pages
                         //console.log(data.numrender);
                         // PDF info
-                        console.log(data.info);
+                       // console.log(data.info);
                         // PDF metadata
-                        console.log(data.metadata);
+                       // console.log(data.metadata);
                         // PDF.js version
                         // check https://mozilla.github.io/pdf.js/getting_started/
                        // console.log(data.version);
                         // PDF text
-                        console.log(data.text); 
+                       // console.log(data.text); 
                             
                     });
 
@@ -613,9 +655,9 @@ app.post("/uploadPDF/:id",(req,res)=>{
                         file.size=0;
                        // console.log(file)
                        uploadRequest2(req.body.courseCode,"PDF",filename,id)
-                        res.json({fileName:file.name,filePath:`/uploadPDFs/${file.name}`})
-                        await User.findOneAndUpdate({_id:id},
-                            {$push:{pdfs:file}})
+                    
+                        res.json({message:"success"})
+                        await User.findOneAndUpdate({_id:id},{$push:{pdfs:file}})
                     }
                 })
             }
@@ -633,8 +675,6 @@ app.post('/upload/:id',(req,res)=>{
         return res.status(400).json({msg:"No file uploaded"});
     }
     const file=req.files.file;
-    console.log(file.mimetype.toLowerCase())
-
     if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase()=="image/jpg"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {
@@ -642,7 +682,6 @@ app.post('/upload/:id',(req,res)=>{
             }
             else{
                 const filename = buf.toString('hex') + path.extname(file.name);
-          
                 await filename
                 if(filename){
                     file.name=filename
@@ -661,36 +700,39 @@ app.post('/upload/:id',(req,res)=>{
                         file.data='';
                         file.size=0;
                             //console.log(file)
-                            res.json({fileName:file.name,filePath:`/uploads/${file.name}`})
                         })
                         uploadRequest2(req.body.title,req.body.faculty,filename,id)
-                        await User.findOneAndUpdate({_id:id},{$push:{details:file}})
+                        await User.findOneAndUpdate({_id:id},{$push:{details:file}},(err,doc)=>{
+                            if(err){
+                                console.log("check book upload route")
+                                console.log(err)                            }
+                        })
                         //initializing book schema to actual get an ID
                         allImg.find(async(err,data)=>{
                             
                            if(err){
+                                console.log("check book upload route  'allImg'")
                                 console.log(err)
                            }
                            else{
+
                                 if(data.length>=1){
-                                    allImg.find(async(err,data)=>{
-                                        if(err){
-                                            console.log(err)
-                                        }
-                                        else{
+                                    console.log("up and running")
+                                          
                                             await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
-                                        }
-                                    
-                                    })
+                                            res.json({message:"success"})
                                 }
                                 else{
+                                   
                                     await new allImg({bookDetails:["test"]}).save()
                                     allImg.find(async(err,data)=>{
+                                      
                                         if(err){
                                             console.log(err)
                                         }
                                         else{
                                             await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                            res.json({message:"success"})
                                         }
                                     
                                     })
@@ -777,17 +819,29 @@ app.post("/uploadRequest/:id",(req,res)=>{
 
 app.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
-    
+ 
     
     if(req.files==null){
-        let file= { name:'',data: '',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
+      
+        let file= { name:'',data:'',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
+                crypto.randomBytes(16,async (err,buf) => {
+                        if (err) {
+                            return   console.log(err)
+                        }
+                        else{
+                            const filename =await buf.toString('hex') + path.extname(req.body.selection);
+                            file.unique=filename
+                        }
+                    }
+                )
                 file.name="/accomodationImg/firstImg.jpg";
                 file.Price=req.body.Price;
-                file.Address=req.body.Address.toLowerCase();
-                file.selection=req.body.selection.toLowerCase();
+                file.Address=req.body.Address
+                file.selection=req.body.selection
                 file.tel=req.body.tel;
-                    
-                res.json({fileName:file.name,filePath:`${file.name}`})
+                file.id=id
+                
+
                 await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
                 
                 //initializing book schema to actual get an ID
@@ -798,14 +852,8 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
                     }
                     else{
                         if(data.length>=1){
-                            allImg.find(async(err,data)=>{
-                                if(err){
-                                    console.log(err)
-                                }
-                                else{
+                          
                                     await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
-                                }
-                            })
                         }
                         else{
                             await new allImg({AccomodationImg:["test"]}).save()
@@ -821,87 +869,96 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
                         }
                     }
                 })
-        return
-    }
-    const file=req.files.file;
-
-    if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase=="image/jpg"){
-        crypto.randomBytes(16,async (err,buf) => {
-            if (err) {
-                return   console.log(err)
-            }
-            else{
-                const filename =await buf.toString('hex') + path.extname(file.name);
-          
-               
-                if(filename){
-                    file.name="/Accomodation_upload/"+filename
-                    file.Price=req.body.Price
-                    file.Address=req.body.Address.toLowerCase()
-                    file.selection=req.body.selection.toLowerCase()
-                    file.tel=req.body.tel
-                    file.mv( `${__dirname}/client/public${file.name}`,async(err)=>{
-                        if(err){
-                            console.log(err)
-                            return res.status(500).send(err)
-                        }
-                        file.data='';
-                        file.size=0;
-    
-                            res.json({fileName:file.name,filePath:`${file.name}`})
-                        })
-                        
-                        await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
-                        //initializing book schema to actual get an ID
-                        allImg.find(async(err,data)=>{
-                            
-                           if(err){
-                                console.log(err)
-                           }
-                           else{
-                                if(data.length>=1){
-                                    allImg.find(async(err,data)=>{
-                                        if(err){
-                                            console.log(err)
-                                        }
-                                        else{
-                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
-                                        }
-                                    
-                                    })
-                                }
-                                else{
-                                    await new allImg({AccomodationImg:["test"]}).save()
-                                    allImg.find(async(err,data)=>{
-                                        if(err){
-                                            console.log(err)
-                                        }
-                                        else{
-                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
-                                        }
-                                    
-                                    })
-                                }
-                           }
-                        })
-                }
-            }
-           
-        })
+        return res.json({message:"success"})
     }
     else{
-        res.json({fileName:'',filePath:'',errMessage:'file extension not supported '});
+  
+        const file=req.files.file;
+        if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase=="image/jpg"){
+            crypto.randomBytes(16,async (err,buf) => {
+                if (err) {
+                    return   console.log(err)
+                }
+                else{
+                    const filename =await buf.toString('hex') + path.extname(file.name);
+            
+                    if(filename){
+                        file.name="/Accomodation_upload/"+filename
+                        file.Price=req.body.Price
+                        file.Address=req.body.Address.toLowerCase()
+                        file.selection=req.body.selection.toLowerCase()
+                        file.tel=req.body.tel
+                        file.id=id
+                        file.unique=filename
+                        file.mv( `${__dirname}/client/public${file.name}`,async(err)=>{
+                            if(err){
+                                console.log(err)
+                                return res.status(500).send(err)
+                            }
+                            file.data='';
+                            file.size=0;
+        
+                            })
+                            
+                            await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
+                            //initializing book schema to actual get an ID
+                            allImg.find(async(err,data)=>{
+                                
+                            if(err){
+                                    console.log(err)
+                            }
+                            else{
+                                    if(data.length>=1){
+                                        allImg.find(async(err,data)=>{
+                                            if(err){
+                                                console.log(err)
+                                            }
+                                            else{
+                                                await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
+                                            }
+                                        
+                                        })
+                                    }
+                                    else{
+                                        await new allImg({AccomodationImg:["test"]}).save()
+                                        allImg.find(async(err,data)=>{
+                                            if(err){
+                                                console.log("check this route /Accomodation_upload/:id")
+                                                console.log(err)
+                                            }
+                                            else{
+                                                await allImg.findOneAndUpdate({_id:data[0].id},{$push:{AccomodationImg:file}})
+                                            }
+                                        
+                                        })
+                                    }
+                            }
+                            })
+                            
+                            res.json({message:"success"})
+                    }
+                }
+            
+            })
+        }
+        else{
+            res.json({fileName:'',filePath:'',errMessage:'file extension not supported '});
+        }
     }
+    
 })
 
 //this function help you upload notification when a user upload text book or pdf
 function uploadRequest2(title,faculty,bookURL,id){
+  
     crypto.randomBytes(16,async (err,buf) => {
+    
         if (err) {
+         
             return   console.log(err)
         }
         else{
-          
+            
             const notificationID = buf.toString('hex') + path.extname(id)
             const file={"title":'',"faculty":'',"bookURL":'',"notificationID":'',
                 "userID":'',"notification":'',"requestType":'',"name":'',"phone":'',
@@ -919,6 +976,7 @@ function uploadRequest2(title,faculty,bookURL,id){
             file.datePosted=new Date().getDate()
             Notification.find(async(err,data)=>{
                 if(err){
+                    
                         console.log(err)
                 }
                 else{
@@ -930,9 +988,7 @@ function uploadRequest2(title,faculty,bookURL,id){
                             }
                             else{
                                 await Notification.findOneAndUpdate({_id:data[0].id},{$push:{notification:file}})
-                              /*  Notification.find((err,data)=>{
-                                    console.log(data[0].notification[5])
-                                })*/
+                             
                             }
                         })
                     }
@@ -948,9 +1004,11 @@ function uploadRequest2(title,faculty,bookURL,id){
                         
                         })
                     }
+                   
                 }
             })
         }
+        return 
     })
 }
 
@@ -975,6 +1033,24 @@ function deletePostFromBookCollection(name){
             if(obj){
                 await allImg.findOneAndUpdate({_id:user[0]._id},
                     {$pull:{bookDetails:obj}})
+            }
+        }
+    })
+}
+
+function deletePostFromAccomodationCollection(name){
+    allImg.find({"AccomodationImg.unique":name},async (err,user)=>{
+        if(err){
+            console.log("err")
+            console.log(err)
+        }
+        else if(user.length!==0){
+            let obj=await user[0].AccomodationImg.find((va)=>{    
+                return  va.unique==name
+            })
+            if(obj){
+                await allImg.findOneAndUpdate({_id:user[0]._id},
+                    {$pull:{AccomodationImg:obj}})
             }
         }
     })
@@ -1069,8 +1145,8 @@ function deleteAllPostFromNotificattion(){
              })
         }
     })
-
 }
+
 function deleteAllPostFromBook(){
     allImg.find((err,data)=>{
         if(err){

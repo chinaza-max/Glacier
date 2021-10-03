@@ -38,6 +38,7 @@
     "react-scroll": "^1.8.1",
     "request": "^2.88.2",
     "styled-components": "^5.2.1",
+    "sweetalert2": "^11.1.6",
     "xml2js": "^0.4.23"
   }
 }
