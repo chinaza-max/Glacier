@@ -57,7 +57,12 @@ app.delete('/logout',(req,res)=>{
 
 app.get('/posts/:id',(req,res)=>{
     User.findById({_id:req.params.id},async(err,data)=>{
-    await    res.send({express:data})
+        if(err){
+            return console.log(err)
+        }
+        else{
+            await    res.send({express:data})
+        }
     })
 })
 
@@ -668,7 +673,7 @@ app.post("/uploadPDF/:id",(req,res)=>{
     }
 })
 
-
+//handle s book uploads 
 app.post('/upload/:id',(req,res)=>{
     const id=req.params.id
     if(req.files===null){
@@ -702,11 +707,7 @@ app.post('/upload/:id',(req,res)=>{
                             //console.log(file)
                         })
                         uploadRequest2(req.body.title,req.body.faculty,filename,id)
-                        await User.findOneAndUpdate({_id:id},{$push:{details:file}},(err,doc)=>{
-                            if(err){
-                                console.log("check book upload route")
-                                console.log(err)                            }
-                        })
+                        await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                         //initializing book schema to actual get an ID
                         allImg.find(async(err,data)=>{
                             
@@ -885,8 +886,8 @@ app.post('/Accomodation_upload/:id',async(req,res)=>{
                     if(filename){
                         file.name="/Accomodation_upload/"+filename
                         file.Price=req.body.Price
-                        file.Address=req.body.Address.toLowerCase()
-                        file.selection=req.body.selection.toLowerCase()
+                        file.Address=req.body.Address
+                        file.selection=req.body.selection
                         file.tel=req.body.tel
                         file.id=id
                         file.unique=filename

@@ -12,10 +12,11 @@ function Detail(props){
 
     const {name}=useParams();
  
-    const isMounted = useRef(false);
+   
+   // const isMounted = useRef(false);
     useEffect(()=>{
       
-        isMounted.current = true;
+       // isMounted.current = true;
 
         const init=async ()=>{
             const response=fetch("/details/"+name)
@@ -28,7 +29,7 @@ function Detail(props){
         }
         init();
  
-        return () => isMounted.current = false;
+       // return () => isMounted.current = false;
     },[name])
         return(
                 <div  className="firstDetailBody">
@@ -70,7 +71,7 @@ function Detail(props){
                     </div>
                 </div>
         )
-        return isMounted;
+        //return isMounted;
 }
 export default Detail;
 

@@ -11,7 +11,7 @@ function Accomodation_Upload(props){
     const [file,setFile]=useState('');
     const [filename,setFilename]=useState('upload image of building');
     const [uploadedFile,setUploadedFile]=useState({});
-    const [eventInfo,setEventInfo]=useState({Price:0,Address:'',selection:'lodge',tel:''});
+    const [eventInfo,setEventInfo]=useState({Price:0,Address:'',selection:'LODGE',tel:''});
     const {Price,Address,selection,tel}=eventInfo
     const {id}=useParams()
     let i=0;

@@ -51,13 +51,13 @@ function AccomodationNav(props){
             <div className="Accomodation_nav_body">
                 <div className="title" style={SearchTitle}> Accomodation Search</div>
                 <div className="search" style={search}>       
-                    <input type="search"  placeholder="Search ....." className="form-control" onChange={onchange} />
+                    <input type="search"  placeholder="Search ..... by name, price and description" className="form-control" onChange={onchange} />
                 </div>
                 <div className="select">
                     <select name="select" id="select" required onChange={handleChange}>
                         <option name="Lodge">All</option>
-                        <option name="Lodge">lodge</option>
-                        <option name="Hostel">hostel</option>
+                        <option name="Lodge">LODGE</option>
+                        <option name="Hostel">HOSTEL</option>
                     </select>
                 </div>
             </div>

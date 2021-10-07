@@ -1,4 +1,4 @@
-import React,{Fragment,useState} from 'react';
+import React,{Fragment,useState,useEffect} from 'react';
 import axios from 'axios'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 
 
-
+/*upload PDF*/
 const UploadBody=(props)=>{
     const [file,setFile]=useState('');
     const [filename,setFilename]=useState('Choose file');
@@ -64,6 +64,10 @@ const UploadBody=(props)=>{
                         title: 'Your work has been upload successfully',
                         showConfirmButton: false,
                         timer: 1500
+                      }).then(()=>{
+                        let submitButton = document.getElementById('submitID');
+                        // enable the submit button
+                        submitButton.disabled = false;
                       })
                       emptyInput();
                 }
@@ -100,11 +104,21 @@ const UploadBody=(props)=>{
             }
         }
     }
+    useEffect(()=>{
+        let form = document.getElementById('formID');
+        let submitButton = document.getElementById('submitID');
+        form.addEventListener('submit', function() {
+        // Disable the submit button
+        submitButton.setAttribute('disabled', true);
+        // Change the "Submit" text
+        submitButton.value = 'Please wait...';             
+        }, false);
+    })
     return(
         <Fragment>
             <div className="container">
     
-                <form onSubmit={onSubmit}  encType="multipart/form-data">
+                <form onSubmit={onSubmit} id="formID" encType="multipart/form-data">
                     <div className="custom-file mt-4">
                         <input type="file" name="file" className="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={(e)=>onChange(e)} required/>
                         <label className="custom-file-label" htmlFor="inputGroupFile03">{filename}</label>
@@ -115,7 +129,7 @@ const UploadBody=(props)=>{
                         <label>course code :</label>
                         <input type="text" name="courseCode" id="courseCode" onChange={handleChange} required/>
                     </div>
-                    <input type="submit" value="Upload"  className="btn btn-primary btn-block  mt-4"/>
+                    <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
                 </form>
                
                 <div id="myProgress">

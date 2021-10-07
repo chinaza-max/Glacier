@@ -71,6 +71,10 @@ const UploadBody=(props)=>{
                         title: 'Your work has been upload successfully',
                         showConfirmButton: false,
                         timer: 2500
+                      }).then(()=>{
+                        let submitButton = document.getElementById('submitID');
+                        // enable the submit button
+                        submitButton.disabled = false;
                       })
                       emptyInput();
                 }
@@ -111,9 +115,22 @@ const UploadBody=(props)=>{
         }
     }
     useEffect(()=>{
-        var form = document.getElementById("myForm");
+        
+       
+
+
+        let form = document.getElementById("myForm");
         function handleForm(event) { event.preventDefault(); } 
         form.addEventListener('submit', handleForm);
+        let submitButton = document.getElementById('submitID');
+
+        //this listener disable button when there is multiple click
+        form.addEventListener('submit', function() {
+        // Disable the submit button
+        submitButton.setAttribute('disabled', true);
+        // Change the "Submit" text
+        submitButton.value = 'Please wait...';             
+        }, false);
     })
     return(
         <Fragment>
@@ -146,7 +163,7 @@ const UploadBody=(props)=>{
                         <label>tel :</label>
                         <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} required/>
                     </div>
-                    <input type="submit" value="Upload"  className="btn btn-primary btn-block  mt-4"/>
+                    <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
                 </form>
                 <div id="myProgress">
                     <div id="myBar"></div>

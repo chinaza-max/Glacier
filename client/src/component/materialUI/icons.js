@@ -67,11 +67,11 @@ function BadgeMax() {
               
             }
         }
-    const intervaID=setInterval(() => {
+   /* const intervaID=setInterval(() => {
       setNotificationAlert()
     }, 6000);
     
-    return()=> { clearInterval(intervaID); }
+    return()=> { clearInterval(intervaID); }*/
     
  
   },[])
