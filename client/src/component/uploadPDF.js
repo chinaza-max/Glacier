@@ -1,5 +1,5 @@
 import React from "react";
-import {useParams,Link } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import Uploadnav from "./sub-components/setingsNav"
 import UploadBody2 from "../component/uploadBody2"  
 import "../style/footer3.css"

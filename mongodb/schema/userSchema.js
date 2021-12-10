@@ -5,7 +5,7 @@ let userSchema= new mongoose.Schema({
         required:'this field is required',
         trim:true
     },
-    password:{
+    password:{ 
         type:String,
         required:"this field is required",
         trim:true
@@ -17,7 +17,6 @@ let userSchema= new mongoose.Schema({
     },
     tel:{
         type:Number,
-        required:"this field is required",
         minimum:11
     },
     details:[],

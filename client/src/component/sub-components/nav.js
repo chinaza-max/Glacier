@@ -10,7 +10,7 @@ import {BadgeMax} from '../materialUI/icons'
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PersonIcon from '@material-ui/icons/Person';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-
+ 
 
 class  Nav extends React.Component{
     constructor(props){
@@ -19,24 +19,28 @@ class  Nav extends React.Component{
         this.fillerFunc=this.fillerFunc.bind(this)
         this.toggle=this.toggle.bind(this)
         this.handleClick= this.handleClick.bind(this)
+        this.Logout=this.Logout.bind(this)
         this.state={name:'',tel:"",navName:"Filler"}
         this.id=props.userId
         this.node=React.createRef()
         
     }
-
+    Logout(){
+        window.localStorage.setItem('isAuthenticated',false)
+        window.localStorage.setItem('id','')
+    } 
     filterTextHolder(e){
         this.props.filterTextFunP(e.target.value)
     }
     fillerFunc(){
-    
-        if(this.state.navName==='Filler'){
-                this.props.mainFillerFuncP('Book')
-                this.setState({navName:"Book"})
+        if(this.props.navNameP==='Filler'){
+               // this.props.mainFillerFuncP('Book')
+                this.props.updateNavNameP("Book")
+
         }
         else{
-            this.props.mainFillerFuncP('Filler')
-            this.setState({navName:"Filler"})
+           //this.props.mainFillerFuncP('Filler')
+            this.props.updateNavNameP("Filler")
         }
     }
     toggle(){
@@ -49,8 +53,6 @@ class  Nav extends React.Component{
         element.classList.toggle("toggle1")
     }
     handleClick(e){
-     
-       console.log(this.node.current.contains(e.target))
         if(this.node.current.contains(e.target)===false){
                 let element=document.getElementById("small-siz-naz")
                 element.classList.remove("toggle");
@@ -62,7 +64,13 @@ componentDidMount(){
         
         document.addEventListener("mousedown",this.handleClick)
         if(this.id){
+            //for login 
+            window.localStorage.setItem('id',this.id)
+            window.localStorage.setItem('isAuthenticated',true)
+
+
             document.getElementById("upload2").addEventListener("click",this.toggle2)
+
         const init=async ()=>{
             const  response= fetch("/names/"+this.id)
             let body=await response.then(res=>res.json())
@@ -95,9 +103,7 @@ componentWillUnmount(){
                     </div>
                     {this.props.userId ? 
                     <div className="navContent">
-                          <form  action="/logout?_method=DELETE" method="POST">
-                                <button className="logout"  style={{textDecoration:"none"}}>logout</button>
-                          </form>
+                                <Link className="logout" to="/login" onClick={()=>this.Logout()}   style={{textDecoration:"none"}}>logout</Link>
                     </div>:
                         <div>    
                               <div className="navContent">
@@ -136,7 +142,7 @@ componentWillUnmount(){
                                         </Link>  
                                     </li>
                                     <li> 
-                                        <Link className="remove_linkStyle pdID" id="bookID" style={{color:"white"}}  to={`/home/${this.props.userId}/upload`}>
+                                        <Link className="remove_linkStyle pdID" id="bookID" style={{color:"white"}}  to={`/home/${this.props.userId}/uploadBook`}>
                                             Book
                                         </Link>  
                                     </li>
@@ -156,7 +162,7 @@ componentWillUnmount(){
                         }
 
                         <div className="navContent resize">
-                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.state.navName}/>
+                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.props.navNameP}/>
                         </div>
                         <div className="navContent resize">
                             <Link className="nav-link navContent" to={`/home/${this.props.userId}/Accomodation/`}>
@@ -189,8 +195,14 @@ componentWillUnmount(){
                         }
                   
                         <div className="navContent resize">
-                            <span className="iconDestop"><PersonIcon/></span>About
+                
+                            <Link className="remove_linkStyle navContent"     to={`/home/${this.props.userId}/profile`}>
+                                    <span className="iconDestop"><PersonIcon/></span> About
+                            </Link>  
+
                         </div>
+
+
                         <div className="navContent name resize" style={{color:"black"}}>chinaza</div>
                     </div>
                 </div>

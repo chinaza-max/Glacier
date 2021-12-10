@@ -3,6 +3,7 @@
     width: 100vw;
     height: 70px;
     z-index: 10;
+    top: 0;
 }
 #nav__setting{
     display:  flex;

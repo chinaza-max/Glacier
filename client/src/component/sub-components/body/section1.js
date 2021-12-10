@@ -2,7 +2,7 @@ import '../../../style/section1.css';
 // import Carousel from "react-elastic-carousel";
 import Item from "../../sub-components/body/item2";
 import "../../../style/styles2.css";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MyCarousel from '../../Carousel';
 
 
@@ -15,19 +15,29 @@ const breakPoints = [
 
 ];
 function Section1(props){
+    
+    function changeView(value){
+        props.updateNavNameP(value)
+    }
     return(
       <div>
         <h5 className="categories-title" style={{zIndex:900000}}>categories</h5>
           <div  className='section1'>
               <MyCarousel breakPoints={breakPoints} autoPlaySpeed={5000} >
                   <Item style={{height:160,width:250,}}>
-                    <div id="section1Book"  className="divCategory"><h3 className="h3Categories">Books</h3>  </div>
+                    <div id="section1Book"  className="divCategory"><h3 className="h3Categories" onClick={()=>changeView("Filler")}>Books</h3>  </div>
                   </Item>
                   <Item style={{height:160,width:250,}}>
-                      <div id="section1Filler"  className="divCategory"><h4 className="h3Categories">School Filler</h4>  </div>
+                      <div id="section1Filler"  className="divCategory"><h4 className="h3Categories" onClick={()=>changeView("Book")}>School Filler</h4>  </div>
                   </Item>
                   <Item style={{height:160,width:250,}} >
-                      <div id="section1Accomodation"  className="divCategory"><h4 className="h3Categories"> Accomodation</h4>  </div>
+                      <div id="section1Accomodation"  className="divCategory">
+                            <h4 className="h3Categories"> 
+                                <Link  className=" h3Categories__link"  to={`/home/${props.id}/Accomodation/`} >
+                                        Accomodation
+                                </Link> 
+                            </h4>
+                      </div>
                   </Item>
                   <Item style={{height:160,width:250,}} >
                       <div id="section1Project"  className="divCategory"><h4 className="h3Categories"> Project Helper</h4>  </div>

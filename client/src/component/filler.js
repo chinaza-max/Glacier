@@ -38,11 +38,8 @@ function Filler(props){
 
 
     let data=PDFs.map((data)=>{
-       
-
         if(data.courseCode.indexOf(props.searchString2.toLowerCase())===-1){
-            console.log("data")
-            return;
+            return '';
         }
         else{
             return(
@@ -56,7 +53,7 @@ function Filler(props){
                 </div>
             )
         }
-      
+    
     })
 
     return(

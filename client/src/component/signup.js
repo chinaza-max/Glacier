@@ -9,12 +9,14 @@ import {useHistory } from "react-router-dom";
 function Signup(){
     const history=useHistory()
     const [eventInfo,setEventInfo]=useState({name:'',password:'',email:'',tel:''});
+    const [error,setError]=useState('')
 
     const{name,password,email,tel}=eventInfo
 
     const handleChange=(event)=>{
         const {name,value}=event.target
         setEventInfo({...eventInfo,[name]:value})
+
     }
 
     const onSubmit=async (e)=>{
@@ -24,29 +26,27 @@ function Signup(){
         formData.append('password',password);
         formData.append('email',email);
         formData.append('tel',tel);
-       
-        try{
-            const res=await axios.post('/signup',formData,{
-                headers:{
-                    'Content-Type':'multipart/form-data'
-                }
-            });
 
-            const{login}=res.data;
-            
-            history.push(login)
-        }
-        catch(err){
-            if(err){
-                console.log(err)
+        axios.post('/signup',formData,{
+            headers:{
+                'Content-Type':'multipart/form-data'
             }
-            else{
-                //console.log(err.response.data.msg)
+        })
+        .then((res)=>{
+            console.log(res.data.express)
+            if(res.data.express==="saved"){
+                history.push("/login")
             }
-        }
+        }) 
+        .catch((error)=>{
+            console.log(error.response.data.express)
+            //setError(error.response.data.express)
+        }); 
     }
+   
     return(
         <div>
+            {error?error:""}
             <form   onSubmit={onSubmit}  encType="multipart/form-data">
                 <div>
                 <input type="text" placeholder="Enter first name" name="name" onChange={handleChange}></input>

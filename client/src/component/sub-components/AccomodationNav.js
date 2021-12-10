@@ -41,10 +41,10 @@ function AccomodationNav(props){
         }
     }
     useEffect(()=>{
-        const aboutController=new AbortController()
+
        
         window.addEventListener('scroll',listenForScroll)
-        return ()=> aboutController.abort()
+        return()=>window.removeEventListener('scroll',listenForScroll)
     },[])
     return(
         <div className="Accomodation_nav-container" style={changeNavStyle}>

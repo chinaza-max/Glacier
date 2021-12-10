@@ -45,8 +45,7 @@ function Accomodation(props){
                             'Accept': 'application/json'
                            }
                     })
-                    const body=await response.json()
-                    console.log(body.express)   
+                    const body=await response.json() 
                     if(body.express=== "No user found"){
                         Swal.fire(
                             'NotDeleted!',
@@ -87,7 +86,6 @@ function Accomodation(props){
             {signal:signal})
             const body=await response.json()
             setaccomodation(body.express)
-            console.log(body.express)
         }
         init()
         return ()=> aboutController.abort()

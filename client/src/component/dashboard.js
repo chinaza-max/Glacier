@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react';
-import {useParams,Link } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import NavDashboard from "./sub-components/dashboard/dashboardNav"
 import "../style/dashBoardSettings.css"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -9,7 +9,6 @@ import axios from "axios";
 
 function Dashboard(props){
     const[post,setposts]=useState([])
-    const[loader,setLoader]=useState('loader2')
     const[fliterText,setFliterText]=useState('')
     const[numberOfItem,setNumberOfItem]=useState('')
     const {id}=useParams();
@@ -43,19 +42,12 @@ function Dashboard(props){
     function creatingObj(name,title,author,date){
         update.push({name,title,author,date})
     }
-    console.log(update)
-  async  function onclickHandle(route){
-    await fetch(route, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        },setLoader(route))
+    function updateSetposts(data){
+        console.log("hdhdhdh")
+        //setposts(data)
     }
-
     useEffect(()=>{
-    const aboutController=new AbortController()
-    const signal=aboutController.signal
+        
     const init =async ()=>{
      
         axios.get('/posts/'+id).then((body) => {
@@ -65,23 +57,15 @@ function Dashboard(props){
         });
     }
     init();
-      return ()=> aboutController.abort()
-    },[loader,id])
+    
+    },[id])
 
-    let data=post.map((data)=>{
-        return(
-            <div  key={data.name} className="BodySettingContainer" >
-                    <div className="BodySettingContainer_sub">Title :{data.title}</div>
-                    <div className="BodySettingContainer_sub">Author : {data.author}</div>
-                    <div className="BodySettingContainer_sub" onClick={()=>{onclickHandle("/deletePost/"+id+"/"+data.name)}}>Delete</div>
-             </div>
-        )
-    })
+ 
         return(
                 <div id="dashBoardContainer">
                     <NavDashboard history={props.history} numberOfItemP={numberOfItem} id={id} dashBoardSortP={dashBoardSort}/>
                     <div id="dashBoardContainer__content">
-                        <DashboardUI uploadP={update} setLoaderP={setLoader}/>
+                        <DashboardUI uploadP={update} updateSetpostsP={updateSetposts()}/>
                     </div>
                 </div>
         )

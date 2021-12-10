@@ -1,6 +1,19 @@
 .section1{
     margin-top: 80px;
 }
+.h3Categories__link{
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+}
+.h3Categories__link:hover{
+    text-decoration: none; 
+    color: white;
+}
+.h3Categories{
+    cursor: pointer;
+}
 @media(max-width:1024px){
     .section1{
         margin-top: 10px;

@@ -7,9 +7,7 @@ function SettingsNav(props) {
     function  goBack(){
         props.history.goBack()
     }
-    function  dashboard(){
-      //props.history.push("/Dashboard/"+props.id)
-    }
+    
     
         return (
                <div>
@@ -17,7 +15,7 @@ function SettingsNav(props) {
                   <ul className="navSetting" style={{backgroundColor: "black"}}>
                         <li className="nav-item">
                           <div className="nav-link active" onClick={goBack} style={{color: "white"}}>
-                            <ArrowBackIcon style={{fontSize: 50 + 'px',paddingTop: 20 + 'px',position:"absolute",left:-2+"px"}}/>
+                          <ArrowBackIcon style={{fontSize: 50 + 'px',paddingTop: 20 + 'px',position:"absolute",left:-2+"px"}}/>
                           </div>
                         </li>
                         <ul id="nav__setting" >
@@ -27,7 +25,7 @@ function SettingsNav(props) {
                               </li>
                             }
                             <li>
-                                <Link  className="nav__setting__link" to={"#"}>About</Link>
+                                <Link  className="nav__setting__link"  id="nav__setting__about" to={"#"}>About</Link>
                             </li>
                         </ul>
                         

@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -21,28 +21,8 @@ import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import {useParams } from "react-router-dom";
+import Swal from 'sweetalert2';
 
-function createData(name, calories, fat,) {
-  return { name, calories, fat,};
-}
-
-/*
-const rows = [
-  createData('Cupcake', 305, "k", ),
-  createData('Donut', 452, 25.0,),
-  createData('Eclair', 262, 16.0,),
-  createData('Frozen yoghurt', 159, 6.0,),
-  createData('Gingerbread', 356, 16.0,),
-  createData('Honeycomb', 408, 3.2,),
-  createData('Ice cream sandwich', 237, 9.0,),
-  createData('Jelly Bean', 375, 0.0,),
-  createData('KitKat', 518, 26.0,),
-  createData('Lollipop', 392, 0.2,),
-  createData('Marshmallow', 318, 0,),
-  createData('Nougat', 360, 19.0,),
-  createData('Oreo', 437, 18.0,),
-];
-*/
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -68,15 +48,7 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
-/*
-const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
-];
-*/
+
 const headCells = [
     { id: 'name', numeric: false, disablePadding: true, label: 'Title of book'},
     { id: 'Author', numeric: true, disablePadding: false, label: 'Author' },
@@ -165,22 +137,49 @@ const EnhancedTableToolbar = (props) => {
 
   function deletefunc(){
     
-    onclickHandle("/deletePost/"+id+"/"+props.selectedP)
-    async  function onclickHandle(route){
-      await fetch(route, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-          })
-          .then((data)=>{
-            return data.json()
-          })
-          .then((res)=>{
-            console.log(res.message)
-            props.setLoaderP()
-          })
-    }
+
+    Swal.fire({
+      title: 'remove accomodation from database?',
+      showCancelButton: true,
+      titleColor:"#ED3137",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async(result) => {
+      if (result.isConfirmed) {
+        onclickHandle("/deletePost/"+id+"/"+props.selectedP)
+        async  function onclickHandle(route){
+          await fetch(route, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+              })
+              .then((data)=>{
+                return data.json()
+              })
+              .then((res)=>{
+                console.log(res.express)
+                if(res.express==="successful"){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Your work has been upload successfully',
+                      showConfirmButton: false,
+                      timer: 2500
+                    }).then(()=>window.location.reload(false))
+                } 
+              })
+        }
+
+      }
+      else{
+        return;
+      }
+    })
+
+
+
+   
     
   }
 

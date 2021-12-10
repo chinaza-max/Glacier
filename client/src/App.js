@@ -2,7 +2,7 @@
 import './App.css';
 import {BrowserRouter as Router, Route,Switch} from "react-router-dom";
 import Home from "./component/home";
-import Upload from "./component/sub-components/upload";
+import uploadBook from "./component/sub-components/uploadBook";
 import Signup from "./component/signup";
 import Login from "./component/login";
 import Dashboard from "./component/dashboard";
@@ -14,6 +14,7 @@ import Accomodation_Upload from "./component/Accomodation_Upload";
 import Accomodation from "./component/Accomodation";
 import Accomodation_UploadRequest from "./component/Accomodation_UploadRequest/Accomodation_UploadRequest";
 import Notification from  "./component/notification";
+import Profile from "./component/profile"
 import "./style/firstbody.css";
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
             <Route path="/login" component={Login}/>
             
             <Route path="/signup" component={Signup}/>
+
+            <Route path="/profile" component={Profile}/>
             
             <Route path="/home/:id/setting" component={Setting}/>
             
@@ -41,13 +44,17 @@ function App() {
 
             <Route path="/home/:id/Accomodation_UploadRequest" component={Accomodation_UploadRequest}/>
            
-            <Route path="/home/:id/upload" component={Upload}/>
+            <Route path="/home/:id/profile" component={Profile}/>
+            
+            <Route path="/home/:id/uploadBook" component={uploadBook}/>
            
             <Route path="/home/:id" component={Home}/>
        
             <Route path="/details/:name" component={Detail}/>
             
             <Route path="/downloadPDF/:name" component={downloadPDF}/>
+
+
   
         </Switch>
       </Router>
