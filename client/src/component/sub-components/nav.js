@@ -10,7 +10,11 @@ import {BadgeMax} from '../materialUI/icons'
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PersonIcon from '@material-ui/icons/Person';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
- 
+import axios from 'axios'
+import Swal from 'sweetalert2'
+
+
+
 
 class  Nav extends React.Component{
     constructor(props){
@@ -20,10 +24,31 @@ class  Nav extends React.Component{
         this.toggle=this.toggle.bind(this)
         this.handleClick= this.handleClick.bind(this)
         this.Logout=this.Logout.bind(this)
+        this.validateTel=this.validateTel.bind(this)
         this.state={name:'',tel:"",navName:"Filler"}
         this.id=props.userId
         this.node=React.createRef()
-        
+    }
+    validateTel(value){
+        const number=/^[0-9]+$/
+      if(value){
+            if(!value.match(number)){
+                console.log("typeof value")
+                return "numeric character only Re-enter no"
+            }
+            else if(value.length<11){
+                return "incomplete number Re-enter no";
+            }
+            else if(value.length>11){
+                return "exceded limit Re-enter no";
+            }
+            else{
+                return true;
+            }
+      }
+      else{
+          return "Enter your phone number to complete your registration"
+      }
     }
     Logout(){
         window.localStorage.setItem('isAuthenticated',false)
@@ -36,7 +61,6 @@ class  Nav extends React.Component{
         if(this.props.navNameP==='Filler'){
                // this.props.mainFillerFuncP('Book')
                 this.props.updateNavNameP("Book")
-
         }
         else{
            //this.props.mainFillerFuncP('Filler')
@@ -77,12 +101,52 @@ componentDidMount(){
             if(body.express==="redirect"){
               this.props.history.push("/signup")
             }
-
             else{
+               
                 this.setState({name:body.express,tel:body.express2})
+                const formData=new FormData();
+                if(body.express2===""){
+                    let tel= window.prompt("Enter your phone number to complete your registration")
+                   while (this.state.tel===""){
+                        if(this.validateTel(tel)===true){
+                            this.setState({tel:tel})
+                        }
+                        else{
+                            tel=window.prompt(this.validateTel(tel))
+                        }
+                        
+                   }
+                   formData.append('tel',this.state.tel);
+                        axios.post('/updateTel/'+this.id,formData,{
+                            headers:{
+                                'Content-Type':'multipart/form-data'
+                            }
+                        })
+                        .then((res)=>{
+                            if(res.data.express==="successfully updated"){
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title:res.data.express,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                            else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: res.data.express,
+                                })
+                            }
+                           
+                        }) 
+                        .catch((error)=>{
+                            console.log(error.response.data.express)
+                        }); 
+                }
             }
-            
-        };  
+        }
         init()
        }
             

@@ -264,6 +264,21 @@ router.get("/generateAccDetails/:name",(req,res)=>{
     })
 })
 
+router.post("/updateTel/:id",(req,res)=>{
+    console.log(req.params.id)
+    console.log(req.body.tel)
+    User.findOneAndUpdate({_id:req.params.id},{tel:req.body.tel},(err,data)=>{
+        if(err){
+            res.json({express:"problem from server updating phone number"}).status(500)
+            console.log(err)
+           return 
+        }
+        else{
+            res.json({express:"successfully updated"}).status(300)
+        }
+    })
+})
+
 function deleteAllPostFromBook(){
     allImg.find((err,data)=>{
         if(err){

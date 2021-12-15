@@ -5,6 +5,7 @@ import {useEffect,useState } from 'react';
 import {useParams} from "react-router-dom";
 import AccomodationNav from "./sub-components/AccomodationNav";
 import Swal from 'sweetalert2'
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -14,7 +15,20 @@ function Accomodation(props){
     const[search2,setsearch2]=useState("All");
     const {id}=useParams(); 
     let searchResult="filled";
-  
+    
+
+
+    function ShowImage(url,about,title){
+        Swal.fire({
+            title,
+            text: about,
+            imageUrl: url,
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+          })
+    }
+
     function requestAccomodation(){
         props.history.push("/home/"+id+"/Accomodation_UploadRequest")
     }
@@ -95,7 +109,7 @@ function Accomodation(props){
         return(
             <div className="noMatchContainer">
                 <h6 className="sub_noMatchContainer">Does not match any results!</h6>
-                <h5 className="sub_noMatchContainer"  id="sub_noMatchContainer_click"onClick={()=>requestAccomodation()}>request accomodation or roommate</h5>
+                <h5 className="sub_noMatchContainer"  id="sub_noMatchContainer_click"onClick={()=>requestAccomodation()}><AddIcon/>request accomodation or roommate</h5>
             </div>
         )
     }
@@ -114,7 +128,7 @@ function Accomodation(props){
                         return( 
                             <div key={data.unique} className="accomodation_body">
                                 <div className="img_container">
-                                    <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} /> 
+                                    <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.name,data.Address,data.selection)}} /> 
                                 </div>
                                 <div className="info1">
                                     <div className="accomodation_type">
@@ -152,7 +166,7 @@ function Accomodation(props){
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} /> 
+                            <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.name,data.Address,data.selection)}}/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
@@ -183,7 +197,7 @@ function Accomodation(props){
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} /> 
+                            <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.name,data.Address,data.selection)}}/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
@@ -209,9 +223,11 @@ function Accomodation(props){
                     </div>
                 )
             }
+            else{
+                return  searchResult=""
+            }
         }
-        return ''
-     })
+    })
   
     return(
     

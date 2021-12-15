@@ -4,6 +4,9 @@ const googleStrategy=require("./googleStrategy")
 const signUpStrategy=require("./signUpStrategy")
 const loginStrategy=require("./loginStrategy")
 
+
+
+
 passport.serializeUser((user,done)=>done(null,user.id))
 passport.deserializeUser((id,done)=>{
     User.findById(id,(err,user)=>{
@@ -17,6 +20,5 @@ passport.deserializeUser((id,done)=>{
 passport.use("local-signUp",signUpStrategy)
 passport.use("local-login",loginStrategy)
 passport.use("google-signUp",googleStrategy)
-
 
 module.exports=passport

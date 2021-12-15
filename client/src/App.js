@@ -3,8 +3,8 @@ import './App.css';
 import {BrowserRouter as Router, Route,Switch} from "react-router-dom";
 import Home from "./component/home";
 import uploadBook from "./component/sub-components/uploadBook";
-import Signup from "./component/signup";
-import Login from "./component/login";
+import Signup from "./component/account/signup";
+import Login from "./component/account/login";
 import Dashboard from "./component/dashboard";
 import Detail from "./component/detail";
 import UploadPDF from "./component/uploadPDF";
@@ -15,21 +15,27 @@ import Accomodation from "./component/Accomodation";
 import Accomodation_UploadRequest from "./component/Accomodation_UploadRequest/Accomodation_UploadRequest";
 import Notification from  "./component/notification";
 import Profile from "./component/profile"
+import VerifyEmail from "./component/account/verifyEmail"
+import ResetPassword from "./component/account/ResetPassword"
 import "./style/firstbody.css";
 
 function App() {
     return (
       <Router>
         <Switch>
-          
+
             <Route path="/"exact component={Home}/>
-            
+
             <Route path="/login" component={Login}/>
             
             <Route path="/signup" component={Signup}/>
 
             <Route path="/profile" component={Profile}/>
             
+            <Route path="/verifyEmail" component={VerifyEmail}/>
+
+            <Route path="/resetPassword/:id" component={ResetPassword}/>
+
             <Route path="/home/:id/setting" component={Setting}/>
             
             <Route path="/home/:id/dashboard" component={Dashboard}/> 

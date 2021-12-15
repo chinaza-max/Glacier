@@ -1,7 +1,8 @@
 const express = require('express');
 const User=require("../mongodb/schema/userSchema")
 const allImg=require("../mongodb/schema/allImg")
-const Notification=require("../mongodb/schema/notificationSchema")
+const Notification=require("../mongodb/schema/notificationSchema");
+const e = require('express');
 const router=express.Router();
 
 
@@ -89,9 +90,15 @@ router.get("/names/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                
                 if(data){
-                    res.send({express:data.name,express2:data.tel})
+                    if(data.tel==undefined){
+                        console.log("here here here")
+                        return  res.send({express:data.name,express2:''})
+                    }
+                    else{
+                        res.send({express:data.name,express2:data.tel})
+                    }
+                     
                 }
                 else{
                     res.send({express:"redirect"})

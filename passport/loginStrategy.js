@@ -4,9 +4,7 @@ const LocalStrategy=require('passport-local').Strategy
 
 const loginLocalStrategy=new LocalStrategy({usernameField: 'email'},(email,password,done)=>{
 
-  
    User.findOne({email},async(err,user)=>{
-
             if(err){
                 return done(err);
             }

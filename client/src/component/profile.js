@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from "./sub-components/setingsNav"
 import {useParams,Link} from "react-router-dom";
-import "../style/profile.css"
+import "../style/profile.css";
 import bookimg from "../../src/profileIMG/Ellipse 2.png";
 import bookimg2 from "../../src/profileIMG/book.svg";
 import acomodation from "../../src/profileIMG/home.svg";

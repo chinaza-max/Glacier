@@ -1,0 +1,131 @@
+.accountContainer{
+    width:100%;
+    height: 100vh;
+    padding-top: 120px;
+    background-image: url("../accountImg/water.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.accountContainerCenter{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    min-width: 700px
+}
+
+.accountContainerCenter > div{
+   height: 500px;
+   flex: 1;
+}
+.accountContainerCenter .type{
+    color: white;
+    font-size: 35;
+}
+.accountContainerCenter > div:nth-child(2){
+    background-image: url("../accountImg/book1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.accountContainerCenter  div .accountContainerCenter__google{
+    width: 70%;
+    height: 30px;
+    box-shadow: 1px 1px  3px rgb(194, 192, 192);
+    background-color: rgb(233, 224, 247);
+    margin: 0 auto;
+    margin-top: 15px;
+ }
+ .accountContainerCenter  div .accountContainerCenter__google a{
+    text-decoration: none;
+ }
+.accountContainerCenter > div form{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 70px;
+    padding-top: 10px;
+    height: 400px;
+    position: relative;
+    box-shadow: 2px 2px 6px rgb(102, 101, 101);
+}
+
+.accountContainerCenter > div form div{
+    text-align: center;
+    margin-top: 30px;
+}
+.accountContainerCenter > div form div input{
+    border: 2px solid black;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    color: white;
+}
+.accountContainerCenter > div form div input:focus{
+    outline: none;
+}
+.accountContainerCenter > div form  .accountContainerCenter__Section1{
+    display: flex;
+    justify-content:space-around;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.accountContainerCenter > div form  .accountContainerCenter__Section1 button:focus{
+    outline: none;
+ }
+.accountContainerCenter > div form  .accountContainerCenter__Section1 button{
+   background-color: transparent;
+   border: 2px solid black;
+   width: 70px;
+}
+.accountContainerCenter > div form  .accountContainerCenter__Section1 button:hover{
+    border: 2px solid blue;
+    color: white;
+ }
+.accountContainerCenter > div form  .accountContainerCenter__forgotPassword{
+    width: 100%;
+    display: block;
+    padding-right: 60px;
+    text-align: right;
+}
+.accountContainerCenter > div form  .accountContainerCenter__logo{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 5px solid black;
+    border-radius: 50%;
+    top: -70px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    padding-top: 35px;
+    background-color: rgb(210, 209, 245);
+}
+
+
+.accountContainerCenter > div form  .accountContainerCenter__error{
+    color: red;
+    margin-bottom: 40px;
+}
+
+
+@media (max-width:500px){
+    .accountContainer{
+        padding-top: 40px;
+    }
+    .accountContainerCenter{
+        width: 100%;
+        min-width: 300px
+    }
+    .accountContainerCenter > div:nth-child(2){
+        display: none;
+    }
+    .accountContainerCenter > div form div{
+        text-align: center;
+        margin-top: 35px;
+    }
+    
+    .accountContainerCenter > div form  .accountContainerCenter__error{
+        color: red;
+        margin-top: 15px;
+    }
+}

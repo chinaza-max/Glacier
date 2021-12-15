@@ -50,13 +50,3 @@ app.use("/",router4);
 
 
 app.listen(port ,()=>console.log(`server started.... ${port}`))
-
-/*
-
-const formData = require('express-form-data');
-
-app.use(formData.parse());
-
-app.post('/image-upload', (req, res) => {
-  console.log(req.files);
-})*/
