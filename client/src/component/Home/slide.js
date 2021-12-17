@@ -1,11 +1,9 @@
 import React from "react";
-import img1 from "./img/about.jpeg"
-import img2 from "./img/background.jpg"
-import img3 from "./img/profile-image1.jpg"
+import img1 from "../sub-components/img/about.jpeg"
+import img2 from "../sub-components/img/background.jpg"
+import img3 from "../sub-components/img/profile-image1.jpg"
 import "../../style/slide.css";
 //import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-
-
 
 class Slide extends React.Component{
 constructor(props){

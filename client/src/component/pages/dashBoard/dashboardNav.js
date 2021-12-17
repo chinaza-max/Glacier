@@ -1,4 +1,3 @@
-import { Link } from 'react-scroll';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -13,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2), 
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -58,13 +57,10 @@ function NavDashboard(props){
       props.history.goBack()
   }
 
-  function  filler(){
-    props.history.push("/home/"+props.id)
-  }
     return(
       <nav id="nav__dashboard">
-        <h4> number of upload ({props.numberOfItemP})</h4>
-         <div className={classes.search} className="nav__dashboard__search">
+        <h4> number of Book-upload ({props.numberOfItemP})</h4>
+         <div className={classes.search} >
                         <div className={classes.searchIcon}>
                         <SearchIcon style={{marginLeft: -55 + 'px'}} />
                         </div>

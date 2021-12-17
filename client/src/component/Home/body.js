@@ -1,6 +1,6 @@
-import Section1 from "../component/sub-components/body/section1";
-import Section2 from "../component/sub-components/body/section2";
-import Filler from "../component/filler";
+import Section1 from "./body/section1";//section1
+import Section2 from "./body/section2";
+import Filler from "../PDF_Filler/filler";
 function Body(props){
 
     return(

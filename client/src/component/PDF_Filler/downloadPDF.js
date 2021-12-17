@@ -1,8 +1,8 @@
 
 import {useParams} from "react-router-dom";
 
-import "../style/downloadPDF.css";
-import Uploadnav from "./sub-components/setingsNav"
+import "../../style/downloadPDF.css";
+import Uploadnav from "../reUse/setingsNav"
 
 
 function DownloadPDF(props){

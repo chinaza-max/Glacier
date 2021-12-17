@@ -244,12 +244,14 @@
 .logout{
     border-radius: 5px;
     background-color: transparent;
-    border: 1px solid black;
+    border: 2px solid black;
+    padding: 2px;
+    color: black;
 }
 .logout:hover{
-    background-color:#007bff ;
-    color: white;
+    color: #007bff;
     border: none;
+    border: 2px solid #007bff;
 }
 
 .logout:focus{

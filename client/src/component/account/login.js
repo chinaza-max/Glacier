@@ -33,7 +33,6 @@ function Login(){
             }).then((res)=>{
                 window.localStorage.setItem('isAuthenticated',res.data.express.isAuthenticated)
                 window.localStorage.setItem('id',res.data.express.id)
-                
                 history.push("/home/"+res.data.express.id)
             })
             .catch((error)=>{

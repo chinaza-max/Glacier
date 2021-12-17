@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {useParams} from "react-router-dom";
-import SetingsNav from "./sub-components/setingsNav"
-import "../style/setting.css"
+import SetingsNav from "../reUse/setingsNav"
+import "../../style/setting.css"
 
 
 function Settings(props){

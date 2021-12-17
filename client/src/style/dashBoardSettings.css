@@ -17,8 +17,9 @@
 }
 #nav__dashboard h4{
     text-align: center;
+    font-size: 18px;
 }
-.nav__dashboard__search{
+#nav__dashboard > div{
     position:absolute;
     margin: auto;
     height: 45px;

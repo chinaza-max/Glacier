@@ -9,7 +9,10 @@ function SubLinkForFiller(props){
     return(
        <ul style={{listStyle:'none'}}>
             <li>
-                <Link className="filler-link"  to="filler" style={{textDecoration:"none"}} spy={true} smooth={true} offset={50} duration={500} onClick={props.fillerFuncP}>
+                <Link className="filler-link"  to="filler" style={{textDecoration:"none"}} spy={true} smooth={true} offset={50} duration={500} onClick={()=>{
+                  props.isLogedInP();
+                  props.fillerFuncP()
+                }}>
                   {display}{"    "}{props.navName}<SwapVertIcon style={{"position":"absolute","bottom":"20px","right":"-13px"}}/>
                 </Link>
             </li>

@@ -1,12 +1,15 @@
-import  "../style/notification.css"
+import  "../../style/notification.css"
 import {useEffect,useState } from 'react';
-import {Link } from "react-router-dom";
-import {ArrowBackIcon} from "./materialUI/icons"
+import {Link ,useParams} from "react-router-dom";
+import {ArrowBackIcon} from "../materialUI/icons";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 function Notification(props){
     const[changeNavStyle,setChangeNavStyle]=useState({"height":"100px","transition":"height 0.4s ease-out","flexDirection":"column"})
     const[Notification,setNotification]=useState([])
     const[NotificationAmount,setNotificationAmount]=useState()
-    
+    let id=useParams()
+   
+
     function  goBack(){
         props.history.goBack()
     }
@@ -27,6 +30,7 @@ function Notification(props){
     } 
     resetNotificationAlert()
     useEffect(()=>{
+         
         const aboutController=new AbortController()
         const signal=aboutController.signal
         document.querySelector(".notificationContainerSub").addEventListener('scroll',listenForScroll)
@@ -34,8 +38,14 @@ function Notification(props){
 async   function init(){
         const response=await fetch("/notifications",{signal:signal})
         const body=await response.json()
-        setNotification(body.express)
-        setNotificationAmount(body.express2)
+        if(body.express===""){
+            return
+        }
+        else{
+            setNotification(body.express)
+            setNotificationAmount(body.express2)
+        }
+        
     }
     init()
     return ()=> aboutController.abort()
@@ -94,13 +104,16 @@ async   function init(){
     return(
         <div  className="notificationContainer">
             <div className="notificationContainerSub">
-                    <div className="notificationNavContainer" style={changeNavStyle}>
+                    <div className="notificationNavContainer" style={changeNavStyle}>{console.log(resultFound)}
                         <div className="homeTag" ><h6 onClick={goBack} className="Home"> <ArrowBackIcon style={{fontSize: 34 + 'px'}}/></h6></div>
-                        <div className="notificationTag"><h4>Notification({NotificationAmount})</h4></div>
+                        {resultFound.length===0?'':<div className="notificationTag"><h4>Notification({NotificationAmount})</h4></div>}
                     </div>
-                <div className="notificationBody">
-                   {resultFound}
-                </div>
+                    {resultFound.length===0?<div className="notificationContainerSub__empty">Notification is empty</div>:
+                    <div className="notificationBody">
+                        {resultFound}
+                    </div>
+                    }
+                  <div className="notificationContainerSub__add"><Link to={`/home/${id.id}/Accomodation_UploadRequest`} className="Link"> <AddCircleIcon style={{"fontSize":"60px"}}/></Link></div>
             </div>
         </div>
     )

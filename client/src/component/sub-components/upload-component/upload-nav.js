@@ -19,7 +19,7 @@ function  dashboard(){
                   {
                   props.id ?  
                    <li className="nav-item">
-                      <div className="nav-link" onClick={dashboard} style={{color: "white"}}>Dashboard</div>
+                      <div className="nav-link" onClick={dashboard} style={{color: "white"}}>Dashboardnnn</div>
                    </li>
                    :
                  ''

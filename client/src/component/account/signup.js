@@ -12,13 +12,20 @@ function Signup(){
     const history=useHistory()
     const [eventInfo,setEventInfo]=useState({name:'',password:'',email:'',tel:''});
     const [error,setError]=useState('')
+    const [errorPhone,setErrorPhone]=useState('')
 
     const{name,password,email,tel}=eventInfo
 
     const handleChange=(event)=>{
         const {name,value}=event.target
         setEventInfo({...eventInfo,[name]:value})
-
+        if(name==="tel"){
+            if(validateTel(value)==="true") {return}
+            else{
+                setErrorPhone(validateTel(value))
+            }
+        }
+        
     }
     const googleSignUp=async (e)=>{
         e.preventDefault();
@@ -36,6 +43,23 @@ function Signup(){
           setTimeout(typeWriter, speed);
     }
     }*/
+    const validateTel=(value)=>{
+        const number=/^[0-9]+$/
+        if(value){
+                if(!value.match(number)){
+                    return "numeric character only Re-enter no"
+                }
+                else if(value.length<11){
+                    return "incomplete number Re-enter no";
+                }
+                else if(value.length>11){
+                    return "exceded limit Re-enter no";
+                }
+                else{
+                    return true;
+                }
+        }
+    }
     const onSubmit=async (e)=>{
         e.preventDefault();
         const formData=new FormData();
@@ -61,6 +85,9 @@ function Signup(){
     }
     useEffect(()=>{
       //  typeWriter()
+        if(window.localStorage.getItem("isAuthenticated")==="true"){
+            history.push("/home/"+window.localStorage.getItem("id"))
+        }
     })
     return(
             <div className='accountContainer'>
@@ -80,6 +107,7 @@ function Signup(){
                             <div>
                             <input type="tel" placeholder="phone No" name="tel" onChange={handleChange} required></input>
                             </div>
+                            <div className='accountContainerCenter__errorPhone'>{errorPhone!==''?errorPhone:""}</div>
                             <div className='accountContainerCenter__Section1'>
                                 <button>Signup</button>
                                 <Link to={"/login"} >login</Link>

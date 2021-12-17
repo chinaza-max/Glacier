@@ -1,9 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "../style/noMatchContainer.css"
+import "../../style/noMatchContainer.css"
 import {useEffect,useState } from 'react';
 import {useParams} from "react-router-dom";
-import AccomodationNav from "./sub-components/AccomodationNav";
+import AccomodationNav from "./AccomodationNav";
 import Swal from 'sweetalert2'
 import AddIcon from '@mui/icons-material/Add';
 

@@ -1,17 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../style/nav.css"
-import SubLinkForFiller from  "../sub-components/subLinkForFiller";                                                                                                                                      
+import "../../style/nav.css";
+import SubLinkForFiller from  "../PDF_Filler/subLinkForFiller";                                                                                                                                
 import HomeIcon from '@material-ui/icons/Home';
 import BackupIcon from '@material-ui/icons/Backup';
 import HotelIcon from '@material-ui/icons/Hotel';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import {BadgeMax} from '../materialUI/icons'
+import {BadgeMax} from '../materialUI/icons';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import PersonIcon from '@material-ui/icons/Person';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import axios from 'axios'
-import Swal from 'sweetalert2'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 
 
@@ -25,9 +25,20 @@ class  Nav extends React.Component{
         this.handleClick= this.handleClick.bind(this)
         this.Logout=this.Logout.bind(this)
         this.validateTel=this.validateTel.bind(this)
+        this.isLogedIn=this.isLogedIn.bind(this)
         this.state={name:'',tel:"",navName:"Filler"}
         this.id=props.userId
         this.node=React.createRef()
+    }
+    isLogedIn(){
+       console.log( window.localStorage.getItem('isAuthenticated'))
+       if(window.localStorage.getItem('isAuthenticated')==="true"){
+            return
+       }
+       else{
+        this.props.history.push("/login")
+       }
+
     }
     validateTel(value){
         const number=/^[0-9]+$/
@@ -226,10 +237,10 @@ componentWillUnmount(){
                         }
 
                         <div className="navContent resize">
-                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.props.navNameP}/>
+                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.props.navNameP} isLogedInP={this.isLogedIn}/>
                         </div>
-                        <div className="navContent resize">
-                            <Link className="nav-link navContent" to={`/home/${this.props.userId}/Accomodation/`}>
+                        <div className="navContent resize" onClick={this.isLogedIn}>
+                            <Link className="nav-link navContent" to={`/home/${this.props.userId}/Accomodation/`} >
                                 <span className="iconDestop"><HotelIcon/></span>Accomodation
                             </Link>  
                         </div>
@@ -243,7 +254,7 @@ componentWillUnmount(){
 
                         }
                        
-                        <div className="navContent resize">
+                        <div className="navContent resize" onClick={this.isLogedIn}>
                             <Link id="NotificationView" className="navContent" to={`/home/${this.props.userId}/notification`}>
                                 <span className="iconDestop"><BadgeMax/></span> Notification
                             </Link> 
@@ -258,7 +269,7 @@ componentWillUnmount(){
                             ""
                         }
                   
-                        <div className="navContent resize">
+                        <div className="navContent resize" onClick={this.isLogedIn}>
                 
                             <Link className="remove_linkStyle navContent"     to={`/home/${this.props.userId}/profile`}>
                                     <span className="iconDestop"><PersonIcon/></span> About
@@ -267,7 +278,7 @@ componentWillUnmount(){
                         </div>
 
 
-                        <div className="navContent name resize" style={{color:"black"}}>chinaza</div>
+                        <div className="navContent name resize" style={{color:"black"}}>{this.state.name}</div>
                     </div>
                 </div>
 
@@ -331,9 +342,9 @@ componentWillUnmount(){
                             ""
                         }
                         <div className="navContent filler2">
-                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.state.navName}/>
+                            <SubLinkForFiller fillerFuncP={this.fillerFunc} navName={this.state.navName}   isLogedInP={this.isLogedIn}/>
                         </div>
-                        <div className="navContent navphone">
+                        <div className="navContent navphone" onClick={this.isLogedIn}>
                             <Link className="nav-link" to={`/home/${this.props.userId}/Accomodation/`}>
                                 <span className="iconMobile"><HotelIcon/></span>Accomodation
                             </Link> 
@@ -348,7 +359,7 @@ componentWillUnmount(){
                             ""
                         }
                         
-                        <div className="navContent navphone">
+                        <div className="navContent navphone" onClick={this.isLogedIn}>
                             <Link className="nav-link" to={`/home/${this.props.userId}/notification`}> 
                                 <span className="iconMobile"><BadgeMax/></span>  Notification
                             </Link>
@@ -364,7 +375,7 @@ componentWillUnmount(){
                         ''
                         }
                        
-                        <div className="navContent last">
+                        <div className="navContent last" onClick={this.isLogedIn}>
                             <span className="iconMobile"><PersonIcon/></span> About
                         </div>
                     

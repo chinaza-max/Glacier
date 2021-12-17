@@ -1,26 +1,21 @@
 import React from "react";
-import Uploadnav from "./setingsNav"
-import UploadBody from "./upload-component/uploadbody"
+import Uploadnav from "../reUse/setingsNav"
+import UploadBodyBook from "./UploadBodyBook"
 import {useParams} from "react-router-dom";
 //import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
 
-
-
-
-function  Upload(props){
-
+function  UploadBook(props){
         let {id}=useParams()
-    
+
         return(
            <div>
                 <div className="uploadContainer">
                     <Uploadnav history={props.history} idP={id}/>
-                    <UploadBody  id={id}/>
+                    <UploadBodyBook  id={id}/>
                  </div> 
            </div>
         )
 }
-
-export default Upload;          
+export default UploadBook;          

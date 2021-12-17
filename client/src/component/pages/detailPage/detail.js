@@ -2,9 +2,9 @@ import React,{useState,useEffect,useRef} from 'react';
 import {useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import NavDetail from './sub-components/navdetail';
-import Details from "../component/sub-components/detail-slider"
-import "../style/details.css"
+import NavDetail from './navdetail';
+import Details from "../detailPage/detail-slider";
+import "../../../style/details.css";
 
 function Detail(props){
     const[post,setposts]=useState([])

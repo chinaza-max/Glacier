@@ -1,6 +1,6 @@
 import {useState,useEffect} from "react"
 import { Link } from "react-router-dom";
-import "../style/filler.css"
+import "../../style/filler.css"
 
 function Filler(props){
     const[PDFs,setPDF]=useState([])

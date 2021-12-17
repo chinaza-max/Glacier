@@ -92,7 +92,6 @@ router.get("/names/:id",(req,res)=>{
             else{
                 if(data){
                     if(data.tel==undefined){
-                        console.log("here here here")
                         return  res.send({express:data.name,express2:''})
                     }
                     else{
@@ -192,7 +191,7 @@ router.get("/notifications",(req,res)=>{
          }
          else{
              if(data.length==0){
-                 return
+                 return res.json({express:"",express2:""})
              }
              else{
                  data[0].notification.forEach((data)=>{
@@ -228,7 +227,7 @@ router.get("/notifications",(req,res)=>{
          }
      })
   async   function  resfunction(){
-         await res.send({express:reArrangeMainData,express2:num})
+         await res.json({express:reArrangeMainData,express2:num})
      }
  })
 

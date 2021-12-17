@@ -1,13 +1,13 @@
 import React from 'react';
-import Nav from "./sub-components/setingsNav"
+import Nav from "../reUse/setingsNav"
 import {useParams,Link} from "react-router-dom";
-import "../style/profile.css";
-import bookimg from "../../src/profileIMG/Ellipse 2.png";
-import bookimg2 from "../../src/profileIMG/book.svg";
-import acomodation from "../../src/profileIMG/home.svg";
-import filler from "../../src/profileIMG/filler.svg";
-import Steppers from "../component/materialUI/stepper"
-import account from "../../src/profileIMG/account.svg";
+import "../../style/profile.css";
+import bookimg from "../../../src/profileIMG/Ellipse 2.png";
+import bookimg2 from "../../../src/profileIMG/book.svg";
+import acomodation from "../../../src/profileIMG/home.svg";
+import filler from "../../../src/profileIMG/filler.svg";
+import Steppers from "../../component/materialUI/stepper"
+import account from "../../../src/profileIMG/account.svg";
 
 
 const step1= [

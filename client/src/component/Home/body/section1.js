@@ -1,6 +1,6 @@
 import '../../../style/section1.css';
 // import Carousel from "react-elastic-carousel";
-import Item from "../../sub-components/body/item2";
+import Item from "./item2";
 import "../../../style/styles2.css";
 import { Link } from "react-router-dom";
 import MyCarousel from '../../Carousel';

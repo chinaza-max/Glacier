@@ -1,12 +1,34 @@
 .notificationContainer{
     width: 100vw;
     height: 100vh;
+    position: relative;
 }
 .notificationContainerSub{
     width: 600px;
     height: 100vh;
     margin: 0 auto;
-    overflow-y: scroll;
+    overflow-y: auto;
+}
+
+.notificationContainerSub .notificationContainerSub__add{
+    position: absolute;
+    bottom: 20px;
+    right: 200px;
+    z-index: 2;
+    width: fit-content;
+    height: fit-content;
+}
+.notificationContainerSub .notificationContainerSub__add .Link{
+    display: block;
+}
+.notificationContainerSub .notificationContainerSub__empty{
+    border: 2px solid black;
+    width: 100%;
+    height: 50px;
+    margin-top: 30%;
+    text-align: center;
+    font-size: 25px;
+
 }
 .notificationNavContainer{
     position: fixed;
@@ -91,6 +113,12 @@
     .notificationContainerSub{
         width: 99%;
         height: 100%;
+    }
+    .notificationContainerSub .notificationContainerSub__add{
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+
     }
  
 }

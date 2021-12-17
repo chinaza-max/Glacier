@@ -1,22 +1,23 @@
 //import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router, Route,Switch} from "react-router-dom";
-import Home from "./component/home";
-import uploadBook from "./component/sub-components/uploadBook";
+import Home from "./component/Home/homeContainer";
+import uploadBook from "./component/Book/uploadBook";
 import Signup from "./component/account/signup";
-import Login from "./component/account/login";
-import Dashboard from "./component/dashboard";
-import Detail from "./component/detail";
-import UploadPDF from "./component/uploadPDF";
-import downloadPDF from "./component/downloadPDF";
-import Setting from "./component/settings";
-import Accomodation_Upload from "./component/Accomodation_Upload";
-import Accomodation from "./component/Accomodation";
-import Accomodation_UploadRequest from "./component/Accomodation_UploadRequest/Accomodation_UploadRequest";
-import Notification from  "./component/notification";
-import Profile from "./component/profile"
+import Login from "./component/account/login"; 
+import Dashboard from "./component/pages/dashBoard/dashboard";
+import Detail from "./component/pages/detailPage/detail";
+import UploadPDF from "./component/PDF_Filler/uploadPDF";
+import downloadPDF from "./component/PDF_Filler/downloadPDF";
+import Setting from "./component/pages/settings";
+import Accomodation_Upload from "./component/Accomodation/Accomodation_Upload";
+import Accomodation from "./component/Accomodation/Accomodation";
+import Accomodation_UploadRequest from "./component/Accomodation/Accomodation_UploadRequest";
+import Notification from  "./component/pages/notification";
+import Profile from "./component/pages/profile"
 import VerifyEmail from "./component/account/verifyEmail"
 import ResetPassword from "./component/account/ResetPassword"
+import PrivateRoute from './component/PrivateRoute'
 import "./style/firstbody.css";
 
 function App() {
@@ -59,8 +60,6 @@ function App() {
             <Route path="/details/:name" component={Detail}/>
             
             <Route path="/downloadPDF/:name" component={downloadPDF}/>
-
-
   
         </Switch>
       </Router>
@@ -70,3 +69,4 @@ function App() {
 export default App;
 //   <Route path="/home/:id/:upload/:dashboard" component={Dashboard}/>
 //allow an app through Windows Firewall
+// <PrivateRoute path="/onlyAuthorizedAllowedHere/" component={Accomodation} />

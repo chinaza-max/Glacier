@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react';
 import {useParams } from "react-router-dom";
-import NavDashboard from "./sub-components/dashboard/dashboardNav"
-import "../style/dashBoardSettings.css"
+import NavDashboard from "./dashboardNav"
+import "../../../style/dashBoardSettings.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
-import DashboardUI from "./materialUI/dashBoardUI";
+import DashboardUI from "../../materialUI/dashBoardUI";
 import axios from "axios";
 
 function Dashboard(props){

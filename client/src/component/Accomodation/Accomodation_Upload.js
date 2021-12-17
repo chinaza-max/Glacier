@@ -1,8 +1,8 @@
-import  "../style/Accomodation_Upload_Nav.css";
+import  "../../style/Accomodation_Upload_Nav.css";
 import {useParams} from "react-router-dom";
 import React,{useState,useEffect} from 'react';
 import axios from 'axios'
-import AccomodationUploadNav from "../component/sub-components/setingsNav"
+import AccomodationUploadNav from "../reUse/setingsNav"
 import Swal from 'sweetalert2';
 
 
@@ -135,7 +135,7 @@ function Accomodation_Upload(props){
                     
                         <div className='Address'>  
                             <label>Address_Description :</label>
-                            <textarea type="text"  name="Address" id="Address" placeholder="Location of building.." onChange={handleChange} required/>
+                            <textarea type="text"  name="Address" id="Address" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
                         </div>
                         <div className='tel'>  
                             <label>tel :</label>
