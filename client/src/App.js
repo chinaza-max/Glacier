@@ -17,7 +17,6 @@ import Notification from  "./component/pages/notification";
 import Profile from "./component/pages/profile"
 import VerifyEmail from "./component/account/verifyEmail"
 import ResetPassword from "./component/account/ResetPassword"
-import PrivateRoute from './component/PrivateRoute'
 import "./style/firstbody.css";
 
 function App() {
@@ -67,6 +66,3 @@ function App() {
 }
 
 export default App;
-//   <Route path="/home/:id/:upload/:dashboard" component={Dashboard}/>
-//allow an app through Windows Firewall
-// <PrivateRoute path="/onlyAuthorizedAllowedHere/" component={Accomodation} />

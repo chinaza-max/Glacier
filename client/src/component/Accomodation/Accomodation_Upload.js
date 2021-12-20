@@ -130,16 +130,16 @@ function Accomodation_Upload(props){
                         {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
                         <div className="price">  
                             <label>Price (NGN):</label>
-                            <input type="tel" name="Price"  id="price" onChange={handleChange} placeholder="12000..." required/>
+                            <input type="tel" name="Price"  id="price" onChange={handleChange} placeholder="12000..." minLength={5} maxLength={7} required/>
                         </div>
                     
                         <div className='Address'>  
                             <label>Address_Description :</label>
                             <textarea type="text"  name="Address" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
-                        </div>
+                        </div> 
                         <div className='tel'>  
                             <label>tel :</label>
-                            <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} required/>
+                            <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
                         </div>
                         <div className='selection_container'>  
                             <label>select :</label>

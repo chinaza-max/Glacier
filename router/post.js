@@ -10,12 +10,7 @@ const fs=require('fs');
 const router=express.Router();
 const crypto=require("crypto");
 app.use(fileUpload());
-
 const Time=require("../Time");
-
-
-
-
 
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
@@ -215,7 +210,7 @@ router.post('/uploadBook/:id',(req,res)=>{
         return res.status(400).json({msg:"No file uploaded"});
     }
     const file=req.files.file;
-    if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"||file.mimetype.toLowerCase()=="image/jpg"){
+    if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {
                 return   console.log(err)
@@ -252,8 +247,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                            else{
 
                                 if(data.length>=1){
-                                    console.log("up and running")
-                                          
+                                
                                             await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
                                             res.json({message:"success"})
                                 }

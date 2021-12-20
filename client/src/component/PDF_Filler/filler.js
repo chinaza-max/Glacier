@@ -5,7 +5,6 @@ import "../../style/filler.css"
 function Filler(props){
     const[PDFs,setPDF]=useState([])
 
-
     useEffect(()=>{
         const aboutController=new AbortController()
         const signal=aboutController.signal
@@ -17,14 +16,12 @@ function Filler(props){
                       'Content-Type': 'application/json',
                       'Accept': 'application/json'
                      }
-              
                   })
                 const body=await response.json()
                 if(body.express.length===0){
-                    return
+                    return;
                 }
                 else{
-                   
                     setPDF(body.express)
                 }
             }
@@ -46,8 +43,9 @@ function Filler(props){
                 <div key={data.name} className=".mainBody-sub-filler">
                     <div className='PDF'>
                           <Link   className="fillerImg"  download to={"/downloadPDF/"+data.name}>
-                                <img className="bodyImg-filler" src="/imgs/pdfImg5.jpg" alt="file cant show"/>     
-                                <div className="courseCode-filler"><h3 className="courseCode-filler-sub">{data.courseCode}</h3></div>
+                                <h2>PDF</h2>
+                                <p>DOWNLOAD</p>
+                                <h5>{data.courseCode}</h5>
                           </Link>
                     </div>
                 </div>
@@ -66,5 +64,3 @@ function Filler(props){
     )
 }
 export default Filler;
-
-

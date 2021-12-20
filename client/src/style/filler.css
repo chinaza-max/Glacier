@@ -22,12 +22,30 @@
 .PDF{
     margin-top: 20px;
     position: relative;
+    border: 1px solid transparent;
+    width: 130px;
+    height: 170px;
+    background-color: white;
 }
-.fillerImg{
+.PDF .fillerImg{
     width: 100%;
-    height:100%;
-    margin-top: 5px;
+    height:90%;
+    margin-top: 10px;
     border-radius: 5px;
+    border: 2px solid red;
+    display: block;
+    text-align: center;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+}
+.PDF:before{
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-bottom:30px solid white;
+    border-right: 30px solid #cfcfcf;
 }
 .bodyImg-filler{
     width: 115px;
@@ -35,7 +53,7 @@
 
 }
 .courseCode-filler{
-    position: absolute;
+    position: absolute; 
     bottom: 0;
     color: black;
     width: 100%;

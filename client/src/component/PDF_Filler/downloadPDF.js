@@ -1,6 +1,5 @@
 
 import {useParams} from "react-router-dom";
-
 import "../../style/downloadPDF.css";
 import Uploadnav from "../reUse/setingsNav"
 
@@ -13,9 +12,9 @@ function DownloadPDF(props){
              <div className="downloadPDF-body">
                 
                 <object  data= {"/uploadPDFs/"+name} type="application/pdf" width="100%" height="600px">
-                <p className="">Your web browser doesn't have a PDF plugin to view details of PDF.
-                Instead you can <a href={"/uploadPDFs/"+name} download> <br/>click here to
-                download the PDF file.</a>
+                <p className="">Your web browser doesn't have a PDF plugin to view details of PDF, before download.
+                <a href={"/uploadPDFs/"+name} download> <br/>click here to
+                download the PDF file directly.</a>
                 </p>
                 </object>
              </div>

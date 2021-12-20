@@ -166,15 +166,15 @@ const UploadBodyBook=(props)=>{
                     <div className="Author">  
                         <label>Book Author :</label>
                         
-                        <input type="text" name="author" id="author" onChange={handleChange} maxLength={20} required/>
+                        <input type="text" name="author" id="author" onChange={handleChange} maxLength={30} required/>
                     </div>
                     <div className='title1'>  
                         <label>Title : </label>
-                        <input type="text"  name="title" id="title" onChange={handleChange} maxLength={25} required />
+                        <input type="text"  name="title" id="title" onChange={handleChange} maxLength={30} required />
                     </div>
                     <div className='Book-faculty'>  
                         <label>Book-faculty :</label>
-                        <input type="text"  name="faculty" id="faculty" onChange={handleChange} maxLength={20} required/>
+                        <input type="text"  name="faculty" id="faculty" onChange={handleChange} maxLength={30} required/>
                     </div>
                     <div className='Description'>  
                         <label>Description :</label>

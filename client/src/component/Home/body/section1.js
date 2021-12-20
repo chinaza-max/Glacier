@@ -19,8 +19,18 @@ function Section1(props){
     function changeView(value){
         props.updateNavNameP(value)
     }
+    function isLogedIn(){
+        console.log( window.localStorage.getItem('isAuthenticated'))
+        if(window.localStorage.getItem('isAuthenticated')==="true"){
+             return
+        }
+        else{
+            props.history.push("/login")
+        }
+ 
+     }
     return(
-      <div>
+      <div> 
         <h5 className="categories-title" style={{zIndex:900000}}>categories</h5>
           <div  className='section1'>
               <MyCarousel breakPoints={breakPoints} autoPlaySpeed={5000} >
@@ -33,7 +43,7 @@ function Section1(props){
                   <Item style={{height:160,width:250,}} >
                       <div id="section1Accomodation"  className="divCategory">
                             <h4 className="h3Categories"> 
-                                <Link  className=" h3Categories__link"  to={`/home/${props.id}/Accomodation/`} >
+                                <Link  className=" h3Categories__link"  to={`/home/${props.id}/Accomodation/`} onClick={()=>isLogedIn()}>
                                         Accomodation
                                 </Link> 
                             </h4>
