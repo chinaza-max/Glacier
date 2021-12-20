@@ -6,6 +6,7 @@ import {useParams} from "react-router-dom";
 import AccomodationNav from "./AccomodationNav";
 import Swal from 'sweetalert2'
 import AddIcon from '@mui/icons-material/Add';
+import ScrollTop from "../reUse/scrollTop"
 
 
 
@@ -102,6 +103,10 @@ function Accomodation(props){
             setaccomodation(body.express)
         }
         init()
+
+      
+
+
         return ()=> aboutController.abort()
     },[])
   
@@ -227,6 +232,7 @@ function Accomodation(props){
                 return  searchResult=""
             }
         }
+        return ''
     })
   
     return(
@@ -239,7 +245,9 @@ function Accomodation(props){
                   <NoResultFound/>}
                 </div>
             </div>
+            <ScrollTop/>
         </div>
     )
 }
 export default Accomodation
+//

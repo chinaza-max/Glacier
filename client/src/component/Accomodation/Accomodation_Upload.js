@@ -135,7 +135,7 @@ function Accomodation_Upload(props){
                     
                         <div className='Address'>  
                             <label>Address_Description :</label>
-                            <textarea type="text"  name="Address" id="Address" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
+                            <textarea type="text"  name="Address" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
                         </div>
                         <div className='tel'>  
                             <label>tel :</label>

@@ -77,9 +77,19 @@ function Profile(props){
     function  goBack(){
         props.history.goBack()
     }
+    function isLogedIn(){
+        console.log( window.localStorage.getItem('isAuthenticated'))
+        if(window.localStorage.getItem('isAuthenticated')==="true"){
+             return
+        }
+        else{
+            props.history.push("/login")
+        }
+ 
+     }
     return(
             <div id="container">
-                   <Nav history={props.history} idP={id} />
+                   <Nav history={props.history} idP={id}  isLogedInP={()=>isLogedIn()}/>
 
                    <div id="container_section1">
                         <ul id="container_section1__conatainer">
@@ -145,11 +155,22 @@ function Profile(props){
                             </li>
                             <li>
                                 <div>
-                                    <p>sign up now and get access to all features and start selling your old text book</p>
+
+                                    {id?
+                                        <p>Get started now and start selling your old text book check out our list of available acomodation</p>
+                                    :   
+                                        <p>sign up now and get access to all features and start selling your old text book</p>
+
+                                    }
                                 </div>
                                <div>
                                    <div>
-                                      <a href="/signup" >signup</a>
+                                   {id?
+                                        <a href="/signup" >Get Started</a>
+                                        :
+                                        <a href="/signup" >signup</a>
+                                   }
+                                    
                                    </div>
                                </div>
                             </li>
@@ -158,11 +179,18 @@ function Profile(props){
 
                    <div id="section5">
                        <h3>GLACIER</h3>
-                        <ul id="section5__section1">
-                            <li><Link to="#" onClick={goBack} className="section5__Link">Home</Link></li>
-                            <li><a href="/signup"  className="section5__Link">Rigister</a></li>
-                            <li><Link to={`/home/${id}/Accomodation/`} className="section5__Link">accomodation</Link></li>
-                        </ul>
+                       {id?
+                                 <ul id="section5__section1">
+                                    <li><Link to="#" onClick={goBack} className="section5__Link">Home</Link></li>
+                                </ul>
+                                :
+                                <ul id="section5__section1">
+                                    <li><Link to="#" onClick={goBack} className="section5__Link">Home</Link></li>
+                                    <li><a href="/signup"  className="section5__Link">Rigister</a></li>
+                                    <li onClick={()=>isLogedIn()}><Link to={`/home/${id}/Accomodation/`} className="section5__Link">accomodation</Link></li>
+                                </ul>
+                             }
+                       
                         <ul id="section5__section2" >
                             <li>Privacy</li>
                             <li>Term and conditions </li>

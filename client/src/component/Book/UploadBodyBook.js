@@ -12,10 +12,10 @@ const UploadBodyBook=(props)=>{
     const [filename,setFilename]=useState('upload Book Cover');
     const [uploadedFile,setUploadedFile]=useState({});
     const [eventInfo,setEventInfo]=useState({author:'',title:'',faculty:'',Description:'',tel:''});
-
+    const [errorPhone,setErrorPhone]=useState('')
     const{author,title,faculty,Description,tel}=eventInfo
     let i=0;
-
+    
     const onChange=(e)=>{
         if(e.target.files[0]!==undefined){
             setFile(e.target.files[0]);
@@ -26,6 +26,30 @@ const UploadBodyBook=(props)=>{
     const handleChange=(event)=>{
         const {name,value}=event.target
         setEventInfo({...eventInfo,[name]:value})
+        if(name==="tel"){
+            if(validateTel(value)==="true") {return}
+            else{
+                setErrorPhone(validateTel(value))
+            }
+        }
+    }
+    
+    const validateTel=(value)=>{
+        const number=/^[0-9]+$/
+        if(value){
+                if(!value.match(number)){
+                    return "numeric character only Re-enter no"
+                }
+                else if(value.length<11){
+                    return "incomplete number Re-enter no";
+                }
+                else if(value.length>11){
+                    return "exceded limit Re-enter no";
+                }
+                else{
+                    return true;
+                }
+        }
     }
     const emptyInput=()=>{
         setFilename('Choose file')
@@ -142,15 +166,15 @@ const UploadBodyBook=(props)=>{
                     <div className="Author">  
                         <label>Book Author :</label>
                         
-                        <input type="text" name="author" id="author" onChange={handleChange} required/>
+                        <input type="text" name="author" id="author" onChange={handleChange} maxLength={20} required/>
                     </div>
                     <div className='title1'>  
                         <label>Title : </label>
-                        <input type="text"  name="title" id="title" onChange={handleChange} required />
+                        <input type="text"  name="title" id="title" onChange={handleChange} maxLength={25} required />
                     </div>
                     <div className='Book-faculty'>  
                         <label>Book-faculty :</label>
-                        <input type="text"  name="faculty" id="faculty" onChange={handleChange} required/>
+                        <input type="text"  name="faculty" id="faculty" onChange={handleChange} maxLength={20} required/>
                     </div>
                     <div className='Description'>  
                         <label>Description :</label>
@@ -158,8 +182,9 @@ const UploadBodyBook=(props)=>{
                     </div>
                     <div className='tel'>  
                         <label>tel :</label>
-                        <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} required/>
+                        <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
                     </div>
+                    <div className='container_tel'>{errorPhone}</div>
                     <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
                 </form>
                 <div id="myProgress">

@@ -269,11 +269,17 @@ componentWillUnmount(){
                             ""
                         }
                   
-                        <div className="navContent resize" onClick={this.isLogedIn}>
+                        <div className="navContent resize" >
                 
-                            <Link className="remove_linkStyle navContent"     to={`/home/${this.props.userId}/profile`}>
+                            {this.props.userId?
+                                <Link className="remove_linkStyle navContent"     to={`/home/${this.props.userId}/profile`}>
                                     <span className="iconDestop"><PersonIcon/></span> About
-                            </Link>  
+                                </Link>  
+                            :
+                                <Link className="remove_linkStyle navContent"     to={`/home/profile`}>
+                                    <span className="iconDestop"><PersonIcon/></span> About
+                                </Link>  
+                            }
 
                         </div>
 
@@ -375,7 +381,7 @@ componentWillUnmount(){
                         ''
                         }
                        
-                        <div className="navContent last" onClick={this.isLogedIn}>
+                        <div className="navContent last" >
                             <span className="iconMobile"><PersonIcon/></span> About
                         </div>
                     

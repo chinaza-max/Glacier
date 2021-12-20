@@ -4,7 +4,7 @@ import NavDashboard from "./dashboardNav"
 import "../../../style/dashBoardSettings.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap.min.js"
-import DashboardUI from "../../materialUI/dashBoardUI";
+import DashboardUI from "./dashBoardUI";
 import axios from "axios";
 
 function Dashboard(props){

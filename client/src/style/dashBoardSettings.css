@@ -47,10 +47,12 @@
 }
 
 /*this css dis able row per page because it throw error*/
+/*
 .MuiSelect-select.MuiSelect-select {
     padding-right: 24px;
     display: none;
-}
+}*/
+
 @media  (min-width:700px){
     #dashBoardContainer__content{
         width: 80%;

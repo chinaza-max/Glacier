@@ -1,0 +1,10 @@
+.scrollTop{
+    position: fixed;
+    bottom: 80px;
+    right: 25px;
+    display: none;
+}
+.scrollTop:hover{
+    cursor: pointer;
+}
+/* */

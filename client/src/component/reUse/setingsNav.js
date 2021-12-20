@@ -7,7 +7,9 @@ function SettingsNav(props) {
     function  goBack(){
         props.history.goBack()
     }
-    
+    function handleisLogedInP(){
+        props.isLogedInP()
+    }
     
         return (
                <div>
@@ -20,8 +22,8 @@ function SettingsNav(props) {
                         </li>
                         <ul id="nav__setting" >
                             {props.idP===""?" ":
-                              <li>
-                              <Link  className="nav__setting__link" to={`/home/${props.idP}/dashboard`}>Dashboard</Link>
+                              <li onClick={()=>handleisLogedInP()}>
+                                    <Link  className="nav__setting__link" to={`/home/${props.idP}/dashboard`}>Dashboard</Link>
                               </li>
                             }
                             <li>

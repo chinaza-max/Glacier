@@ -50,6 +50,9 @@
 .tel label{
     padding-right: 88px;
 }
+.container_tel{
+    color: red;
+}
 .pdfImg{
     width: 100%;
     height: 100%;

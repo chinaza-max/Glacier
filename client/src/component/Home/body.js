@@ -1,6 +1,7 @@
 import Section1 from "./body/section1";//section1
 import Section2 from "./body/section2";
 import Filler from "../PDF_Filler/filler";
+import ScrollTop from "../reUse/scrollTop";
 function Body(props){
 
     return(
@@ -10,6 +11,7 @@ function Body(props){
             props.viewP==='Filler' ? <Section2 id={props.id} searchString2={props.searchString}/> :
               <Filler  searchString2={props.searchString}/>
             }
+             <ScrollTop/>
         </div>
     )
 }

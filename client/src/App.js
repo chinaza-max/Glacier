@@ -31,7 +31,7 @@ function App() {
             
             <Route path="/signup" component={Signup}/>
 
-            <Route path="/profile" component={Profile}/>
+            <Route path="/home/profile" component={Profile}/>
             
             <Route path="/verifyEmail" component={VerifyEmail}/>
 

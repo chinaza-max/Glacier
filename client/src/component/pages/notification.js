@@ -3,6 +3,8 @@ import {useEffect,useState } from 'react';
 import {Link ,useParams} from "react-router-dom";
 import {ArrowBackIcon} from "../materialUI/icons";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ScrollTop from "../reUse/scrollTop"
+
 function Notification(props){
     const[changeNavStyle,setChangeNavStyle]=useState({"height":"100px","transition":"height 0.4s ease-out","flexDirection":"column"})
     const[Notification,setNotification]=useState([])
@@ -28,27 +30,49 @@ function Notification(props){
         let total=numberOfPDF+numberOfBook
         localStorage.setItem('notificationNumber', JSON.stringify(total))
     } 
+    
+    function scrollFunction() {
+        let container=document.querySelector(".notificationContainerSub")
+        if (container.scrollTop > 20) {
+            document.querySelector(".scrollTop").style.display = "block";
+            console.log("dirt")
+        } 
+        else {
+            document.querySelector(".scrollTop").style.display = "none";
+            console.log("fish")
+        }
+    }
+   
     resetNotificationAlert()
     useEffect(()=>{
-         
+        
         const aboutController=new AbortController()
         const signal=aboutController.signal
-        document.querySelector(".notificationContainerSub").addEventListener('scroll',listenForScroll)
+        const container=document.querySelector(".notificationContainerSub")
+        container.addEventListener('scroll',listenForScroll);
+        document.querySelector(".scrollTop").style.right="13.5%";
+        document.querySelector(".scrollTop").style.position="abolute";
 
+     
+     
+        container.addEventListener("scroll",scrollFunction)
 async   function init(){
-        const response=await fetch("/notifications",{signal:signal})
-        const body=await response.json()
-        if(body.express===""){
-            return
-        }
-        else{
-            setNotification(body.express)
-            setNotificationAmount(body.express2)
-        }
+            const response=await fetch("/notifications",{signal:signal})
         
+            const body=await response.json()
+            if(body.express===""){
+                return
+            }
+            else{
+                setNotification(body.express)
+                setNotificationAmount(body.express2)
+            }
     }
     init()
-    return ()=> aboutController.abort()
+    return ()=> {
+        aboutController.abort()
+        container.removeEventListener("scroll",scrollFunction); 
+    }
     },[])
     let resultFound=Notification.map((data)=>{
         if(data==='test'){
@@ -104,16 +128,19 @@ async   function init(){
     return(
         <div  className="notificationContainer">
             <div className="notificationContainerSub">
-                    <div className="notificationNavContainer" style={changeNavStyle}>{console.log(resultFound)}
+                    <div className="notificationNavContainer" style={changeNavStyle}>
                         <div className="homeTag" ><h6 onClick={goBack} className="Home"> <ArrowBackIcon style={{fontSize: 34 + 'px'}}/></h6></div>
                         {resultFound.length===0?'':<div className="notificationTag"><h4>Notification({NotificationAmount})</h4></div>}
                     </div>
                     {resultFound.length===0?<div className="notificationContainerSub__empty">Notification is empty</div>:
                     <div className="notificationBody">
                         {resultFound}
+                     
                     </div>
                     }
+                      
                   <div className="notificationContainerSub__add"><Link to={`/home/${id.id}/Accomodation_UploadRequest`} className="Link"> <AddCircleIcon style={{"fontSize":"60px"}}/></Link></div>
+                  <ScrollTop notificationP="notification"/>
             </div>
         </div>
     )
