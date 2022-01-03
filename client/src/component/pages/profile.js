@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from "../reUse/setingsNav"
-import {useParams,Link} from "react-router-dom";
+import {useParams,Link,useNavigate} from "react-router-dom";
 import "../../style/profile.css";
 import bookimg from "../../../src/profileIMG/Ellipse 2.png";
 import bookimg2 from "../../../src/profileIMG/book.svg";
@@ -74,19 +74,20 @@ const step3= [
 
 function Profile(props){
     const {id}=useParams();
-    function  goBack(){
-        props.history.goBack()
-    }
+    const navigate=useNavigate()
+
     function isLogedIn(){
-        console.log( window.localStorage.getItem('isAuthenticated'))
         if(window.localStorage.getItem('isAuthenticated')==="true"){
              return
         }
         else{
-            props.history.push("/login")
+            navigate("/login")
         }
  
      }
+    function goBack(){
+        navigate(-1)
+    }
     return(
             <div id="container">
                    <Nav history={props.history} idP={id}  isLogedInP={()=>isLogedIn()}/>
@@ -185,7 +186,7 @@ function Profile(props){
                                 </ul>
                                 :
                                 <ul id="section5__section1">
-                                    <li><Link to="#" onClick={goBack} className="section5__Link">Home</Link></li>
+                                    <li><Link to={`/login`}  className="section5__Link">Home</Link></li>
                                     <li><a href="/signup"  className="section5__Link">Rigister</a></li>
                                     <li onClick={()=>isLogedIn()}><Link to={`/home/${id}/Accomodation/`} className="section5__Link">accomodation</Link></li>
                                 </ul>

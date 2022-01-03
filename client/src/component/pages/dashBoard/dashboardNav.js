@@ -2,6 +2,7 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import {ArrowBackIcon} from "../../materialUI/icons"
+import {useNavigate} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,13 +49,13 @@ const useStyles = makeStyles((theme) => ({
 
 function NavDashboard(props){
   const classes = useStyles();
-
+  const navigate = useNavigate();
   
   function filteredTextHolder(e){
     props.dashBoardSortP(e.target.value)
   }
   function  goBack(){
-      props.history.goBack()
+    navigate(-1)
   }
 
     return(

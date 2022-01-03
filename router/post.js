@@ -15,8 +15,7 @@ const Time=require("../Time");
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
- 
-    
+
     if(req.files==null){
         let file= { name:'',data:'',size: 0,tempFilePath: '',mimetype: '', md5: '',Price: '',Address: '',selection: '',tel: ''}
                 crypto.randomBytes(16,async (err,buf) => {
@@ -232,8 +231,6 @@ router.post('/uploadBook/:id',(req,res)=>{
                             console.log(err)
                             return res.status(500).send(err)
                         }
-                        file.data='';
-                       
                         })
                         uploadRequest2(req.body.title,req.body.faculty,filename,id)
                         await User.findOneAndUpdate({_id:id},{$push:{details:file}})

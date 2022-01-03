@@ -1,6 +1,6 @@
 //this style contains styling for both the accomodation body
 import {useEffect,useState } from 'react';
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
 import {ArrowBackIcon} from "../materialUI/icons";
 import "../../style/Accomodation_nav.css";
 
@@ -9,17 +9,17 @@ function AccomodationNav(props){
     const[SearchTitle,setSearchTitle]=useState({"display":"block"})
     const[Accomodation_nav2,setAccomodation_nav2]=useState({"paddingTop":"0px"})
     const[search,setsearch]=useState({"paddingTop":"0px"})
-
-    let {id}=useParams()
+    const navigate = useNavigate();
+    const {id}=useParams()
     
     function  onchange(e){
         props.filterFunc(e.target.value.toLowerCase())
     }
     function back(){
-        props.history.goBack()
+        navigate(-1)
     }
     function backToUpLoad(){
-        props.history.push("/home/"+id+"/Accomodation_Upload")
+        navigate("/home/"+id+"/Accomodation_Upload")
     }
     const handleChange=(event)=>{
         const {value}=event.target

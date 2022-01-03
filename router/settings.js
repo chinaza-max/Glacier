@@ -5,14 +5,16 @@ const allImg=require("../mongodb/schema/allImg")
 const router=express.Router();
 const fs=require('fs');
 const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=require("../deletefiles");
+const mongoConnection=require('mongoose')
+const connection=mongoConnection.connection;
 
 
 
 
-
-router.get('/deleteAllAcc',(req,res)=>{
+router.get('/deleteAllAcc/:AdminId',(req,res)=>{
     deleteAllFiles()
     deleteAllPostFromNotificattion()
+    console.log("am over here am  over here")
     connection.db.listCollections().toArray((err,names)=>{
         if(err){
             console.log("check route deleteAllAcc ")
@@ -20,22 +22,14 @@ router.get('/deleteAllAcc',(req,res)=>{
         }
         else{
             for(i=0;i<names.length; i++){
-        
-                if(names[i].name=="users"){
-                    mongoConnection.connection.db.dropCollection("users", function (err, result) {
+                    mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
                             if (err) {
                                 console.log(err)
-                                
                             }
-                            else{
-                                res.send({express:"all account has been deleted"})
-                            }
-                        }
-
-                    )
-                }
-                else{
-                    res.send({express:"No collection of account was found in the dataBase"})
+                })
+                if(i==names.length){
+                    console.log("jjjjjjjjjjjjjjj")
+                    res.send({express:"all account has been deleted"})
                 }
             }
         }
@@ -265,8 +259,7 @@ router.get("/generateAccDetails/:name",(req,res)=>{
 })
 
 router.post("/updateTel/:id",(req,res)=>{
-    console.log(req.params.id)
-    console.log(req.body.tel)
+   
     User.findOneAndUpdate({_id:req.params.id},{tel:req.body.tel},(err,data)=>{
         if(err){
             res.json({express:"problem from server updating phone number"}).status(500)
@@ -318,6 +311,9 @@ function deleteAllAccomodationPost(){
         }
     })
 }
+
+
+
 function deleteAllPostFromNotificattion(){
 
     Notification.find((err,data)=>{
@@ -325,17 +321,20 @@ function deleteAllPostFromNotificattion(){
             console.log(err)
         }
         else{
-         //   console.log(data)
-            Notification.updateMany({_id:data[0]._id},{ $set: {notification:[]}},function(err, affected){
-                 if(err){
-                     console.log(err)
-                     return 
-                 }
-                 else{
-                     console.log(affected)
-                    
-                 }
-             })
+           
+            if(data.length!==0){
+                Notification.updateMany({_id:data[0]._id},{ $set: {notification:[]}},function(err, affected){
+                    if(err){
+                        console.log(err)
+                        return 
+                    }
+                    else{
+                        console.log(affected)
+                       
+                    }
+                })
+            }
+          
         }
     })
     User.find((err,data)=>{
@@ -344,16 +343,18 @@ function deleteAllPostFromNotificattion(){
         }
         else{
             
-          User.updateMany({_id:data[0]._id},{ $set: {notification: []}},function(err, affected){
-                 if(err){
-                     console.log(err)
-                     return 
-                 }
-                 else{
-                     console.log(affected)
-                    
-                 }
-             })
+            if(data.length!==0){
+                User.updateMany({_id:data[0]._id},{ $set: {notification: []}},function(err, affected){
+                    if(err){
+                        console.log(err)
+                        return 
+                    }
+                    else{
+                        console.log(affected)
+                       
+                    }
+               })
+            }
         }
     })
 }
@@ -396,4 +397,9 @@ function deletePostFromBookCollection(name){
 }
 
 
+
+function test(res,req,next){
+    console.log("chinaza chinaza")
+    next()
+}
 module.exports=router

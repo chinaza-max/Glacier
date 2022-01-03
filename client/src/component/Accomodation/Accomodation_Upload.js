@@ -107,6 +107,7 @@ function Accomodation_Upload(props){
             }
         }
     }
+    
     useEffect(()=>{
         let form = document.getElementById('formID');
         let submitButton = document.getElementById('submitID');
@@ -116,7 +117,13 @@ function Accomodation_Upload(props){
         // Change the "Submit" text
         submitButton.value = 'Please wait...';             
         }, false);
-    })
+
+        return form.removeEventListener('submit', function() {
+            submitButton.setAttribute('disabled', true);
+            submitButton.value = 'Please wait...';             
+            })
+    },[])
+
     return(
         <div className="container_of_Accomodation_Upload">
             <AccomodationUploadNav  history={props.history} idP={id}/>
@@ -135,7 +142,7 @@ function Accomodation_Upload(props){
                     
                         <div className='Address'>  
                             <label>Address_Description :</label>
-                            <textarea type="text"  name="Address" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
+                            <textarea type="text"  name="Address" id="Address" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
                         </div> 
                         <div className='tel'>  
                             <label>tel :</label>

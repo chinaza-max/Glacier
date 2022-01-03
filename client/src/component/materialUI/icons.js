@@ -1,6 +1,6 @@
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import React,{useState,useEffect} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
@@ -67,11 +67,11 @@ function BadgeMax() {
               
             }
         }
-   /* const intervaID=setInterval(() => {
+    const intervaID=setInterval(() => {
       setNotificationAlert()
     }, 6000);
     
-    return()=> { clearInterval(intervaID); }*/
+    return()=> { clearInterval(intervaID); }
     
  
   },[])

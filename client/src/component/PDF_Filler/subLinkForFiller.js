@@ -5,7 +5,8 @@ import SwapVertIcon from '@mui/icons-material/SwapVert';
 
 function SubLinkForFiller(props){
   
-    let display=props.navName==="Filler"? <span className="iconDestop"><PictureAsPdfIcon/></span> :<span className="iconDestop"><BookIcon/> </span>
+    let display=props.navNameP==="Filler"? <span className="iconDestop"><PictureAsPdfIcon/></span> :<span className="iconDestop"><BookIcon/> </span>
+    
     return(
        <ul style={{listStyle:'none'}}>
             <li>
@@ -13,7 +14,7 @@ function SubLinkForFiller(props){
                   props.isLogedInP();
                   props.fillerFuncP()
                 }}>
-                  {display}{"    "}{props.navName}<SwapVertIcon style={{"position":"absolute","bottom":"20px","right":"-13px"}}/>
+                  {display}{"    "}{props.navNameP}<SwapVertIcon style={{"position":"absolute","bottom":"20px","right":"-8px"}}/>
                 </Link>
             </li>
        </ul>

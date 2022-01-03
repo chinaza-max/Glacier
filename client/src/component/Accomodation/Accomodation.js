@@ -2,10 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "../../style/noMatchContainer.css"
 import {useEffect,useState } from 'react';
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
 import AccomodationNav from "./AccomodationNav";
 import Swal from 'sweetalert2'
-import AddIcon from '@mui/icons-material/Add';
+import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import ScrollTop from "../reUse/scrollTop"
 
 
@@ -15,7 +15,8 @@ function Accomodation(props){
     const[search,setsearch]=useState([]);
     const[search2,setsearch2]=useState("All");
     const {id}=useParams(); 
-    let searchResult="filled";
+    const navigate=useNavigate()
+    let searchResult="empty";
     
 
 
@@ -31,7 +32,7 @@ function Accomodation(props){
     }
 
     function requestAccomodation(){
-        props.history.push("/home/"+id+"/Accomodation_UploadRequest")
+        navigate("/home/"+id+"/Accomodation_UploadRequest")
     }
     function filterFunc(value){
         setsearch(value.toLowerCase());
@@ -88,8 +89,15 @@ function Accomodation(props){
 
     }
     useEffect(()=>{
+
             const aboutController=new AbortController()
-            const signal=aboutController.signal
+            const signal=aboutController.signal;
+
+//this condition help check help if the user is properly login
+            if(id==="undefined"){
+                navigate("/login")
+            }
+
     async   function init(){
             const response=await fetch("/accomodations",
                 {   
@@ -100,21 +108,25 @@ function Accomodation(props){
                 },
             {signal:signal})
             const body=await response.json()
-            setaccomodation(body.express)
+            console.log(body.express)
+            if(body.express!==""){
+             //   setaccomodation(body.express)
+            }
         }
         init()
-
-      
-
-
         return ()=> aboutController.abort()
-    },[])
+    },[navigate,id])
   
     let NoResultFound=()=>{
         return(
             <div className="noMatchContainer">
-                <h6 className="sub_noMatchContainer">Does not match any results!</h6>
-                <h5 className="sub_noMatchContainer"  id="sub_noMatchContainer_click"onClick={()=>requestAccomodation()}><AddIcon/>request accomodation or roommate</h5>
+                { accomodation.length!==0?
+                    <h6 className="sub_noMatchContainer">Does not match any results!</h6>
+                    :
+                    <h6 className="sub_noMatchContainer">No available accomodation at the moment!</h6>
+                }
+           
+                <h5 className="sub_noMatchContainer"  id="sub_noMatchContainer_click"onClick={()=>requestAccomodation()}><AddRoundedIcon/>request accomodation or roommate</h5>
             </div>
         )
     }
@@ -241,7 +253,7 @@ function Accomodation(props){
             <AccomodationNav filterFunc={filterFunc} accomodationFunc={accomodationFunc} history={props.history}/>
             <div className="accomodation_body_container">
                 <div  className="accomodation_body_container_sub">
-                  {searchResult!=="empty"?resultFound:
+                  {(searchResult!=="empty")||(accomodation.length>0)?resultFound:
                   <NoResultFound/>}
                 </div>
             </div>

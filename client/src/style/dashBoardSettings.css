@@ -45,7 +45,10 @@
     left: 5px;
     color: white;
 }
-
+#nav__dashboard__back:hover{
+    color: #0027D6;
+    cursor: pointer;
+}
 /*this css dis able row per page because it throw error*/
 /*
 .MuiSelect-select.MuiSelect-select {

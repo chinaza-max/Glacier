@@ -12,6 +12,7 @@ const loginLocalStrategy=new LocalStrategy({usernameField: 'email'},(email,passw
                     return done('user not found',null)
             }
             try{
+                
                 if(await bcrypt.compare(password,user.password)){
                     return done(null,{"id":user.id,"name":user.name})
                 } 

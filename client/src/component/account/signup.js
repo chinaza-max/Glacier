@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios'
-import {useHistory,Link } from "react-router-dom";
+import {useNavigate,Link } from "react-router-dom";
 import "../../style/signUp.css";
 import GoogleIcon from '@mui/icons-material/Google';
 
@@ -9,7 +9,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 
 function Signup(){
-    const history=useHistory()
+    const navigate=useNavigate()
     const [eventInfo,setEventInfo]=useState({name:'',password:'',email:'',tel:''});
     const [error,setError]=useState('')
     const [errorPhone,setErrorPhone]=useState('')
@@ -75,7 +75,7 @@ function Signup(){
         })
         .then((res)=>{
             if(res.data.express==="saved"){
-                history.push("/login")
+                navigate("/login")
             }
         }) 
         .catch((error)=>{
@@ -86,7 +86,7 @@ function Signup(){
     useEffect(()=>{
       //  typeWriter()
         if(window.localStorage.getItem("isAuthenticated")==="true"){
-            history.push("/home/"+window.localStorage.getItem("id"))
+            navigate("/home/"+window.localStorage.getItem("id"))
         }
     })
     return(
@@ -102,7 +102,7 @@ function Signup(){
                             <input type="password" placeholder="passWord ..." name="password" onChange={handleChange} required></input>
                             </div>
                             <div>
-                            <input type="email" placeholder="name@.com" name="email" onChange={handleChange} required></input>
+                            <input type="email" placeholder="EmailName@.com" name="email" onChange={handleChange} required></input>
                             </div>
                             <div>
                             <input type="tel" placeholder="phone No" name="tel" onChange={handleChange} required></input>

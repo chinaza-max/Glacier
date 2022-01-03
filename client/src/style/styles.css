@@ -53,13 +53,14 @@
 }
 .h3Categories{
   width:fit-content;
-  padding: 0px 10px 0px 10px;
+  padding: 0px 5px 0px 5px;
   height: fit-content;
   border: 2px solid white;
   margin: 0 auto;
   color: white; 
   margin-top: 60px;
   line-height: 40px;
+  font-size: 16px;
 }
 @media(min-width:640px) {
     .detailSliderContainer {

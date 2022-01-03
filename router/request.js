@@ -13,7 +13,8 @@ router.get('/posts/:id',(req,res)=>{
             return console.log(err)
         }
         else{
-            await    res.send({express:data})
+        
+            await  res.send({express:data.details})
         }
     })
 })
@@ -152,7 +153,7 @@ router.get("/accomodations",(req,res)=>{
         }
         else{
             if(data.length==0){
-                return
+                await res.send({express:"g"})
             }
             else{
                 data[0].AccomodationImg.forEach((data)=>{

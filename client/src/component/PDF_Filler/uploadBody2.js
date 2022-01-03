@@ -112,7 +112,16 @@ const UploadBody=(props)=>{
         submitButton.setAttribute('disabled', true);
         // Change the "Submit" text
         submitButton.value = 'Please wait...';             
-        }, false);
+        }, false)
+
+        return(()=>{
+            window.removeEventListener('submit', function() {
+                // Disable the submit button
+                submitButton.setAttribute('disabled', true);
+                // Change the "Submit" text
+                submitButton.value = 'Please wait...';             
+            })
+        })
     })
     return(
         <Fragment>

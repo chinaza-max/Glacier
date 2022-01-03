@@ -96,8 +96,9 @@ const UploadBodyBook=(props)=>{
                         let submitButton = document.getElementById('submitID');
                         // enable the submit button
                         submitButton.disabled = false;
+                        emptyInput();
                       })
-                      emptyInput();
+                   
                 }
               }
             }

@@ -1,22 +1,22 @@
 import React from "react";
-import {useParams } from "react-router-dom";                                                                                                                
+import {useNavigate} from "react-router-dom";                                                                                                                
 import {ArrowBackIcon} from "../../materialUI/icons"
 
 
-function NavDetail(props){
-  let id=useParams()
- 
+function NavDetail(){
+  const navigate=useNavigate()
+
   function  goBack(){
-      props.history.goBack()
+      navigate(-1)
   }
 
-        return(
-            <ul className="detailNav" style={{backgroundColor: "black",position:"fixed",width:"100vw"}}>
-              <li className="detailNavItem">
-                <span className="detailNavItemBack" onClick={goBack} style={{color: "white"}}><ArrowBackIcon style={{fontSize:'40px',paddingTop:'10px'}}/></span>
-              </li>
-            </ul>
-        )
-    }
+  return(
+      <ul className="detailNav" style={{backgroundColor: "black",position:"fixed",width:"100vw"}}>
+        <li className="detailNavItem">
+          <span className="detailNavItemBack" onClick={goBack} style={{color: "white"}}><ArrowBackIcon style={{fontSize:'40px',paddingTop:'10px'}}/></span>
+        </li>
+      </ul>
+  )
+}
 
 export default NavDetail;          

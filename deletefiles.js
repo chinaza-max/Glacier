@@ -28,6 +28,8 @@ function deleteAllFiles(){
             })
         }
     })
+    deleteAllAccomodationFiles();
+    deleteAllPDFFiles();
 }
 function deleteAllAccomodationFiles(){
     const directory="./client/public/Accomodation_upload/";

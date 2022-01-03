@@ -1,14 +1,14 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios'
-import {useHistory ,Link} from "react-router-dom";
+import {useNavigate ,Link} from "react-router-dom";
 import GoogleIcon from '@mui/icons-material/Google';
 import "../../style/signUp.css";
 
 function Login(){
-    const history=useHistory()
+    const navigate=useNavigate()
     const [eventInfo,setEventInfo]=useState({password:'',email:''});
     const [error,setError]=useState('')
-    const  {password,email}=eventInfo
+    const {password,email}=eventInfo
     
 
     const handleChange=(event)=>{
@@ -33,10 +33,10 @@ function Login(){
             }).then((res)=>{
                 window.localStorage.setItem('isAuthenticated',res.data.express.isAuthenticated)
                 window.localStorage.setItem('id',res.data.express.id)
-                history.push("/home/"+res.data.express.id)
+                navigate("/home/"+res.data.express.id)
             })
             .catch((error)=>{
-                console.log(error.response.data.express)
+                
                 setError(error.response.data.express)
             })
 
@@ -48,7 +48,7 @@ function Login(){
 
     useEffect(()=>{
         if(window.localStorage.getItem("isAuthenticated")==="true"){
-            history.push("/home/"+window.localStorage.getItem("id"))
+            navigate("/home/"+window.localStorage.getItem("id"))
         }
     })
    
@@ -58,7 +58,7 @@ function Login(){
                     <div>
                         <form  onSubmit={onSubmit}  encType="multipart/form-data">
                             <div>
-                            <input type="email" placeholder="name@.com" name="email" onChange={handleChange} required></input>
+                            <input type="email" placeholder="EmailName@.com" name="email" onChange={handleChange} required></input>
                             </div>
                             <div>
                             <input type="password" placeholder="passWord ..." name="password" onChange={handleChange} required></input>

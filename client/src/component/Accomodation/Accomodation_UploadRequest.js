@@ -1,15 +1,17 @@
 import "../../style/Accomodation_UploadRequest.css";
-import {useParams} from "react-router-dom";
+import {useParams,useNavigate} from "react-router-dom";
 import React,{useState} from 'react';
 import axios from 'axios';
 import {ArrowBackIcon} from "../materialUI/icons"
 import Swal from 'sweetalert2/src/sweetalert2.js'
 
-function Accomodation_UploadRequest(props){
+function Accomodation_UploadRequest(){
 
     const [eventInfo,setEventInfo]=useState({num:0,selection:'',notification:"",select:""});
     const{num,selection,notification}=eventInfo;
     const id=useParams();
+    const navigate = useNavigate();
+
     const handleChange=(event)=>{
         const {name,value}=event.target;  
         if(name==="selection"){
@@ -25,10 +27,10 @@ function Accomodation_UploadRequest(props){
     }
 
     function clearInput(){
-        document.querySelector(".notification").value="request...";
-        document.querySelector('#select option').prop('selected', function() {
+        document.querySelector("#notification").placeholder="request...";
+       /* document.querySelector('#select option').prop('selected', function() {
             return this.defaultSelected;
-        });
+        });*/
     }
     function selectionEmpty(){
             let selection=document.getElementById("select")
@@ -60,7 +62,7 @@ function Accomodation_UploadRequest(props){
         
                 if(express==="success"){
                     Swal.fire({
-                        position: 'bottom-center',
+                        position: 'center',
                         icon: 'success',
                         title: 'Your work has been uploaded',
                         showConfirmButton: false,
@@ -87,7 +89,7 @@ function Accomodation_UploadRequest(props){
         }
     }
     function  goBack(){ 
-        props.history.goBack()
+        navigate(-1)
     }
     return(
         <div className="request_container">
@@ -126,7 +128,7 @@ function Accomodation_UploadRequest(props){
                             </div>
                             <div className="request_container__body_Description__1__textAreaContainer">
                                 <div>{num?num:0}/250</div>
-                                <textarea type="text" placeholder="request....." name="notification"   onChange={handleChange} maxLength={250} required/>
+                                <textarea type="text" placeholder="request....." name="notification" id="notification"  onChange={handleChange} maxLength={250} required/>
                             
                             </div>
                         </div>

@@ -13,7 +13,7 @@ function UploadPDF(props){
     return(
         <div>
              <div className="uploadContainer">
-                 <Uploadnav history={props.history} idP={id}/>
+                 <Uploadnav idP={id}/>
                  <UploadBody2  id={id}/>
               </div> 
         </div>

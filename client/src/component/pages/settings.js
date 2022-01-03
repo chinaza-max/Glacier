@@ -17,7 +17,7 @@ function Settings(props){
     setFileName({...fileName,bookName:'',pdfName:''});
   }
     async  function deleteAllAccount(){
-            const response=await fetch("/deleteAllAcc")
+            const response=await fetch(`/deleteAllAcc/${id}`)
             const body=await response.json()
             setreponses({...responses,accOneResponse:body.express})
     }

@@ -1,5 +1,6 @@
 import {useState,useEffect} from "react"
 import { Link } from "react-router-dom";
+import FileDownloadTwoToneIcon from '@mui/icons-material/FileDownloadTwoTone';
 import "../../style/filler.css"
 
 function Filler(props){
@@ -35,6 +36,7 @@ function Filler(props){
 
 
     let data=PDFs.map((data)=>{
+        console.log(props.searchString)
         if(data.courseCode.indexOf(props.searchString2.toLowerCase())===-1){
             return '';
         }
@@ -45,6 +47,7 @@ function Filler(props){
                           <Link   className="fillerImg"  download to={"/downloadPDF/"+data.name}>
                                 <h2>PDF</h2>
                                 <p>DOWNLOAD</p>
+                                <FileDownloadTwoToneIcon/>
                                 <h5>{data.courseCode}</h5>
                           </Link>
                     </div>

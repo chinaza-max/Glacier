@@ -15,16 +15,16 @@
     justify-items: left;
 }
 .mainBody-sub-filler{
-    width: 130px;
-    height: 200px;
+    width: 120px;
+    height: 180px;
     margin-top: 10px;
 }
 .PDF{
     margin-top: 20px;
     position: relative;
     border: 1px solid transparent;
-    width: 130px;
-    height: 170px;
+    width: 117px;
+    height: 150px;
     background-color: white;
 }
 .PDF .fillerImg{
@@ -39,6 +39,12 @@
     color: white;
     text-decoration: none;
 }
+.PDF .fillerImg h2{
+   font-size: 22px;
+}
+.PDF .fillerImg p{
+    font-size: 12px;
+ }
 .PDF:before{
     content: "";
     position: absolute;
@@ -49,7 +55,7 @@
 }
 .bodyImg-filler{
     width: 115px;
-    height: 180px;
+    height: 170px;
 
 }
 .courseCode-filler{
