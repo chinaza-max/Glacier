@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 
 
-module.exports=mongoose.connect("mongodb://localhost:27017/BookDB", {
+module.exports=mongoose.connect("mongodb+srv://chinaza:chinaza100*@mern.p63a6.mongodb.net/glacierDB?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },

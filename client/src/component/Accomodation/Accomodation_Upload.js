@@ -148,10 +148,10 @@ function Accomodation_Upload(props){
             }
             catch(err){
                 if(err){
-                    console.log(err)
+                   // console.log(err)
                 }
                 else{
-                    console.log(err.response.data.msg)
+                  //  console.log(err.response.data.msg)
                 }
             }
         }
