@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload');
 const cookieSession = require('cookie-session')
 const cors = require('cors')
 const app = express();
-const port=5000;
+const port=process.env.PORT||5000;
 // in latest body-parser use like below.
 app.use(fileUpload());
 app.use(cors())

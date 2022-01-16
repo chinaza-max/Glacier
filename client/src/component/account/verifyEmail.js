@@ -49,7 +49,7 @@ function VerifyEmail(){
         )
         .catch(
             (e)=>{
-                console.log(e)
+               // console.log(e)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

@@ -79,7 +79,7 @@ function Signup(){
             }
         }) 
         .catch((error)=>{
-            console.log(error.response.data.express)
+         //   console.log(error.response.data.express)
             setError(error.response.data.express)
         }); 
     }
