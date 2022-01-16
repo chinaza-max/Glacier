@@ -19,7 +19,6 @@ function Section2(props){
               })
             const body=await response.json()
             setBooks(body.express)
-            console.log(body.express)
             localStorage.setItem('numberOfBook', JSON.stringify(body.express.length))
        }
       fetchData();

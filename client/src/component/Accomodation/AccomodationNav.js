@@ -63,8 +63,8 @@ function AccomodationNav(props){
             </div>
             <div className="Accomodation_nav2" style={Accomodation_nav2}>
                 <div className="back">
-                    <span  className="back" onClick={back}>
-                        <ArrowBackIcon style={{fontSize: 50 + 'px',paddingTop: 20 + 'px',position:"absolute",left:-2+"px",top:0+"px"}}/>
+                    <span  className="back" onClick={()=>{back()}}>
+                        <ArrowBackIcon style={{fontSize: 35 + 'px',paddingTop: 0 + 'px',position:"absolute",left:0+"px",top:-5+"px"}}/>
                     </span>
                 </div>
                 <div className="Upload-accomodation_container"><span className="Upload-accomodation" onClick={backToUpLoad}>Upload-accomodation</span> </div>

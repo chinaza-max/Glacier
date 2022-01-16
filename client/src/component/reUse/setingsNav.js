@@ -23,12 +23,9 @@ function SettingsNav(props) {
                                     <Link  className="nav__setting__link" to={`/home/${props.idP}/dashboard`}>Dashboard</Link>
                               </li>
                             }
-                            <li>
-                                <Link  className="nav__setting__link"  id="nav__setting__about" to={"#"}>About</Link>
-                            </li>
                         </ul>
                         
-                  </ul>
+                  </ul> 
                </div>
         )
         

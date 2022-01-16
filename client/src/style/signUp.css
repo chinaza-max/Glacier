@@ -100,6 +100,9 @@
     margin: 0 auto;
     padding-top: 35px;
     background-color: rgb(210, 209, 245);
+    font-family:Neonderthaw ;
+    font-size: 30px;
+    line-height: 20px;
 }
 .accountContainerCenter > div form  .accountContainerCenter__errorPhone{
     color: red;

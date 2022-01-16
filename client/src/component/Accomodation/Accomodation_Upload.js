@@ -4,6 +4,7 @@ import React,{useState,useEffect} from 'react';
 import axios from 'axios'
 import AccomodationUploadNav from "../reUse/setingsNav"
 import Swal from 'sweetalert2';
+import { PaystackButton } from "react-paystack"
 
 
 
@@ -13,10 +14,24 @@ function Accomodation_Upload(props){
     const [uploadedFile,setUploadedFile]=useState({});
     const [eventInfo,setEventInfo]=useState({Price:0,Address:'',selection:'LODGE',tel:''});
     const {Price,Address,selection,tel}=eventInfo
+    const [freeUpload,setFreeUpload]=useState(true)
+    const [apikeys,setApikey]=useState("")
+    const [email,setEmail]=useState("")
     const {id}=useParams()
     let i=0;
 
-   
+    const componentProps = {
+        email,
+        amount:10000,
+        publicKey:apikeys,
+        text: "upload now",
+        onSuccess: () =>{
+        alert("Thanks for doing business with us! Come back soon!!")
+        onPayment()
+        },
+        onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+    }
+
     const onChange=(e)=>{
         if(e.target.files[0]){
             setFile(e.target.files[0]);
@@ -68,9 +83,12 @@ function Accomodation_Upload(props){
                         showConfirmButton: false,
                         timer: 2100
                       }).then(()=>{
-                        let submitButton = document.getElementById('submitID');
-                        // enable the submit button
-                        submitButton.disabled = false;
+                          if(freeUpload){
+                                let submitButton = document.getElementById('submitID');
+                                // enable the submit button
+                                submitButton.disabled = false;
+                          }
+                      
                       })
                       emptyInput();
                 }
@@ -78,8 +96,8 @@ function Accomodation_Upload(props){
             }
           }
     }
-    const onSubmit=async (e)=>{
-        e.preventDefault();
+    const onPayment=async ()=>{
+
         const formData=new FormData();
         formData.append('file',file);
         formData.append('Price',Price);
@@ -107,29 +125,101 @@ function Accomodation_Upload(props){
             }
         }
     }
-    
+    const onSubmit=async (e)=>{
+        e.preventDefault();
+        if(freeUpload){
+            const formData=new FormData();
+            formData.append('file',file);
+            formData.append('Price',Price);
+            formData.append('Address',Address);
+            formData.append('selection',selection);
+            formData.append('tel',tel);
+            try{
+                const res=await axios.post('/Accomodation_upload/'+id,formData,{
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    }
+                });
+                const{message,errMessage}=await res.data
+                setUploadedFile({errMessage})
+                if(message==="success"){
+                    move()
+                }
+            }
+            catch(err){
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    console.log(err.response.data.msg)
+                }
+            }
+        }
+        
+    }
+     
     useEffect(()=>{
-        let form = document.getElementById('formID');
-        let submitButton = document.getElementById('submitID');
-        form.addEventListener('submit', function() {
-        // Disable the submit button
-        submitButton.setAttribute('disabled', true);
-        // Change the "Submit" text
-        submitButton.value = 'Please wait...';             
-        }, false);
+        
+    async    function getUpdate(){
+                 
+        try{
+            await axios.get(`/email/${id}`,{
+        }).then((res)=>{ 
+            setEmail(res.data.express)
+        })
+        .catch((error)=>{
+        // console.log(error.response.data.express)
+        })
+        }
+        catch(err){
+            console.log(err)
+        }
+        
+        //for updating check box
+        try{
+            await axios.get(`/checkValue/${8184724615}`,{
+        }).then((res)=>{ 
+            setFreeUpload(res.data.express)
+            setApikey(res.data.express2)
+        })
+        .catch((error)=>{
+        // console.log(error.response.data.express)
+        })
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
 
-        return form.removeEventListener('submit', function() {
+    getUpdate();
+
+
+        if(freeUpload){
+            
+            let form = document.getElementById('formID');
+            let submitButton = document.getElementById('submitID');
+            form.addEventListener('submit', function() {
+            // Disable the submit button
             submitButton.setAttribute('disabled', true);
+            // Change the "Submit" text
             submitButton.value = 'Please wait...';             
-            })
-    },[])
+            }, false);
+    
+            return form.removeEventListener('submit', function() {
+                submitButton.setAttribute('disabled', true);
+                submitButton.value = 'Please wait...';             
+                })
+                
+        }
+       
+    },[id,freeUpload])
 
     return(
         <div className="container_of_Accomodation_Upload">
             <AccomodationUploadNav  history={props.history} idP={id}/>
             <div className="center">
                 <div className="body_of_Accomodation_Upload">
-                    <form onSubmit={onSubmit} id="formID"  encType="multipart/form-data">
+                    <form onSubmit={(e)=>{onSubmit(e); return false}}  id="formID"  encType="multipart/form-data">
                         <div className="custom-file mt-4">
                             <input type="file" name="file" className="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={onChange} />
                             <label className="custom-file-label" htmlFor="inputGroupFile03">{filename} *Optional</label>
@@ -155,8 +245,13 @@ function Accomodation_Upload(props){
                                 <option name="Hostel">HOSTEL</option>
                             </select>
                         </div>
-                        <input type="submit" value="Upload" id="submitID"  disabled={false}  className="btn btn-primary btn-block  mt-4"/>
+                        {freeUpload===false?
+                            <PaystackButton className="paystack-button" {...componentProps} />
+                            :
+                            <input type="submit" value="Upload" id="submitID"  disabled={false}  className="btn btn-primary btn-block  mt-4"/>
+                        }
                     </form>
+                    
                     <div id="myProgress">
                         <div id="myBar"></div>
                     </div>

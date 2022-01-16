@@ -10,13 +10,14 @@
     flex-direction: row;
     justify-content:flex-end;
     width: 100%;
+    list-style: none;
 }
 #nav__setting li .nav__setting__link{
     text-decoration: none;
     color: white;
 }
 #nav__setting li{
-    padding-right: 40px;
+    padding-right: 20px;
  }
 #nav__setting li .nav__setting__link:hover{
     color: #007bff;

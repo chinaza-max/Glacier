@@ -50,13 +50,13 @@ function Section1(props){
                       </div>
                   </Item>
                   <Item style={{height:160,width:250,}} >
-                      <div id="section1Project"  className="divCategory"><h4 className="h3Categories"> Project Helper</h4>  </div>
+                      <div id="section1Project"  className="divCategory"><h4 className="h3Categories"> <a href="https://api.whatsapp.com/send?phone=08184724615&text=you%20welcome!">Project Helper</a> </h4>  </div>
                   </Item>
                   <Item style={{height:160,width:250,}}>
-                      <div id="section1Term"  className="divCategory"><h4 className="h3Categories">Term Paper Writer</h4>  </div>
+                      <div id="section1Term"  className="divCategory"><h4 className="h3Categories"><a href="https://api.whatsapp.com/send?phone=08184724615&text=you%20welcome!">Term Paper Writer</a></h4>  </div>
                   </Item>
                   <Item style={{height:160,width:250,}}>
-                      <div id="section1Advert"  className="divCategory"><h4 className="h3Categories"> Advert Placement</h4>  </div>
+                      <div id="section1Advert"  className="divCategory"><h4 className="h3Categories"><a href="https://api.whatsapp.com/send?phone=08184724615&text=you%20welcome!">Advert Placement</a> </h4>  </div>
 
                   </Item>
               </MyCarousel>

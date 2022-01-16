@@ -1,6 +1,7 @@
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import {useEffect} from 'react';
-import "../../style/scrollTop.css"
+import "../../style/scrollTop.css";
+
 
 function ScrollTop(props){
     function topFunction() {
@@ -20,10 +21,16 @@ function ScrollTop(props){
         function scrollFunction() {
             
             if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
-                document.querySelector(".scrollTop").style.display = "block";
+                
+                if(document.querySelector(".scrollTop")){
+                    document.querySelector(".scrollTop").style.display = "block";
+                }
+               
             } 
             else {
-                document.querySelector(".scrollTop").style.display = "none";
+                if(document.querySelector(".scrollTop")){
+                    document.querySelector(".scrollTop").style.display = "none";
+                }
             }
         }
      
@@ -35,6 +42,7 @@ function ScrollTop(props){
     },[])
     return(
         <div className='scrollTop' onClick={()=>topFunction()}>
+     
             <ArrowCircleUpIcon style={{"fontSize":"50px"}}/>
         </div>
     )

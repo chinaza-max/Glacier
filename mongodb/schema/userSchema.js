@@ -19,6 +19,10 @@ let userSchema= new mongoose.Schema({
         type:Number,
         minimum:11
     },
+    check:{
+        type:Boolean,
+        default:false
+    },
     details:[],
     AccomodationImg:[],
     pdfs:[],

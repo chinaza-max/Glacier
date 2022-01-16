@@ -2,10 +2,26 @@ const express = require('express');
 const User=require("../mongodb/schema/userSchema")
 const allImg=require("../mongodb/schema/allImg")
 const Notification=require("../mongodb/schema/notificationSchema");
-const e = require('express');
 const router=express.Router();
 
 
+
+
+router.get('/phone/:id',(req,res)=>{
+    console.log("data")
+        User.findById({_id:req.params.id},async(err,data)=>{
+            if(err){
+                return console.log(err)
+            }
+            else{
+                if(data){
+                    await  res.send({express:data.tel})
+                }
+                
+            }
+        })
+
+})
 
 router.get('/posts/:id',(req,res)=>{
     User.findById({_id:req.params.id},async(err,data)=>{
@@ -113,6 +129,26 @@ router.get("/names/:id",(req,res)=>{
 })
 
 
+router.get("/email/:id",(req,res)=>{
+    if(req.params.id){
+        User.findById(req.params.id,(err,data)=>{
+            if(err){
+                console.log("check this route /email/:id")
+                console.log(err)
+            }
+            else{
+                if(data){
+                        res.send({express:data.email})
+                }
+            }
+        })
+    }
+    else{
+        res.send({express:' '})
+    }
+   
+})
+
 router.get('/pdfAPI',(req,res)=>{
   
     let reArrangeMainData=[]
@@ -145,6 +181,7 @@ router.get('/pdfAPI',(req,res)=>{
 })
 
 router.get("/accomodations",(req,res)=>{
+
     let mainData=[]
     let reArrangeMainData=[]
     allImg.find(async(err,data)=>{
@@ -152,8 +189,9 @@ router.get("/accomodations",(req,res)=>{
             console.log(err)
         }
         else{
-            if(data.length==0){
-                await res.send({express:"g"})
+
+            if(data[0].AccomodationImg.length==0){
+                await res.send({express:""})
             }
             else{
                 data[0].AccomodationImg.forEach((data)=>{
@@ -230,7 +268,7 @@ router.get("/notifications",(req,res)=>{
   async   function  resfunction(){
          await res.json({express:reArrangeMainData,express2:num})
      }
- })
+})
 
 
 

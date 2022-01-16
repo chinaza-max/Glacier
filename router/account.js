@@ -6,10 +6,8 @@ const User=require("../mongodb/schema/userSchema")
 const bcrypt=require('bcrypt');
 const app=express();
 
-const methodOverride=require("method-override")
-app.use(methodOverride('_method'))
-
-
+//const methodOverride=require("method-override")
+//app.use(methodOverride('_method'))
 
 
 router.post('/login', (req, res, next)=>{
@@ -63,6 +61,21 @@ router.get("/auth/google/callback",(req, res, next)=>{
 })
 
 
+router.get('/numberOfAcc',async (req, res)=>{
+   
+    User.find((err,data)=>{
+        if(err){
+            res.json({express:"problem from server saving password"}).status(500)
+            console.log(err)
+           return 
+        }
+        else{
+            console.log(data.length)
+            res.json({express:data.length})
+        }
+    })
+})
+
 router.post('/verifyEmail', (req, res,)=>{
 
     User.findOne({email:req.body.email}, async(err,user)=>{
@@ -105,5 +118,7 @@ router.post('/ResetPassword',async (req, res)=>{
         }
     })
 })
+
+
 
 module.exports=router;

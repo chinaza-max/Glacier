@@ -11,29 +11,33 @@ const connection=mongoConnection.connection;
 
 
 
-router.get('/deleteAllAcc/:AdminId',(req,res)=>{
-    deleteAllFiles()
-    deleteAllPostFromNotificattion()
-    console.log("am over here am  over here")
-    connection.db.listCollections().toArray((err,names)=>{
-        if(err){
-            console.log("check route deleteAllAcc ")
-            console.log(err)
-        }
-        else{
-            for(i=0;i<names.length; i++){
-                    mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
-                            if (err) {
-                                console.log(err)
-                            }
-                })
-                if(i==names.length){
-                    console.log("jjjjjjjjjjjjjjj")
-                    res.send({express:"all account has been deleted"})
+router.get('/deleteAllAcc/:AdminId',()=>{deleteAllFiles();deleteAllPostFromNotificattion()},(req,res)=>{
+
+    if(req.params.AdminId===process.env.AdminId){
+        connection.db.listCollections().toArray((err,names)=>{
+            if(err){
+                console.log("check route deleteAllAcc")
+                console.log(err)
+            }
+            else{
+                   
+                for(i=0;i<names.length; i++){
+                        mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
+                                if (err) {
+                                    console.log(err)
+                                }
+                    })
+                
+                    if(i==names.length-1){
+                        console.log("names")
+                        res.send({express:"all account has been deleted"})
+                    }
                 }
             }
-        }
-    })
+        })
+    }
+   
+    
 })
 
 router.get("/deleteSingleAcc/:name",(req,res)=>{
@@ -125,11 +129,14 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
     })
 })
 
-router.get("/deleteAllPost",(req,res)=>{
+
+router.get("/deleteAllBook",(req,res)=>{
+
+    deleteAllFiles()
     deleteAllPostFromBook();
     deleteAllPostFromNotificattion()
     //this function below helps to delete all file in the directory;
-    deleteAllFiles()
+   
     User.find((err,data)=>{
        if(err){
             console.log(err)
@@ -258,6 +265,20 @@ router.get("/generateAccDetails/:name",(req,res)=>{
     })
 })
 
+router.get("/checkValue/:id",(req,res)=>{
+    User.find({tel:req.params.id},(err,user)=>{
+        if(err){
+            console.log(err)
+        }
+        else if(user.length!==0){
+            res.send({express:user[0].check,express2:process.env.Pay_Stack_APIKEY})
+        }
+        else{
+            res.send({express:"no user found"})
+        }
+    })
+}) 
+
 router.post("/updateTel/:id",(req,res)=>{
    
     User.findOneAndUpdate({_id:req.params.id},{tel:req.body.tel},(err,data)=>{
@@ -267,6 +288,21 @@ router.post("/updateTel/:id",(req,res)=>{
            return 
         }
         else{
+            res.json({express:"successfully updated"}).status(300)
+        }
+    })
+})
+
+router.post("/updateCheckValue/:id/:value",(req,res)=>{
+
+    User.findOneAndUpdate({tel:req.params.id},{check:req.params.value},(err,data)=>{
+        if(err){
+            res.json({express:"problem from server updating phone number"}).status(500)
+            console.log(err)
+           return 
+        }
+        else{
+           // console.log(data)
             res.json({express:"successfully updated"}).status(300)
         }
     })
@@ -311,9 +347,6 @@ function deleteAllAccomodationPost(){
         }
     })
 }
-
-
-
 function deleteAllPostFromNotificattion(){
 
     Notification.find((err,data)=>{
@@ -329,12 +362,11 @@ function deleteAllPostFromNotificattion(){
                         return 
                     }
                     else{
-                        console.log(affected)
+                       // console.log(affected)
                        
                     }
                 })
             }
-          
         }
     })
     User.find((err,data)=>{
@@ -350,13 +382,17 @@ function deleteAllPostFromNotificattion(){
                         return 
                     }
                     else{
-                        console.log(affected)
-                       
+                        //console.log(affected)
+                        
                     }
                })
             }
+            else{
+                return
+            }
         }
     })
+
 }
 
 function deletePostFromAccomodationCollection(name){
@@ -397,9 +433,4 @@ function deletePostFromBookCollection(name){
 }
 
 
-
-function test(res,req,next){
-    console.log("chinaza chinaza")
-    next()
-}
 module.exports=router

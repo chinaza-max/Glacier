@@ -114,7 +114,7 @@ function Signup(){
                             </div>
                             <div className='accountContainerCenter__google'> <a href="/" onClick={(e)=>{googleSignUp(e)}}><GoogleIcon  style={{"color":"blue"}}/> sign up with google</a></div>
 
-                            <div className='accountContainerCenter__logo'>Glacier</div>
+                            <div className='accountContainerCenter__logo'>Glac</div>
                             <div className='accountContainerCenter__error'>   {error?error:""}</div>
                         </form>
                     </div>

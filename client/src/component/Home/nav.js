@@ -117,7 +117,10 @@ function Nav(props){
         const init=async ()=>{
             const  response= fetch("/names/"+id)
             let body=await response.then(res=>res.json())
+        
             if(body.express==="redirect"){
+                window.localStorage.setItem('isAuthenticated',false)
+                window.localStorage.setItem('id','')
                 navigate("/signup")
             }
             else{
@@ -205,7 +208,7 @@ function Nav(props){
             </div>
            <div className="navbarSubContainer">
                 <div className="navContainer-sz">
-                    <div className="navContainer first" style={{color:"black"}}>logo</div>
+                    <div className="navContainer first" style={{color:"black"}}>GLAC</div>
                     <div className="search"> <input onChange={filterTextHolder} className="form-control2 mr-sm-2" type="search" placeholder="Search ......"/></div>
                     <div className="menu"  ref={node}>
                         <div id="menu_position">
@@ -303,6 +306,31 @@ function Nav(props){
             </div>
 
            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           
         </nav> 
               <div id="small-siz-naz" className="pre_toggle" ref={node}>
                     <div className="menu_position2">
@@ -316,8 +344,9 @@ function Nav(props){
                     
                     {id ?
                          <div className="navContent">
-                                <form  action="/logout?_method=DELETE" method="POST">
-                                    <button className="logout2"  style={{textDecoration:"none"}}>logout</button>
+                             
+                                <form  action="/login">
+                                    <button className="logout2"  style={{textDecoration:"none"}} onClick={()=>Logout()}>logout</button>
                                 </form>
                          </div>
                          : 
@@ -335,25 +364,28 @@ function Nav(props){
                     {id?
                         <div className="navContent" id="upload2">
                              <span className="iconMobile"><BackupIcon/></span>Upload
+                             <span  className="iconMobileDropDown"><ArrowDropDownIcon/></span>
                             <ul id="dropDown" className="dropDown_class">
+                                {userInfo.tel===8184724715?
+                                        <li>  
+                                        <Link className="remove_linkStyle pdID"  style={{color:"white"}}  to={`/home/${id}/uploadPDF`}>
+                                            PDF
+                                        </Link>  
+                                        </li>
+                                    :""}
                                 <li> 
-                                    <Link className="remove_linkStyle"   to={`/home/${id}/uploadPDF`}>
-                                        PDF
-                                    </Link>  
-                                </li>
-                                <li> 
-                                    <Link className="remove_linkStyle"   to={`/home/${id}/upload`}>
+                                    <Link className="remove_linkStyle"   to={`/home/${id}/uploadBook`}>
                                         Book
                                     </Link>  
                                 </li>
                                 <li style={{color:"white"}}>
                                     <Link className="remove_linkStyle"   to={`/home/${id}/Accomodation_UploadRequest`}>
-                                        Notification
+                                        Notifica
                                     </Link> 
                                   </li>
                                 <li id="dropDown_accomodation"> 
                                     <Link className="remove_linkStyle"   to={`/home/${id}/Accomodation_Upload`}>
-                                        Accomodation
+                                        Accomo
                                     </Link> 
                                 </li>
                             </ul>

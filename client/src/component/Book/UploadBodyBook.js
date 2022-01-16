@@ -4,7 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "../../style/uploadBody.css";
 import Swal from 'sweetalert2';
- 
+//import componentProps from "../reUse/Payment"
+import { PaystackButton } from "react-paystack"
+import "../../style/Payment.css"
 
 
 const UploadBodyBook=(props)=>{
@@ -13,6 +15,23 @@ const UploadBodyBook=(props)=>{
     const [uploadedFile,setUploadedFile]=useState({});
     const [eventInfo,setEventInfo]=useState({author:'',title:'',faculty:'',Description:'',tel:''});
     const [errorPhone,setErrorPhone]=useState('')
+    const [freeUpload,setFreeUpload]=useState(true)
+    const [apikeys,setApikey]=useState("")
+    const [email,setEmail]=useState("")
+    
+
+    const componentProps = {
+        email,
+        amount:10000,
+        publicKey:apikeys,
+        text: "upload now",
+        onSuccess: () =>{
+        alert("Thanks for doing business with us! Come back soon!!")
+        onPayment()
+        },
+        onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+      }
+
     const{author,title,faculty,Description,tel}=eventInfo
     let i=0;
     
@@ -93,9 +112,12 @@ const UploadBodyBook=(props)=>{
                         showConfirmButton: false,
                         timer: 2500
                       }).then(()=>{
-                        let submitButton = document.getElementById('submitID');
-                        // enable the submit button
-                        submitButton.disabled = false;
+                          if(freeUpload){
+                            let submitButton = document.getElementById('submitID');
+                            // enable the submit button
+                            submitButton.disabled = false;
+                          }
+                       
                         emptyInput();
                       })
                    
@@ -104,8 +126,7 @@ const UploadBodyBook=(props)=>{
             }
           }
     }
-    const onSubmit=async (e)=>{
-        e.preventDefault();
+    const onPayment=async ()=>{
         const formData=new FormData();
         formData.append('file',file);
         formData.append('author',author);
@@ -113,6 +134,7 @@ const UploadBodyBook=(props)=>{
         formData.append('faculty',faculty);
         formData.append('Description',Description);
         formData.append('tel',tel);
+
         try{
           
             const res=await axios.post('/uploadBook/'+props.id,formData,{
@@ -129,31 +151,103 @@ const UploadBodyBook=(props)=>{
         }
         catch(err){
             if(err){
-                console.log(err)
+               // console.log(err)
             }
             else{
-                console.log(err.response.data.msg)
+                //console.log(err.response.data.msg)
             }
         }
+    
+    }
+    
+    const onSubmit=async (e)=>{
+        e.preventDefault();
+        if(freeUpload){
+          
+            const formData=new FormData();
+            formData.append('file',file);
+            formData.append('author',author);
+            formData.append('title',title);
+            formData.append('faculty',faculty);
+            formData.append('Description',Description);
+            formData.append('tel',tel);
+            try{
+              
+                const res=await axios.post('/uploadBook/'+props.id,formData,{
+                    headers:{
+                        'Content-Type':'multipart/form-data'
+                    }
+                })
+                const{message,errMessage}=res.data
+                setUploadedFile({errMessage})
+                
+                if(message==="success"){
+                     move()
+                }
+            }
+            catch(err){
+                if(err){
+                   // console.log(err)
+                }
+                else{
+                   // console.log(err.response.data.msg)
+                }
+            }
+        }
+       
     }
     useEffect(()=>{
-        
-       
 
+    async    function getUpdate(){
+                 
+                try{
+                    await axios.get(`/email/${props.id}`,{
+                }).then((res)=>{ 
+                    setEmail(res.data.express)
+                })
+                .catch((error)=>{
+                // console.log(error.response.data.express)
+                })
+                }
+                catch(err){
+                   // console.log(err)
+                }
+            
+            //for updating check box
+            try{
+                await axios.get(`/checkValue/${8184724615}`,{
+            }).then((res)=>{ 
+                setFreeUpload(res.data.express)
+                setApikey(res.data.express2)
+            })
+            .catch((error)=>{
+            // console.log(error.response.data.express)
+            })
+            }
+            catch(err){
+               // console.log(err)
+            }
+        }
 
-        let form = document.getElementById("myForm");
-        function handleForm(event) { event.preventDefault(); } 
-        form.addEventListener('submit', handleForm);
-        let submitButton = document.getElementById('submitID');
+        getUpdate();
 
-        //this listener disable button when there is multiple click
-        form.addEventListener('submit', function() {
-        // Disable the submit button
-        submitButton.setAttribute('disabled', true);
-        // Change the "Submit" text
-        submitButton.value = 'Please wait...';             
-        }, false);
-    })
+        if(freeUpload){
+            
+            let form = document.getElementById("myForm");
+            function handleForm(event) { event.preventDefault(); } 
+            form.addEventListener('submit', handleForm);
+            let submitButton = document.getElementById('submitID');
+    
+            //this listener disable button when there is multiple click
+            form.addEventListener('submit', function() {
+            // Disable the submit button
+            submitButton.setAttribute('disabled', true);
+            // Change the "Submit" text
+            submitButton.value = 'Please wait...';             
+            }, false);
+        }
+      
+    },[props.id,freeUpload])
     return(
         <Fragment>
             <div className="container">
@@ -186,7 +280,13 @@ const UploadBodyBook=(props)=>{
                         <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
                     </div>
                     <div className='container_tel'>{errorPhone}</div>
+
+                    {freeUpload===false?
+                     <PaystackButton className="paystack-button" {...componentProps} />
+                    :
                     <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
+
+                    }
                 </form>
                 <div id="myProgress">
                     <div id="myBar"></div>

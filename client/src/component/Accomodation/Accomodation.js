@@ -6,7 +6,8 @@ import {useParams,useNavigate} from "react-router-dom";
 import AccomodationNav from "./AccomodationNav";
 import Swal from 'sweetalert2'
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
-import ScrollTop from "../reUse/scrollTop"
+import ScrollTop from "../reUse/scrollTop";
+import axios from 'axios'
 
 
 
@@ -16,7 +17,7 @@ function Accomodation(props){
     const[search2,setsearch2]=useState("All");
     const {id}=useParams(); 
     const navigate=useNavigate()
-    let searchResult="empty";
+    let searchResult="filled";
     
 
 
@@ -89,32 +90,34 @@ function Accomodation(props){
 
     }
     useEffect(()=>{
-
-            const aboutController=new AbortController()
-            const signal=aboutController.signal;
-
+    
 //this condition help check help if the user is properly login
             if(id==="undefined"){
                 navigate("/login")
             }
 
     async   function init(){
-            const response=await fetch("/accomodations",
-                {   
-                    headers : { 
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                   }
-                },
-            {signal:signal})
-            const body=await response.json()
-            console.log(body.express)
-            if(body.express!==""){
-             //   setaccomodation(body.express)
+        
+            try{
+                await axios.get("/accomodations",{
+                }).then((res)=>{
+                    if(res.data.express===""){
+                        setaccomodation([])
+                    }
+                    else{
+                        setaccomodation(res.data.express)
+                    }
+                })
+                .catch((error)=>{
+                // console.log(error.response.data.express)
+                })
+            }
+            catch(err){
+              //  console.log(err)
             }
         }
         init()
-        return ()=> aboutController.abort()
+       
     },[navigate,id])
   
     let NoResultFound=()=>{
@@ -130,15 +133,15 @@ function Accomodation(props){
             </div>
         )
     }
-    let resultFound=accomodation.map((data)=>{
+    const resultFound=accomodation.map((data)=>{
         
         if(data==='test'){
+         
              return '' 
         }
         else{
-          
+           
             if(data.selection.toLowerCase().indexOf(search)===-1 && data.Address.toLowerCase().indexOf(search)===-1){
-        
                 if(isNumeric(search) && search.length>0){
                     let convertedNum=Number(search)
                     if( convertedNum<=data.price){
@@ -179,7 +182,7 @@ function Accomodation(props){
             }
             else if(search2.toLowerCase()==="All".toLowerCase()){
                 
-                searchResult="filled";
+                searchResult="empty";
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
@@ -241,7 +244,7 @@ function Accomodation(props){
                 )
             }
             else{
-                return  searchResult=""
+                return  searchResult="empty"
             }
         }
         return ''
@@ -250,10 +253,12 @@ function Accomodation(props){
     return(
     
         <div className="Accomodation">
+
             <AccomodationNav filterFunc={filterFunc} accomodationFunc={accomodationFunc} history={props.history}/>
             <div className="accomodation_body_container">
                 <div  className="accomodation_body_container_sub">
-                  {(searchResult!=="empty")||(accomodation.length>0)?resultFound:
+                  {accomodation.length>0? (resultFound[0]==='')?<NoResultFound/>:resultFound
+                  :
                   <NoResultFound/>}
                 </div>
             </div>
@@ -261,5 +266,4 @@ function Accomodation(props){
         </div>
     )
 }
-export default Accomodation
-//
+export default Accomodation;

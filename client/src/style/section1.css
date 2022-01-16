@@ -11,8 +11,17 @@
     text-decoration: none; 
     color: white;
 }
-.h3Categories{
+
+.h3Categories a{
+    display: inline-block;  
+    color: white;
+}
+
+.h3Categories a:hover{
     cursor: pointer;
+    text-decoration: none;
+    color: white;
+    
 }
 @media(max-width:1024px){
     .section1{

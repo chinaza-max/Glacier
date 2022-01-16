@@ -185,9 +185,8 @@ router.post("/uploadPDF/:id",(req,res)=>{
                         return res.status(500).send(err)
                     }
                     else{
-                        file.data='';
-                        file.size=0;
-                       // console.log(file)
+                        
+                       console.log(file.size)
                        uploadRequest2(req.body.courseCode,"PDF",filename,id)
                     
                         res.json({message:"success"})
@@ -208,7 +207,8 @@ router.post('/uploadBook/:id',(req,res)=>{
     if(req.files===null){
         return res.status(400).json({msg:"No file uploaded"});
     }
-    const file=req.files.file;
+    const file=req.files.file;1
+    console.log(file.size)
     if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"){
         crypto.randomBytes(16,async (err,buf) => {
             if (err) {

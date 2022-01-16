@@ -17,7 +17,7 @@ function Login(){
     }
     const googleSignUp=async (e)=>{
         e.preventDefault();
-        window.open("http://localhost:5000/auth/google","_self")
+        window.open("http://localhost:5000/auth/google","_self");
     }
    
     const onSubmit=async (e)=>{
@@ -73,7 +73,7 @@ function Login(){
                             <Link to={"/verifyEmail"} className='accountContainerCenter__forgotPassword'>forgot  password</Link>
                             <div className='accountContainerCenter__google'> <a href="/" onClick={(e)=>{googleSignUp(e)}}> <GoogleIcon  style={{"color":"blue"}}/>sign in with google</a></div>
                             <div className='accountContainerCenter__error'>   {error?error:""}</div>
-                            <div className='accountContainerCenter__logo'>Glacier</div>
+                            <div className='accountContainerCenter__logo'>Glac</div>
                         </form>
                     </div>
                     <div></div>
