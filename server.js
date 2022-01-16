@@ -51,3 +51,10 @@ app.use("/",router4);
 
 app.listen(port ,()=>console.log(`server started.... ${port}`))
 //chinaza100*
+/*
+ "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server",
+    "client": "cd client && npm start",
+    "dev": "concurrently -n 'server,client' \"nodemon server.js\" \"npm run client\""
+  }*/
