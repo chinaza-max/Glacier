@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const cookieSession = require('cookie-session')
 const cors = require('cors')
 const app = express();
+const path = require('path');
 const port=process.env.PORT||5000;
 // in latest body-parser use like below.
 app.use(fileUpload());
@@ -49,7 +50,14 @@ app.use("/",router3);
 app.use("/",router4);
 
 if(process.env.NOde_ENV==="production"){
-  app.use(express.static("client/build"))
+  console.log("chinaza chinaza")
+  //app.use(express.static("client/build"))
+  app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+  });
+
 }
 app.listen(port ,()=>console.log(`server started.... ${port}`))
 //chinaza100*
