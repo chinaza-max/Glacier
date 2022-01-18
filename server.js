@@ -48,7 +48,9 @@ app.use("/",router2);
 app.use("/",router3);
 app.use("/",router4);
 
-
+if(process.env.NOde_ENV==="production"){
+  app.use(express.static("client/build"))
+}
 app.listen(port ,()=>console.log(`server started.... ${port}`))
 //chinaza100*
 /*
