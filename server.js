@@ -21,7 +21,7 @@ const passport=require('passport')
 */
 const passportContol=require("./passport/index")
 const session=require('express-session')
-
+/*main*/
 
 app.use(cookieSession({
   name: 'session',
