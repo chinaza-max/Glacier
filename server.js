@@ -14,7 +14,7 @@ const port=process.env.PORT||5000;
 // in latest body-parser use like below.
 app.use(fileUpload());
 app.use(cors())
-
+console.log(express.static("client/build"))
 /*
 const mongoConnection=require('mongoose')
 const connection=mongoConnection.connection;
@@ -50,14 +50,14 @@ app.use("/",router3);
 app.use("/",router4);
 
 if(process.env.NOde_ENV==="production"){
-  console.log("chinaza chinaza")
-  //app.use(express.static("client/build"))
-  app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+  app.use(express.static("client/build"))
+ /* app.use(express.static(path.join(__dirname, 'client', 'build')));
 
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
   });
-
+*/
 }
 app.listen(port ,()=>console.log(`server started.... ${port}`))
 //chinaza100*

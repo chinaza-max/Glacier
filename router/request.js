@@ -43,24 +43,29 @@ router.get("/details/:name",(req,res)=>{
             console.log(err)
         }
         else{
-            for(let i=0; i<data.length; i++){
-                User.findById(data[i],async(err,user)=>{
-                    if(err){
-                        console.log("/details/:id")
-                        console.log(err)
-                    }
-                    else{
-                        let obj=user.details.find((val)=>{ return val.name==req.params.name})
-                        if(obj){
-                            details.push({"name":obj.name,"tel":obj.tel,"author":obj.author,
-                            "title":obj.title,"faculty":obj.faculty,"description":obj.Description})
-                            
-                            res.send({express:details})
-                            return;
+            if(data.length!=0){
+                for(let i=0; i<data.length; i++){
+                    User.findById(data[i],async(err,user)=>{
+                        if(err){
+                            console.log("/details/:id")
+                            console.log(err)
                         }
-                    }
-                })
+                        else{
+                           if(user){
+                            let obj=user.details.find((val)=>{ return val.name==req.params.name})
+                            if(obj){
+                                details.push({"name":obj.name,"tel":obj.tel,"author":obj.author,
+                                "title":obj.title,"faculty":obj.faculty,"description":obj.Description})
+                                
+                                res.send({express:details})
+                                return;
+                            }
+                           }
+                        }
+                    })
+                }
             }
+          
            // res.send({express:details})
         }
     })
@@ -107,7 +112,7 @@ router.get("/names/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                if(data){
+                if(data.length!=0){
                     if(data.tel==undefined){
                         return  res.send({express:data.name,express2:''})
                     }
@@ -137,7 +142,7 @@ router.get("/email/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                if(data){
+                if(data.length!=0){
                         res.send({express:data.email})
                 }
             }
@@ -158,23 +163,26 @@ router.get('/pdfAPI',(req,res)=>{
             console.log(err)
             return
         }
-        else{
-               
-                if(data[0].pdfs.length!=0){
-                   
-                    let len=data[0].pdfs.length-1
-                    for(let i=len; 0<=i; i--){
-                        reArrangeMainData.push(data[0].pdfs[i])
-                        if(i==0){
-                            res.send({express:reArrangeMainData})
-                        }
-                    }   
+        else{   
+         
+               if(data.length!=0){
+                    if(data[0].pdfs.length!=0){
                     
-                }
-                else{
+                        let len=data[0].pdfs.length-1
+                        for(let i=len; 0<=i; i--){
+                            reArrangeMainData.push(data[0].pdfs[i])
+                            if(i==0){
+                                res.send({express:reArrangeMainData})
+                            }
+                        }   
+                    }
+                    else{
+                        res.send({express:reArrangeMainData})
+                    }
+               }
+               else{
                     res.send({express:reArrangeMainData})
-                }
-            
+               }
         }
     })
 
@@ -189,24 +197,29 @@ router.get("/accomodations",(req,res)=>{
             console.log(err)
         }
         else{
-
-            if(data[0].AccomodationImg.length==0){
-                await res.send({express:""})
-            }
-            else{
-                data[0].AccomodationImg.forEach((data)=>{
-                    if(data.name){
-                        mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel,"id":data.id,"unique":data.unique})
-                    }
-                })
-                let len=mainData.length-1
-                for(let i=len; 0<=i; i--){
-                    reArrangeMainData.push(mainData[i])
-                    if(i==0){
-                            resfunction()
+            if(data.length!=0){
+                if(data[0].AccomodationImg.length==0){
+                    await res.send({express:""})
+                }
+                else{
+                    data[0].AccomodationImg.forEach((data)=>{
+                        if(data.name){
+                            mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel,"id":data.id,"unique":data.unique})
+                        }
+                    })
+                    let len=mainData.length-1
+                    for(let i=len; 0<=i; i--){
+                        reArrangeMainData.push(mainData[i])
+                        if(i==0){
+                                resfunction()
+                        }
                     }
                 }
             }
+            else{
+                res.send({express:reArrangeMainData})
+            }
+         
         }
     })
  async   function  resfunction(){
@@ -298,7 +311,7 @@ router.get("/notifications",(req,res)=>{
             console.log(err)
         }
         else{
-             if(user){ 
+             if(user.length!==0){ 
                  let obj=await user.notification.find((va)=>{    
                      return  va.notificationID==notificationID
                  })
