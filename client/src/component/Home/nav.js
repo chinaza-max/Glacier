@@ -196,10 +196,10 @@ function Nav(props){
                 </div>:
                     <div>    
                           <div className="navContent">
-                                <a className="login" href="/login" style={{color:"black",textDecoration:"none"}}>login</a>
+                                <Link className="login" href="/login" style={{color:"black",textDecoration:"none"}}>login</Link>
                           </div>
                           <div className="navContent">
-                                <a className="signup" href="/signup" style={{color:"black",textDecoration:"none"}}>signup</a>
+                                <Link className="signup" href="/signup" style={{color:"black",textDecoration:"none"}}>signup</Link>
                           </div>
                     </div>
                 }
@@ -353,10 +353,10 @@ function Nav(props){
                         
                         <div>
                             <div className="navContent">
-                                <a className="signupMobile" href="/signup" style={{textDecoration:"none"}}>signup</a>
+                                <Link className="signupMobile" href="/signup" style={{textDecoration:"none"}}>signup</Link>
                             </div>
                             <div className="navContent">
-                                <a className="loginMobile" href="/login" style={{textDecoration:"none"}}>login</a>
+                                <Link className="loginMobile" href="/login" style={{textDecoration:"none"}}>login</Link>
                             </div>
                         </div>
                          }
