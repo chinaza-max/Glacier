@@ -6,7 +6,7 @@ const User=require("../mongodb/schema/userSchema")
 const googleLocalStrategy=new GoogleStrategy({
     clientID:  process.env.GoogleClientID,
     clientSecret:  process.env.GoogleClientSecret,
-    callbackURL: "http://localhost:5000/auth/google/callback",
+    callbackURL: "https://glacier-file.herokuapp.com/auth/google/callback",
   },
   async(req,token, tokenSecret, profile, done)=>{
     

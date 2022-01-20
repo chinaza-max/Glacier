@@ -30,7 +30,6 @@ router.post('/login', (req, res, next)=>{
     })(req, res, next);
 });
 
-
 router.post('/signup', (req, res, next)=>{
     passport.authenticate("local-signUp",(err, user, info) =>{
         if (err) {
@@ -41,7 +40,6 @@ router.post('/signup', (req, res, next)=>{
     
     })(req, res, next)
 })
-
 
 router.get("/auth/google",passport.authenticate("google-signUp",{
     scope:  [ 'profile', 'email' ]
