@@ -139,7 +139,7 @@ function Nav(props){
                         
                    }
                    formData.append('tel',userInfo.tel);
-                        axios.post('/updateTel/'+id,formData,{
+                        axios.post('https://glacier-file.herokuapp.com/updateTel/'+id,formData,{
                             headers:{
                                 'Content-Type':'multipart/form-data'
                             }
