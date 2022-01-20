@@ -17,7 +17,7 @@ function Login(){
     }
     const googleSignUp=async (e)=>{
         e.preventDefault();
-        window.open("http://localhost:5000/auth/google","_self");
+        window.open("https://glacier-file.herokuapp.com/auth/google","_self");
     }
    
     const onSubmit=async (e)=>{
