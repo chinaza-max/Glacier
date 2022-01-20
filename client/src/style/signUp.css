@@ -36,9 +36,9 @@
     margin-top: 15px;
     min-width: 75%;
  }
- .accountContainerCenter  div .accountContainerCenter__google a{
+ /*.accountContainerCenter  div .accountContainerCenter__google a{
     text-decoration: none;
- }
+ }*/
 .accountContainerCenter > div form{
     width: 80%;
     margin: 0 auto;

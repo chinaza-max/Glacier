@@ -15,8 +15,8 @@ function Login(){
         const {name,value}=event.target
         setEventInfo({...eventInfo,[name]:value})
     }
-    const googleSignUp=async (e)=>{
-        e.preventDefault();
+    const googleSignUp=async ()=>{
+    
         window.open("https://glacier-file.herokuapp.com/auth/google","_self");
     }
    
@@ -71,7 +71,7 @@ function Login(){
 
 
                             <Link to={"/verifyEmail"} className='accountContainerCenter__forgotPassword'>forgot  password</Link>
-                            <div className='accountContainerCenter__google'> <a href="/" onClick={(e)=>{googleSignUp(e)}}> <GoogleIcon  style={{"color":"blue"}}/>sign in with google</a></div>
+                            <div className='accountContainerCenter__google'> <span  onClick={()=>{googleSignUp()}}> <GoogleIcon  style={{"color":"blue"}}/>sign in with google</span></div>
                             <div className='accountContainerCenter__error'>   {error?error:""}</div>
                             <div className='accountContainerCenter__logo'>Glac</div>
                         </form>
