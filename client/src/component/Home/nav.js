@@ -117,18 +117,14 @@ function Nav(props){
         const init=async ()=>{
             const  response= fetch("https://glacier-file.herokuapp.com/names/"+id)
             let body=await response.then(res=>res.json())
-            console.log("body.express")
-            console.log(body.express)
-            console.log("body.express")
+     
             if(body.express==="redirect"){
                 window.localStorage.setItem('isAuthenticated',false)
                 window.localStorage.setItem('id','')
                 navigate("/signup")
             }
             else{
-                console.log("body.express2")
-                console.log(body.express2)
-                console.log("body.express2")
+              
                 setUserInfo({name:body.express,tel:body.express2})
                 const formData=new FormData();
                 if(body.express2===""){
@@ -188,8 +184,8 @@ function Nav(props){
             }
        
         }
-    },[id,userInfo.tel,navigate])
-
+    },[])
+//id,userInfo.tel,navigate
     return(
         <div>
         <nav className="navbar" style={{backgroundColor:"white",position: "fixed", width: "100%"}}>              
