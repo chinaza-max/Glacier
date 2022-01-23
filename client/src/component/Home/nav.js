@@ -132,6 +132,7 @@ function Nav(props){
                    if (userInfo.tel===""){
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
+                            
                             console.log("set")
                             console.log(userInfo.tel)
                         }
