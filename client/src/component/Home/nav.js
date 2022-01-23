@@ -129,7 +129,7 @@ function Nav(props){
                 const formData=new FormData();
                 if(body.express2===""){
                     let tel= window.prompt("Enter your phone number to complete your registration")
-                   while (userInfo.tel===""){
+                   if (userInfo.tel===""){
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
                             console.log("set")
@@ -184,8 +184,8 @@ function Nav(props){
             }
        
         }
-    },[])
-//id,userInfo.tel,navigate
+    },[id,userInfo.tel,navigate])
+
     return(
         <div>
         <nav className="navbar" style={{backgroundColor:"white",position: "fixed", width: "100%"}}>              
