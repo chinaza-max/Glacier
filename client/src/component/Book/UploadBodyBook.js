@@ -137,7 +137,7 @@ const UploadBodyBook=(props)=>{
 
         try{
           
-            const res=await axios.post('/uploadBook/'+props.id,formData,{
+            const res=await axios.post('https://glacier-file.herokuapp.com/uploadBook/'+props.id,formData,{
                 headers:{
                     'Content-Type':'multipart/form-data'
                 }
@@ -173,7 +173,7 @@ const UploadBodyBook=(props)=>{
             formData.append('tel',tel);
             try{
               
-                const res=await axios.post('/uploadBook/'+props.id,formData,{
+                const res=await axios.post('https://glacier-file.herokuapp.com/uploadBook/'+props.id,formData,{
                     headers:{
                         'Content-Type':'multipart/form-data'
                     }
