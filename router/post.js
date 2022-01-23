@@ -207,7 +207,7 @@ router.post('/uploadBook/:id',(req,res)=>{
     if(req.files===null){
         return res.status(400).json({msg:"No file uploaded"});
     }
-    const file=req.files.file;1
+    const file=req.files.file;
     console.log(file.size)
     if(file.mimetype.toLowerCase()=="image/jpeg"||file.mimetype.toLowerCase()=="image/png"){
         crypto.randomBytes(16,async (err,buf) => {
