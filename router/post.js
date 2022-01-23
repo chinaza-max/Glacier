@@ -225,7 +225,9 @@ router.post('/uploadBook/:id',(req,res)=>{
                     file.Description=req.body.Description.toLowerCase()
                     file.tel=req.body.tel
                     file.date=Time().year + "-" + Time().month + "-" +Time().date
-    
+                    console.log("chinaza chinaza")
+                    console.log(`${__drname}`)
+                    console.log("chinaza chinaza chinaza")
                     file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
                         if(err){
                             console.log(err)
