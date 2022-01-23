@@ -226,7 +226,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                     file.tel=req.body.tel
                     file.date=Time().year + "-" + Time().month + "-" +Time().date
     
-                    file.mv( `${__dirname}../../client/build/public/uploads/${file.name}`,async(err)=>{
+                    file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
                         if(err){
                             console.log(err)
                             return res.status(500).send(err)
