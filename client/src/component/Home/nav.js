@@ -132,9 +132,7 @@ function Nav(props){
                    if (userInfo.tel===""){
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
-                            
-                            console.log("set")
-                            console.log(userInfo.tel)
+   
                         }
                         else{
                             tel=window.prompt(validateTel(tel))
@@ -142,7 +140,7 @@ function Nav(props){
                         
                    }
                    formData.append('tel',userInfo.tel);
-                   console.log("post")
+              
                         axios.post(`https://glacier-file.herokuapp.com/updateTel/${id}`,formData,{
                             headers:{
                                 'Content-Type':'multipart/form-data'

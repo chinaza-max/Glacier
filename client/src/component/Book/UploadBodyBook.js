@@ -127,6 +127,7 @@ const UploadBodyBook=(props)=>{
           }
     }
     const onPayment=async ()=>{
+        console.log("paid")
         const formData=new FormData();
         formData.append('file',file);
         formData.append('author',author);
@@ -163,7 +164,7 @@ const UploadBodyBook=(props)=>{
     const onSubmit=async (e)=>{
         e.preventDefault();
         if(freeUpload){
-          
+          console.log("free")
             const formData=new FormData();
             formData.append('file',file);
             formData.append('author',author);
@@ -218,6 +219,7 @@ const UploadBodyBook=(props)=>{
                 await axios.get(`/checkValue/${8184724615}`,{
             }).then((res)=>{ 
                 setFreeUpload(res.data.express)
+                console.log(res.data.express)
                 setApikey(res.data.express2)
             })
             .catch((error)=>{
