@@ -228,7 +228,7 @@ router.post('/uploadBook/:id',(req,res)=>{
 
 
                     if (!fs.existsSync(`${__dirname}../../client/public/uploads`)){
-                        fs.mkdirSync(`${__dirname}../../client/public/uploads`);
+                        fs.mkdirSync(`${__dirname}../../client/public/uploads`,{ recursive: true });
                     }
                     file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
                         if(err){
