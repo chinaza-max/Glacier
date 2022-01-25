@@ -39,7 +39,7 @@ function Section2(props){
                     <div key={data.name} className="mainBody-sub">
                         
                             <div className="mainBody-subCenter">
-                                <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={"/uploads/"+data.name} alt="file cant show"/>  </Link>
+                                <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={"public/uploads/"+data.name} alt="file cant show!"/>  </Link>
                             </div>
                             <div className="booksTitle">
                                 {data.title}
