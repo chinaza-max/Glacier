@@ -225,9 +225,11 @@ router.post('/uploadBook/:id',(req,res)=>{
                     file.Description=req.body.Description.toLowerCase()
                     file.tel=req.body.tel
                     file.date=Time().year + "-" + Time().month + "-" +Time().date
-                    console.log("chinaza chinaza")
-                    console.log(`${__dirname}`)
-                    console.log("chinaza chinaza chinaza")
+
+
+                    if (!fs.existsSync(`${__dirname}../../client/public/uploads`)){
+                        fs.mkdirSync(`${__dirname}../../client/public/uploads`);
+                    }
                     file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
                         if(err){
                             console.log(err)
