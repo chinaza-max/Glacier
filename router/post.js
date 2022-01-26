@@ -260,7 +260,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     },
                                     media:{
                                         mimeType:file.mimetype,
-                                        body:file.data
+                                        body:file
                                     }
                 
                                 })
@@ -270,6 +270,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                             }
                         }
                         uploadFile()
+                        res.json({message:"success"})
 
 /*
                         uploadRequest2(req.body.title,req.body.faculty,filename,id)
