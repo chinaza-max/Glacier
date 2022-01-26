@@ -271,24 +271,24 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 
                                 })
                                 await drive.permissions.create({
-                                    fileId:response.data.id,
-                                    requestBody:{
-                                        role:"reader",
-                                        type:"anyone"
-                                    }
+                                        fileId:response.data.id,
+                                        requestBody:{
+                                            role:"reader",
+                                            type:"anyone"
+                                        }
                                 })
                                 const result= await drive.files.get({
                                     fileId:response.data.id,
-                                    fields:'webViewLink, webContentLink'
+                                    fields:'webViewLink, webContentLink, thumbnailLink'
                                 })
                              
                                 file.data=''
                                 file.driveID=response.data.id
-                                file.driveURL=result.data.webViewLink
+                                file.driveURL=result.data.thumbnailLink
 
                                
                                 uploadRequest2(req.body.title,req.body.faculty,filename,id)
-                                console.log(file)
+                                console.log(result.data)
                                 await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                                 //initializing book schema to actual get an ID
                                 allImg.find(async(err,data)=>{
