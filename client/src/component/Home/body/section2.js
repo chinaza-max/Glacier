@@ -19,6 +19,7 @@ function Section2(props){
               })
             const body=await response.json()
             setBooks(body.express)
+            console.log(body.express)
             localStorage.setItem('numberOfBook', JSON.stringify(body.express.length))
        }
       fetchData();
@@ -39,7 +40,7 @@ function Section2(props){
                     <div key={data.name} className="mainBody-sub">
                         
                             <div className="mainBody-subCenter">
-                                <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={data.driveURL} alt="file cant show!"/>  </Link>
+                                <Link className="books" to={"/details/"+data.driveURL}>  <img className="bodyImg" src={data.driveURL} alt="file cant show!"/>  </Link>
                             </div>
                             <div className="booksTitle">
                                 {data.title}

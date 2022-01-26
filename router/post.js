@@ -286,50 +286,46 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 file.driveID=response.data.id
                                 file.driveURL=result.data.webViewLink
                                 
+                                uploadRequest2(req.body.title,req.body.faculty,filename,id)
+                                await User.findOneAndUpdate({_id:id},{$push:{details:file}})
+                                //initializing book schema to actual get an ID
+                                allImg.find(async(err,data)=>{
+                                   if(err){
+                                        console.log("check book upload route  'allImg'")
+                                        console.log(err)
+                                   }
+                                   else{
+        
+                                        if(data.length>=1){
+                                        
+                                                    await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                                    res.json({message:"success"})
+                                        }
+                                        else{
+                                           
+                                            await new allImg({bookDetails:["test"]}).save()
+                                            allImg.find(async(err,data)=>{
+                                              
+                                                if(err){
+                                                    console.log(err)
+                                                }
+                                                else{
+                                                    await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
+                                                    res.json({message:"success"})
+                                                }
+                                            
+                                            })
+                                        }
+                                    }
+                                })
+                        
                             }catch(error){
 
                                 console.log(error.message)
                             }
                         }
                         uploadFile(file.data)
-            
-                        res.json({message:"success"})
 
-
-                        uploadRequest2(req.body.title,req.body.faculty,filename,id)
-                        await User.findOneAndUpdate({_id:id},{$push:{details:file}})
-                        //initializing book schema to actual get an ID
-                        allImg.find(async(err,data)=>{
-                            
-                           if(err){
-                                console.log("check book upload route  'allImg'")
-                                console.log(err)
-                           }
-                           else{
-
-                                if(data.length>=1){
-                                
-                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
-                                            res.json({message:"success"})
-                                }
-                                else{
-                                   
-                                    await new allImg({bookDetails:["test"]}).save()
-                                    allImg.find(async(err,data)=>{
-                                      
-                                        if(err){
-                                            console.log(err)
-                                        }
-                                        else{
-                                            await allImg.findOneAndUpdate({_id:data[0].id},{$push:{bookDetails:file}})
-                                            res.json({message:"success"})
-                                        }
-                                    
-                                    })
-                                }
-                            }
-                    })
-                
                 }
             }
            
