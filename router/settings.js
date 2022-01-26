@@ -134,8 +134,8 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
 router.get("/deleteAllBook",(req,res)=>{
 
    // deleteAllFiles()
-   // deleteAllPostFromBook();
-    //deleteAllPostFromNotificattion()
+     deleteAllPostFromBook();
+     deleteAllPostFromNotificattion()
     //this function below helps to delete all file in the directory;
    
     User.find((err,data)=>{
