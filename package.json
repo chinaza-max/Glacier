@@ -9,9 +9,9 @@
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"cd client && npm run build",
-    "install-client":"cd client && npm install",
-    "heroku-postbuild":"npm run install-client && npm run build",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "server": "nodemon server",
     "client": "cd client && npm start",
     "dev": "concurrently -n 'server,client' \"nodemon server.js\" \"npm run client\""
@@ -36,6 +36,7 @@
     "express-fileupload": "^1.2.0",
     "express-flash": "0.0.2",
     "express-session": "^1.17.1",
+    "googleapis": "^92.0.0",
     "gridfs-stream": "^1.1.1",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
@@ -60,4 +61,3 @@
     "xml2js": "^0.4.23"
   }
 }
-

@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const fs=require('fs');
 const router=express.Router();
 const crypto=require("crypto");
+const {google} = require('googleapis');
 app.use(fileUpload());
 const Time=require("../Time");
 
@@ -218,7 +219,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                 const filename = buf.toString('hex') + path.extname(file.name);
                 await filename
                 if(filename){
-                    file.name=filename
+                    //file.name=filename
                     file.author=req.body.author.toLowerCase()
                     file.title=req.body.title.toLowerCase()
                     file.faculty=req.body.faculty.toLowerCase()
@@ -227,15 +228,50 @@ router.post('/uploadBook/:id',(req,res)=>{
                     file.date=Time().year + "-" + Time().month + "-" +Time().date
 
 
-                    if (!fs.existsSync(`${__dirname}../../client/public/uploads`)){
+                 /*   if (!fs.existsSync(`${__dirname}../../client/public/uploads`)){
                         fs.mkdirSync(`${__dirname}../../client/public/uploads`,{ recursive: true });
                     }
-                    file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
+                   file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
                         if(err){
                             console.log(err)
                             return res.status(500).send(err)
                         }
+                        })*/
+
+
+                        let oauth2Client=new google.auth.OAuth2(
+                            process.env.GOOGLE_DRIVE_CLIENT_ID,
+                            process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+                            process.env.GOOGLE_DRIVE_REDIRECT_URI
+                        )
+                        oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
+
+                        const drive=google.drive({
+                            version:'v3',
+                            auth:oauth2Client
                         })
+
+                        async function uploadFile(){
+                            try{
+                                const response=await drive.files.create({
+                                    requestBody:{
+                                        name:file.name,
+                                        mimeType:file.mimetype
+                                    },
+                                    media:{
+                                        mimeType:file.mimetype,
+                                        body:file.data
+                                    }
+                
+                                })
+                                console.log(response.data)
+                            }catch(error){
+                                console.log(error.message)
+                            }
+                        }
+                        uploadFile()
+
+/*
                         uploadRequest2(req.body.title,req.body.faculty,filename,id)
                         await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                         //initializing book schema to actual get an ID
@@ -267,8 +303,9 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     
                                     })
                                 }
-                           }
+                            }
                     })
+                    */
                 }
             }
            
