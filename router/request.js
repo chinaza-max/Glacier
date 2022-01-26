@@ -55,7 +55,7 @@ router.get("/details/:name",(req,res)=>{
                             let obj=user.details.find((val)=>{ return val.name==req.params.name})
                             if(obj){
                                 details.push({"name":obj.name,"tel":obj.tel,"author":obj.author,
-                                "title":obj.title,"faculty":obj.faculty,"description":obj.Description})
+                                "title":obj.title,"faculty":obj.faculty,"description":obj.Description,"driveURL":data.driveURL})
                                 
                                 res.send({express:details})
                                 return;

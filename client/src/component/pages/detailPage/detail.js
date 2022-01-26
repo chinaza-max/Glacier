@@ -22,7 +22,7 @@ function Detail(props){
             const response=fetch("/details/"+name)
             const body=await response.then(res=>res.json())
             setposts(body.express);
-            
+             
             const response2=await fetch("/Books");
             const body2=await response2.json();
             setBooks(body2.express);
@@ -40,7 +40,7 @@ function Detail(props){
                           {post.map((data)=>{
                               return(
                                   <div key={data.name} className="detailBody">
-                                      <div className="bookImgContainer"><img  className="bookImg" src={"/uploads/"+data.name} alt="file cant show"/> </div>
+                                      <div className="bookImgContainer"><img  className="bookImg" src={data.driveURL} alt="file cant show"/> </div>
                                       <div className="content"> 
                                       <div><h3 className="color2">{data.title}</h3></div>
                                       <div className="callContainer">
