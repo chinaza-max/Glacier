@@ -12,9 +12,12 @@ const crypto=require("crypto");
 const {google} = require('googleapis');
 app.use(fileUpload());
 const Time=require("../Time");
-//const { Readable } = require('stream');
 const {Duplex} = require('stream');
-
+const oauth2Client=new google.auth.OAuth2(
+    process.env.GOOGLE_DRIVE_CLIENT_ID,
+    process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+    process.env.GOOGLE_DRIVE_REDIRECT_URI
+)
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
@@ -241,58 +244,11 @@ router.post('/uploadBook/:id',(req,res)=>{
                         })*/
 
 
-                        let oauth2Client=new google.auth.OAuth2(
-                            process.env.GOOGLE_DRIVE_CLIENT_ID,
-                            process.env.GOOGLE_DRIVE_CLIENT_SECRET,
-                            process.env.GOOGLE_DRIVE_REDIRECT_URI
-                        )
-                        oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
-
-                        const drive=google.drive({
-                            version:'v3',
-                            auth:oauth2Client
-                        })
-                        function bufferToStream(myBuuffer) {
-                            let tmp = new Duplex();
-                            tmp.push(myBuuffer);
-                            tmp.push(null);
-                            return tmp;
-                        }
-                        async function uploadFile(){
-                            try{
-                                const response=await drive.files.create({
-                                    requestBody:{
-                                        name:file.name,
-                                        mimeType:file.mimetype
-                                    },
-                                    media:{
-                                        mimeType:file.mimetype,
-                                        body:bufferToStream(file.data)
-                                    }
-                                   
-                                })
-                                await drive.permissions.create({
-                                    fileId:response.data.id,
-                                    requestBody:{
-                                        role:"reader",
-                                        type:"anyone"
-                                    }
-                                })
-                                const result= await drive.files.get({
-                                    fileId:response.data.id,
-                                    fields:'webViewLink, webContentLink'
-                                })
-                                console.log(result.data)
-                                file.data=''
-                                file.driveID=response.data.id
-                                
-                            }catch(error){
-                
-                                console.log(error.message)
-                            }
-                        }
-                        uploadFile()
-            
+                       
+                     
+                       // file.driveID=
+                        let driveData=uploadFile(file.data)
+                        console.log(driveData)
                         res.json({message:"success"})
 
 /*
@@ -542,6 +498,54 @@ function deletePostFromBookCollection(name){
 }
 
 
+//part handles upload to google drive
+oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
+
+const drive=google.drive({
+    version:'v3',
+    auth:oauth2Client
+})
+function bufferToStream(myBuuffer) {
+    let tmp = new Duplex();
+    tmp.push(myBuuffer);
+    tmp.push(null);
+    return tmp;
+}
+
+async function uploadFile(buffer){
+    try{
+        const response=await drive.files.create({
+            requestBody:{
+                name:file.name,
+                mimeType:file.mimetype
+            },
+            media:{
+                mimeType:file.mimetype,
+                body:bufferToStream(buffer)
+            }
+           
+        })
+        await drive.permissions.create({
+            fileId:response.data.id,
+            requestBody:{
+                role:"reader",
+                type:"anyone"
+            }
+        })
+        const result= await drive.files.get({
+            fileId:response.data.id,
+            fields:'webViewLink, webContentLink'
+        })
+        
+        let obj={
+            id:response.data.id,
+            url:result.data.webViewLink
+        }
+        return obj
+    }catch(error){
+        console.log(error.message)
+    }
+}
 
 module.exports=router
 
