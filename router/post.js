@@ -281,12 +281,14 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     fileId:response.data.id,
                                     fields:'webViewLink, webContentLink'
                                 })
-                                console.log(result.data)
+                             
                                 file.data=''
                                 file.driveID=response.data.id
                                 file.driveURL=result.data.webViewLink
-                                
+
+                               
                                 uploadRequest2(req.body.title,req.body.faculty,filename,id)
+                                console.log(file)
                                 await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                                 //initializing book schema to actual get an ID
                                 allImg.find(async(err,data)=>{
