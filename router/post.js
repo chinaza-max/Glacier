@@ -12,7 +12,7 @@ const crypto=require("crypto");
 const {google} = require('googleapis');
 app.use(fileUpload());
 const Time=require("../Time");
-
+const { Readable } = require('stream');
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
@@ -260,7 +260,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     },
                                     media:{
                                         mimeType:file.mimetype,
-                                        body:fs.createReadStream('',file.data)
+                                        body:Readable.from(myBuffer.toString())
                                     }
                 
                                 })
