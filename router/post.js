@@ -260,7 +260,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     },
                                     media:{
                                         mimeType:file.mimetype,
-                                        body:Readable.from(myBuffer.toString())
+                                        body:Readable.from(file.data.toString())
                                     }
                 
                                 })
