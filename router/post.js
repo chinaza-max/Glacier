@@ -225,7 +225,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                 const filename = buf.toString('hex') + path.extname(file.name);
                 await filename
                 if(filename){
-                    //file.name=filename
+                    file.name=filename
                     file.author=req.body.author.toLowerCase()
                     file.title=req.body.title.toLowerCase()
                     file.faculty=req.body.faculty.toLowerCase()
