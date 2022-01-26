@@ -269,16 +269,30 @@ router.post('/uploadBook/:id',(req,res)=>{
                                         mimeType:file.mimetype,
                                         body:bufferToStream(file.data)
                                     }
-                
+                                   
                                 })
-                                console.log(response.data)
+                                await drive.permissions.create({
+                                    fileId:response.data.id,
+                                    requestBody:{
+                                        role:"reader",
+                                        type:"anyone"
+                                    }
+                                })
+                                const result= await drive.files.get({
+                                    fileId:response.data.id,
+                                    fields:'webViewLink, webContentLink'
+                                })
+                                console.log(result.data)
+                                file.data=''
+                                file.driveID=response.data.id
+                                
                             }catch(error){
-                                console.log(" chinaza chinaza chinaza chinaza chinaza chinaza chinaza")
+                
                                 console.log(error.message)
                             }
                         }
                         uploadFile()
-                        console.log("moses moses moses moses moses moses")
+            
                         res.json({message:"success"})
 
 /*
