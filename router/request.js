@@ -88,7 +88,7 @@ router.get('/Books',(req,res)=>{
                 console.log(data[0].bookDetails.length)
                 data[0].bookDetails.forEach((data)=>{
                     if(data.name){
-                        mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author})
+                        mainData.push({'name':data.name,"faculty":data.faculty,"title":data.title,"author":data.author,"driveURL":data.driveURL})
                     }
                 })
                 let len=mainData.length-1
