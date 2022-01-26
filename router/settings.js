@@ -12,8 +12,8 @@ const connection=mongoConnection.connection;
 
 
 router.get('/deleteAllAcc/:AdminId',(req,res)=>{
-    deleteAllFiles()
-    deleteAllPostFromNotificattion()
+   // deleteAllFiles()
+   // deleteAllPostFromNotificattion()
     if(req.params.AdminId===process.env.AdminId){
         connection.db.listCollections().toArray((err,names)=>{
             if(err){

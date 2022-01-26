@@ -291,15 +291,11 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 console.log(error.message)
                             }
                         }
-
-                       
-                     
-                   
                         uploadFile(file.data)
             
                         res.json({message:"success"})
 
-/*
+
                         uploadRequest2(req.body.title,req.body.faculty,filename,id)
                         await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                         //initializing book schema to actual get an ID
@@ -333,7 +329,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 }
                             }
                     })
-                    */
+                
                 }
             }
            
