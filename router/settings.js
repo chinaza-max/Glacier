@@ -60,7 +60,7 @@ router.get("/deleteSingleAcc/:name",(req,res)=>{
                 deletePostFromBookCollection(listofPostTodelete[i])
             }
             //this function send file name to be deleted from the directory
-          await  nameOfFiles(listofPostTodelete);
+          //await  nameOfFiles(listofPostTodelete);
             
             if(id){
                 User.findOneAndRemove({_id:id},(err)=>{
@@ -133,9 +133,9 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
 
 router.get("/deleteAllBook",(req,res)=>{
 
-    deleteAllFiles()
-    deleteAllPostFromBook();
-    deleteAllPostFromNotificattion()
+   // deleteAllFiles()
+   // deleteAllPostFromBook();
+    //deleteAllPostFromNotificattion()
     //this function below helps to delete all file in the directory;
    
     User.find((err,data)=>{
