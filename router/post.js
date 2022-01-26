@@ -266,10 +266,12 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 })
                                 console.log(response.data)
                             }catch(error){
+                                console.log(" chinaza chinaza chinaza chinaza chinaza chinaza chinaza")
                                 console.log(error.message)
                             }
                         }
                         uploadFile()
+                        console.log("moses moses moses moses moses moses")
                         res.json({message:"success"})
 
 /*
