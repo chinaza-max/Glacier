@@ -12,7 +12,9 @@ const crypto=require("crypto");
 const {google} = require('googleapis');
 app.use(fileUpload());
 const Time=require("../Time");
-const { Readable } = require('stream');
+//const { Readable } = require('stream');
+const {Duplex} = require('stream');
+
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
@@ -250,7 +252,12 @@ router.post('/uploadBook/:id',(req,res)=>{
                             version:'v3',
                             auth:oauth2Client
                         })
-
+                        function bufferToStream(myBuuffer) {
+                            let tmp = new Duplex();
+                            tmp.push(myBuuffer);
+                            tmp.push(null);
+                            return tmp;
+                        }
                         async function uploadFile(){
                             try{
                                 const response=await drive.files.create({
@@ -260,7 +267,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     },
                                     media:{
                                         mimeType:file.mimetype,
-                                        body:Readable.from(file.data.toString())
+                                        body:bufferToStream(file.data)
                                     }
                 
                                 })
