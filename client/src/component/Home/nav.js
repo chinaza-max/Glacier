@@ -132,42 +132,44 @@ function Nav(props){
                    if (userInfo.tel===""){
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
-                            formData.append('tel',userInfo.tel);
-                            
-                            axios.post(`https://glacier-file.herokuapp.com/updateTel/${id}`,formData,{
-                                headers:{
-                                    'Content-Type':'multipart/form-data'
-                                }
-                            })
-                            .then((res)=>{
-                                if(res.data.express==="successfully updated"){
-                                    Swal.fire({
-                                        position: 'center',
-                                        icon: 'success',
-                                        title:res.data.express,
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    })
-                                }
-                                else{
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Oops...',
-                                        text: res.data.express,
-                                    })
-                                }
-                               
-                            }) 
-                            .catch((error)=>{
-                                console.log(error.response.data.express)
-                            }); 
+   
                         }
                         else{
                             tel=window.prompt(validateTel(tel))
                         }
                         
                    }
-                
+                   if(userInfo.tel!==''){
+                   formData.append('tel',userInfo.tel);
+              
+                        axios.post(`https://glacier-file.herokuapp.com/updateTel/${id}`,formData,{
+                            headers:{
+                                'Content-Type':'multipart/form-data'
+                            }
+                        })
+                        .then((res)=>{
+                            if(res.data.express==="successfully updated"){
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title:res.data.express,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+                            else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: res.data.express,
+                                })
+                            }
+                           
+                        }) 
+                        .catch((error)=>{
+                            console.log(error.response.data.express)
+                        }); 
+                   }
                 }
             }
         }
