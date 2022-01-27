@@ -127,9 +127,9 @@ function Nav(props){
               
                 setUserInfo({name:body.express,tel:body.express2})
                 const formData=new FormData();
-                if(body.express2===""){
+                if(body.express2===""&&userInfo.tel===""){
                     let tel= window.prompt("Enter your phone number to complete your registration")
-                   if (userInfo.tel===""){
+                   if (userInfo.tel===""){  
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
    
