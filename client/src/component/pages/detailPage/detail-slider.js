@@ -14,8 +14,7 @@ const breakPoints = [
 ];
 
 function Details(props) {
-  let data=props.data.map((data)=>{
- 
+  let data=props.data.map((data)=>{ 
       return(
         <Item key={data.name}> <Link className="books" to={"/details/"+data.name}>  <img className="bodyImg" src={data.driveURL} alt="file cant show"/> </Link></Item>
       )
