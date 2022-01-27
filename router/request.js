@@ -43,7 +43,7 @@ router.get("/details/:name",(req,res)=>{
             console.log(err)
         }
         else{
-            if(data.length!=0){
+            if(data){
                 for(let i=0; i<data.length; i++){
                     User.findById(data[i],async(err,user)=>{
                         if(err){
@@ -112,7 +112,7 @@ router.get("/names/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                if(data.length!=0){
+                if(data){
                     if(data.tel==undefined){
                         return  res.send({express:data.name,express2:''})
                     }
@@ -142,7 +142,7 @@ router.get("/email/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                if(data.length!=0){
+                if(data){
                         res.send({express:data.email})
                 }
             }
@@ -165,7 +165,7 @@ router.get('/pdfAPI',(req,res)=>{
         }
         else{   
          
-               if(data.length!=0){
+               if(data){
                     if(data[0].pdfs.length!=0){
                     
                         let len=data[0].pdfs.length-1
@@ -197,7 +197,7 @@ router.get("/accomodations",(req,res)=>{
             console.log(err)
         }
         else{
-            if(data.length!=0){
+            if(data){
                 if(data[0].AccomodationImg.length==0){
                     await res.send({express:""})
                 }
@@ -242,6 +242,9 @@ router.get("/notifications",(req,res)=>{
              console.log(err)
          }
          else{
+             if(data==null){
+                return res.json({express:"",express2:""})
+             }
              if(data.length==0){
                  return res.json({express:"",express2:""})
              }
