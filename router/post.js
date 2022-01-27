@@ -438,17 +438,7 @@ router.post('/deletePost/:id/:name',(req,res)=>{
                 if(obj){
                     await User.findOneAndUpdate({_id:req.params.id},
                         {$pull:{details:obj}})
-                    
-                    try{
-                        fs.unlinkSync("./client/public/uploads/"+imgNames[imgName])
-                        if(imgName==imgSize){
-                            response()
-                        }
-                       
-                    }catch(err){
-                        console.log("err"+  err)
-                        res({message:"error form server tring to delete file"})
-                    }
+                        response()
                 }
             }
        }
