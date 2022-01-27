@@ -79,6 +79,7 @@ function deleteAllPDFFiles(){
 
 
 async function deleteDriveFile(id){
+    console.log("delete")
     try{
         const res= await drive.files.delete({
             fileId:id
