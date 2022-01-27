@@ -129,11 +129,11 @@ function Nav(props){
                 const formData=new FormData();
                 if(body.express2===""){
                     let tel= window.prompt("Enter your phone number to complete your registration")
-                //   if (userInfo.tel===""){
+                   if (userInfo.tel===""){
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
                             formData.append('tel',userInfo.tel);
-              
+                            
                             axios.post(`https://glacier-file.herokuapp.com/updateTel/${id}`,formData,{
                                 headers:{
                                     'Content-Type':'multipart/form-data'
@@ -166,7 +166,7 @@ function Nav(props){
                             tel=window.prompt(validateTel(tel))
                         }
                         
-               //    }
+                   }
                 
                 }
             }
