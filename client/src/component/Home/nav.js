@@ -125,19 +125,22 @@ function Nav(props){
             }
             else{
               
-                setUserInfo({name:body.express,tel:body.express2})
+         
                 const formData=new FormData();
            //     if(body.express2===""&&userInfo.tel===""){
                     console.log(body.express2==="")
                     console.log(body.express2)
-                   if (userInfo.tel===""){  
+                   if (userInfo.tel===""&&body.express2===""){  
                     let tel= window.prompt("Enter your phone number to complete your registration")
                         if(validateTel(tel)===true){
                             setUserInfo({tel:tel})
+                           
                         }
                         else{
                             tel=window.prompt(validateTel(tel))
                         }
+                   }else{
+                        setUserInfo({name:body.express,tel:body.express2})
                    }
                    if(userInfo.tel!==''){
                    formData.append('tel',userInfo.tel);
