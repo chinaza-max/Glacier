@@ -142,7 +142,7 @@ function Nav(props){
                    }else{
                         setUserInfo({name:body.express,tel:body.express2})
                    }
-                   if(userInfo.tel!==''){
+                   if(userInfo.tel!==''&&body.express2===''){
                        console.log('userInfo.tel')
                        console.log(userInfo.tel)
                    formData.append('tel',userInfo.tel);
