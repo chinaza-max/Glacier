@@ -557,6 +557,7 @@ async function deleteDriveFile(id){
         auth:oauth2Client
     })
     try{
+        console.log(id)
         await drive.files.delete({
             fileId:id
         })
