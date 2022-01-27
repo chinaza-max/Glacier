@@ -316,9 +316,9 @@ function deleteAllPostFromBook(){
         }
         else{
             //this section collect id of drive to be deleted
-            console.log("array array arrayarrayarray array ")
             let array=[]
             for(let i=1; i<data[0].bookDetails.length; i++){
+                console.log("array array array array  array array array array array ")
                 array.push(data[0].bookDetails[i].driveID)
                 if(i===data[0].bookDetails.length-1){
                     console.log(array)
@@ -334,7 +334,6 @@ function deleteAllPostFromBook(){
                  }
                  else{
                      console.log(affected)
-                    
                  }
              })
         }
