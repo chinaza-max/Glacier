@@ -44,6 +44,7 @@ router.get('/deleteAllAcc/:AdminId',(req,res)=>{
 
 router.get("/deleteSingleAcc/:name",(req,res)=>{
     let listofPostTodelete=[];
+    let array=[]
     User.find({"details.name":req.params.name},async(err,data)=>{
         
         if(err){
@@ -56,8 +57,10 @@ router.get("/deleteSingleAcc/:name",(req,res)=>{
             let tel=data[0].tel
             data[0].details.forEach((data)=>{
                 listofPostTodelete.push(data.name)
+                array.push(data.driveID)
             })
             for(let i=0; i<listofPostTodelete.length; i++){
+                deleteDriveFile(array[i])
                 deletePostFromBookCollection(listofPostTodelete[i])
             }
             //this function send file name to be deleted from the directory
@@ -318,17 +321,13 @@ function deleteAllPostFromBook(){
         else{
             //this section collect id of drive to be deleted
             let array=[]
-            console.log("data[0].bookDetails.length")
-            console.log(data[0].bookDetails.length)
-            console.log(data[0].bookDetails)
-            console.log("data[0].bookDetails.length")
+         
             for(let i=0; i<data[0].bookDetails.length; i++){
-                console.log("array array array array  array array array array array ")
+            
                 if(data[0].bookDetails[i].driveID){
                     array.push(data[0].bookDetails[i].driveID)
                 }
                 if(i===data[0].bookDetails.length-1){
-                    console.log(array)
                     for(let j=0; j<array.length; j++){
                         deleteDriveFile(array[j])
                     }
@@ -362,13 +361,10 @@ async function deleteDriveFile(id){
         version:'v3',
         auth:oauth2Client
     })
-    console.log("delete")
-    console.log(id)
     try{
         await drive.files.delete({
             fileId:id
         })
-        console.log(id)
     }
     catch(err){
         console.log(err.message)
