@@ -8,15 +8,7 @@ const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=
 const mongoConnection=require('mongoose')
 const connection=mongoConnection.connection;
 const {google} = require('googleapis');
-const oauth2Client=new google.auth.OAuth2(
-    process.env.GOOGLE_DRIVE_CLIENT_ID,
-    process.env.GOOGLE_DRIVE_CLIENT_SECRET,
-    process.env.GOOGLE_DRIVE_REDIRECT_URI
-)
-const drive=google.drive({
-    version:'v3',
-    auth:oauth2Client
-})
+
 
 
 
@@ -330,9 +322,11 @@ function deleteAllPostFromBook(){
             console.log(data[0].bookDetails.length)
             console.log(data[0].bookDetails)
             console.log("data[0].bookDetails.length")
-            for(let i=1; i<data[0].bookDetails.length; i++){
+            for(let i=0; i<data[0].bookDetails.length; i++){
                 console.log("array array array array  array array array array array ")
-                array.push(data[0].bookDetails[i].driveID)
+                if(data[0].bookDetails[i].driveID){
+                    array.push(data[0].bookDetails[i].driveID)
+                }
                 if(i===data[0].bookDetails.length-1){
                     console.log(array)
                     for(let j=0; j<array.length; j++){
@@ -358,6 +352,16 @@ function deleteAllPostFromBook(){
 
 
 async function deleteDriveFile(id){
+    const oauth2Client=new google.auth.OAuth2(
+        process.env.GOOGLE_DRIVE_CLIENT_ID,
+        process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+        process.env.GOOGLE_DRIVE_REDIRECT_URI
+    )
+    oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
+    const drive=google.drive({
+        version:'v3',
+        auth:oauth2Client
+    })
     console.log("delete")
     console.log(id)
     try{
