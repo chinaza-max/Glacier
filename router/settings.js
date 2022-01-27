@@ -322,7 +322,7 @@ function deleteAllPostFromBook(){
                 array.push(data[0].bookDetails[i].driveID)
                 if(i===data[0].bookDetails.length-1){
                     console.log(array)
-                    for(let j=0; i<array.length; i++){
+                    for(let j=0; j<array.length; i++){
                         deleteDriveFile(array[j])
                     }
                 }
