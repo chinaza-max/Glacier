@@ -1,16 +1,7 @@
 const fs=require('fs');
 const path=require("path");
-const {google} = require('googleapis');
 const directory="./client/public/uploads/";
-const oauth2Client=new google.auth.OAuth2(
-    process.env.GOOGLE_DRIVE_CLIENT_ID,
-    process.env.GOOGLE_DRIVE_CLIENT_SECRET,
-    process.env.GOOGLE_DRIVE_REDIRECT_URI
-)
-const drive=google.drive({
-    version:'v3',
-    auth:oauth2Client
-})
+
 
 function deleteFileInUpload(name){
     fs.unlinkSync(directory+name)
@@ -78,19 +69,8 @@ function deleteAllPDFFiles(){
 }
 
 
-async function deleteDriveFile(id){
-    console.log("delete")
-    try{
-        const res= await drive.files.delete({
-            fileId:id
-        })
-        console.log(id)
-    }
-    catch(err){
-        console.log(err.message)
-    }
-}
 
 
 
-module.exports={nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles,deleteDriveFile}
+
+module.exports={nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}

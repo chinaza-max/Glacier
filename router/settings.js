@@ -4,7 +4,7 @@ const Notification=require("../mongodb/schema/notificationSchema")
 const allImg=require("../mongodb/schema/allImg")
 const router=express.Router();
 const fs=require('fs');
-const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles,deleteDriveFile}=require("../deletefiles");
+const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=require("../deletefiles");
 const mongoConnection=require('mongoose')
 const connection=mongoConnection.connection;
 
@@ -341,6 +341,20 @@ function deleteAllPostFromBook(){
              })
         }
     })
+}
+
+async function deleteDriveFile(id){
+    console.log("delete")
+    console.log(id)
+    try{
+        const res= await drive.files.delete({
+            fileId:id
+        })
+        console.log(id)
+    }
+    catch(err){
+        console.log(err.message)
+    }
 }
 
 function deleteAllAccomodationPost(){
