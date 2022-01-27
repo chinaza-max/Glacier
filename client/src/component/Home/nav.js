@@ -127,9 +127,6 @@ function Nav(props){
               
          
                 const formData=new FormData();
-           //     if(body.express2===""&&userInfo.tel===""){
-                    console.log(body.express2==="")
-                    console.log(body.express2)
                    if (userInfo.tel===""&&body.express2===""){  
                     let tel= window.prompt("Enter your phone number to complete your registration")
                         if(validateTel(tel)===true){
@@ -143,9 +140,7 @@ function Nav(props){
                         setUserInfo({name:body.express,tel:body.express2})
                    }
                    if(userInfo.tel!==''&&body.express2===''){
-                       console.log('userInfo.tel')
-                       console.log(userInfo.tel)
-                   formData.append('tel',userInfo.tel);
+                        formData.append('tel',userInfo.tel);
               
                         axios.post(`https://glacier-file.herokuapp.com/updateTel/${id}`,formData,{
                             headers:{
@@ -175,7 +170,6 @@ function Nav(props){
                             console.log(error.response.data.express)
                         }); 
                    }
-               // }
             }
         }
         init()

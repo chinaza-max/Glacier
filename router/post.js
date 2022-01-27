@@ -530,8 +530,10 @@ function deletePostFromBookCollection(name){
             console.log("err")
             console.log(err)
         }
+
         else if(user.length!==0){
-            let obj=await user[0].bookDetails.find((va)=>{    
+            let obj=await user[0].bookDetails.find((va)=>{ 
+                deleteDriveFile(va.driveID)
                 return  va.name==name
             })
             if(obj){
@@ -543,6 +545,26 @@ function deletePostFromBookCollection(name){
 }
 
 
+async function deleteDriveFile(id){
+    const oauth2Client=new google.auth.OAuth2(
+        process.env.GOOGLE_DRIVE_CLIENT_ID,
+        process.env.GOOGLE_DRIVE_CLIENT_SECRET,
+        process.env.GOOGLE_DRIVE_REDIRECT_URI
+    )
+    oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
+    const drive=google.drive({
+        version:'v3',
+        auth:oauth2Client
+    })
+    try{
+        await drive.files.delete({
+            fileId:id
+        })
+    }
+    catch(err){
+        console.log(err.message)
+    }
+}
 
 
 module.exports=router
