@@ -365,7 +365,7 @@ async function deleteDriveFile(id){
     console.log("delete")
     console.log(id)
     try{
-        const res= await drive.files.delete({
+        await drive.files.delete({
             fileId:id
         })
         console.log(id)
