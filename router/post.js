@@ -533,7 +533,12 @@ function deletePostFromBookCollection(name){
 
         else if(user.length!==0){
             let obj=await user[0].bookDetails.find((va)=>{ 
-                deleteDriveFile(va.driveID)
+                if(va.name==name){
+                    deleteDriveFile(va.driveID)
+                    console.log("chinaza chinaza chinaza chinazachinazachinazachinaza")
+                    console.log(va.driveID)
+                    console.log("chinaza chinaza chinaza chinazachinazachinazachinaza")
+                }
                 return  va.name==name
             })
             if(obj){

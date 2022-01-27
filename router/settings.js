@@ -14,7 +14,8 @@ const {google} = require('googleapis');
 
 router.get('/deleteAllAcc/:AdminId',(req,res)=>{
    // deleteAllFiles()
-   // deleteAllPostFromNotificattion()
+   deleteAllPostFromNotificattion()
+   
     if(req.params.AdminId===process.env.AdminId){
         connection.db.listCollections().toArray((err,names)=>{
             if(err){
