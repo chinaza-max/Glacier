@@ -328,6 +328,7 @@ function deleteAllPostFromBook(){
             let array=[]
             console.log("data[0].bookDetails.length")
             console.log(data[0].bookDetails.length)
+            console.log(data[0].bookDetails)
             console.log("data[0].bookDetails.length")
             for(let i=1; i<data[0].bookDetails.length; i++){
                 console.log("array array array array  array array array array array ")
