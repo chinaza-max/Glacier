@@ -143,6 +143,8 @@ function Nav(props){
                         setUserInfo({name:body.express,tel:body.express2})
                    }
                    if(userInfo.tel!==''){
+                       console.log('userInfo.tel')
+                       console.log(userInfo.tel)
                    formData.append('tel',userInfo.tel);
               
                         axios.post(`https://glacier-file.herokuapp.com/updateTel/${id}`,formData,{
