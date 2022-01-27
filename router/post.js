@@ -438,7 +438,9 @@ router.post('/deletePost/:id/:name',(req,res)=>{
                 if(obj){
                     await User.findOneAndUpdate({_id:req.params.id},
                         {$pull:{details:obj}})
-                        response()
+                        if(imgName==imgSize){
+                            response()
+                        }
                 }
             }
        }
