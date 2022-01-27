@@ -433,11 +433,17 @@ function Nav(props){
                     :
                     ''
                     }
-                   
-                    <div className="navContent last" >
-                        <span className="iconMobile"><PersonIcon/></span> About
-                    </div>
                 
+
+                    {id?
+                            <Link className="navContent last" style={{display:"inline-block"}}    to={`/home/${id}/profile`}>
+                                <span className="iconMobile"><PersonIcon/></span> About
+                            </Link>  
+                        :
+                        <div className="navContent last" >
+                            <span className="iconMobile"><PersonIcon/></span> About
+                        </div> 
+                    }
                 </div>
         </div>
     )
