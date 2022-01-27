@@ -64,7 +64,7 @@ router.get("/deleteSingleAcc/:name",(req,res)=>{
                 deletePostFromBookCollection(listofPostTodelete[i])
             }
             //this function send file name to be deleted from the directory
-          //await  nameOfFiles(listofPostTodelete);
+          // await  nameOfFiles(listofPostTodelete);
             
             if(id){
                 User.findOneAndRemove({_id:id},(err)=>{
