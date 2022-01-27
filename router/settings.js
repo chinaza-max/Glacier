@@ -4,7 +4,7 @@ const Notification=require("../mongodb/schema/notificationSchema")
 const allImg=require("../mongodb/schema/allImg")
 const router=express.Router();
 const fs=require('fs');
-const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles}=require("../deletefiles");
+const {nameOfFiles,deleteAllFiles,deleteAllPDFFiles,deleteAllAccomodationFiles,deleteDriveFile}=require("../deletefiles");
 const mongoConnection=require('mongoose')
 const connection=mongoConnection.connection;
 
@@ -152,7 +152,7 @@ router.get("/deleteAllBook",(req,res)=>{
                 }
             })
         }
-        res.send({express:"All post removed"})
+        res.send({express:"All Book removed"})
        }
     })
 })
@@ -315,6 +315,17 @@ function deleteAllPostFromBook(){
             console.log(err)
         }
         else{
+
+            //this section collect id of drive to be deleted
+            let array=[]
+            for(let i=1; i<data[0].bookDetails.length; i++){
+                array.push(data[0].bookDetails[i].driveID)
+                if(i===data[0].bookDetails.length-1){
+                    for(i in array){
+                        deleteDriveFile(array[i])
+                    }
+                }
+            }
             allImg.updateMany({_id:data[0]._id},{ $set: {bookDetails: []}},function(err, affected){
                  if(err){
                      console.log(err)
@@ -432,6 +443,7 @@ function deletePostFromBookCollection(name){
         }
     })
 }
+
 
 
 module.exports=router
