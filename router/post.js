@@ -90,7 +90,7 @@ router.post('/Accomodation_upload/:id',async(req,res)=>{
                         file.tel=req.body.tel
                         file.id=id
                         file.unique=filename
-                        file.mv( `${__dirname}../../client/public${file.name}`,async(err)=>{
+                       /* file.mv( `${__dirname}../../client/public${file.name}`,async(err)=>{
                             if(err){
                                 console.log(err)
                                 return res.status(500).send(err)
@@ -98,8 +98,48 @@ router.post('/Accomodation_upload/:id',async(req,res)=>{
                             file.data='';
                             file.size=0;
         
+                            })*/
+                            oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
+                            const drive=google.drive({
+                                version:'v3',
+                                auth:oauth2Client
                             })
-                            
+                            function bufferToStream(myBuuffer) {
+                                let tmp = new Duplex();
+                                tmp.push(myBuuffer);
+                                tmp.push(null);
+                                return tmp;
+                            }
+                            async function uploadFile(buffer){
+                                try{
+                                    const response=await drive.files.create({
+                                        requestBody:{
+                                            name:file.name,
+                                            mimeType:file.mimetype
+                                        },
+                                        media:{
+                                            mimeType:file.mimetype,
+                                            body:bufferToStream(buffer)
+                                        }
+                                    
+                                    })
+                                    await drive.permissions.create({
+                                            fileId:response.data.id,
+                                            requestBody:{
+                                                role:"reader",
+                                                type:"anyone"
+                                            }
+                                    })
+                                    const result= await drive.files.get({
+                                        fileId:response.data.id,
+                                        fields:'webViewLink, webContentLink, thumbnailLink'
+                                    })
+                                 
+                                    file.data=''
+                                    file.driveID=response.data.id
+                                    file.driveURL=result.data.thumbnailLink
+    
+                                   
                             await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
                             //initializing book schema to actual get an ID
                             allImg.find(async(err,data)=>{
@@ -136,6 +176,13 @@ router.post('/Accomodation_upload/:id',async(req,res)=>{
                             })
                             
                             res.json({message:"success"})
+                            
+                            }catch(error){
+
+                                console.log(error.message)
+                            }
+                        }
+                        uploadFile(file.data)
                     }
                 }
             
@@ -248,7 +295,6 @@ router.post('/uploadBook/:id',(req,res)=>{
                         
                         //part handles upload to google drive
                         oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
-
                         const drive=google.drive({
                             version:'v3',
                             auth:oauth2Client
@@ -259,7 +305,6 @@ router.post('/uploadBook/:id',(req,res)=>{
                             tmp.push(null);
                             return tmp;
                         }
-
                         async function uploadFile(buffer){
                             try{
                                 const response=await drive.files.create({
@@ -291,7 +336,7 @@ router.post('/uploadBook/:id',(req,res)=>{
 
                                
                                 uploadRequest2(req.body.title,req.body.faculty,filename,id)
-                                console.log(result.data)
+                                
                                 await User.findOneAndUpdate({_id:id},{$push:{details:file}})
                                 //initializing book schema to actual get an ID
                                 allImg.find(async(err,data)=>{

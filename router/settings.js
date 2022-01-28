@@ -14,33 +14,64 @@ const {google} = require('googleapis');
 
 router.get('/deleteAllAcc/:AdminId',(req,res)=>{
    // deleteAllFiles()
+
    deleteAllPostFromNotificattion()
-   
-    if(req.params.AdminId===process.env.AdminId){
-        connection.db.listCollections().toArray((err,names)=>{
-            if(err){
-                console.log("check route deleteAllAcc")
-                console.log(err)
-            }
-            else{
-                   
-                for(i=0;i<names.length; i++){
-                        mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
-                                if (err) {
-                                    console.log(err)
-                                }
-                    })
-                
-                    if(i==names.length-1){
-                        console.log("names")
-                        res.send({express:"all account has been deleted"})
+    
+   let array=[]
+    allImg.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            for(let i=0; i < data[0].bookDetails.length; i++){
+                if(data[0].bookDetails[i]=="test"){
+                }
+                else{
+                    array.push(data[0].bookDetails[i].driveID)
+                }
+                if(i==data[0].bookDetails.length-1){
+                    for(let j=0; j < data[0].AccomodationImg.length; j++){
+                        if(data[0].AccomodationImg[j]=="test"){
+                        }
+                        else{
+                            array.push(data[0].AccomodationImg[j].driveID)
+                        }
+                        if(j==data[0].AccomodationImg.length-1){
+                            removeCollection()
+                            for(let k=0;k<array.length;k++){
+                                deleteDriveFile(array[k])
+                            }
+                        }
                     }
                 }
             }
-        })
+        }
+    })
+    function removeCollection(){
+        if(req.params.AdminId===process.env.AdminId){
+            connection.db.listCollections().toArray((err,names)=>{
+                if(err){
+                    console.log("check route deleteAllAcc")
+                    console.log(err)
+                }
+                else{
+                       
+                    for(i=0;i<names.length; i++){
+                            mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
+                                    if (err) {
+                                        console.log(err)
+                                    }
+                        })
+                    
+                        if(i==names.length-1){
+                            console.log("names")
+                            res.send({express:"all account has been deleted"})
+                        }
+                    }
+                }
+            })
+        }
     }
-   
-    
 })
 
 router.get("/deleteSingleAcc/:name",(req,res)=>{
