@@ -19,7 +19,7 @@ function Detail(props){
        // isMounted.current = true;
 
         const init=async ()=>{
-            const response=fetch("/details/"+name)
+            const response=fetch("/detail/"+name)
             const body=await response.then(res=>res.json())
             setposts(body.express);
              

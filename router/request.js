@@ -35,7 +35,7 @@ router.get('/posts/:id',(req,res)=>{
     })
 })
 
-router.get("/details/:name",(req,res)=>{
+router.get("/detail/:name",(req,res)=>{
     let details=[];
     User.find((err,data)=>{
         if(err){

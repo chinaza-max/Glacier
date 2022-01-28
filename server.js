@@ -14,7 +14,6 @@ const port=process.env.PORT||5000;
 // in latest body-parser use like below.
 app.use(fileUpload());
 app.use(cors())
-console.log(express.static("client/build"))
 /*
 const mongoConnection=require('mongoose')
 const connection=mongoConnection.connection;
