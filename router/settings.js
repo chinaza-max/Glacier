@@ -168,7 +168,6 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
 
 router.get("/deleteAllBook",(req,res)=>{
 
-   // deleteAllFiles()
      deleteAllPostFromBook();
      deleteAllPostFromNotificattion()
     //this function below helps to delete all file in the directory;
@@ -212,10 +211,7 @@ router.get("/deleteSingleAccomodation/:name",(req,res)=>{
                     if(obj.name=="/accomodationImg/firstImg.jpg"){
                           res.send({express:"succefully Deleted"})
                     }
-                    else{
-                        fs.unlinkSync("./client/public"+obj.name)
-                        res.send({express:"succefully Deleted"})
-                    }
+                   
                 }
                 catch(err){
                     console.log("err"+  err)
@@ -267,7 +263,7 @@ router.get("/deleteSinglePost/:name",(req,res)=>{
 })
 router.get("/deleteAllAccomodationPost",(req,res)=>{
     deleteAllAccomodationPost();
-    deleteAllAccomodationFiles();
+    //deleteAllAccomodationFiles();
     User.find((err,data)=>{
         if(err){
              console.log(err)
@@ -350,9 +346,9 @@ function deleteAllPostFromBook(){
             console.log(err)
         }
         else{
+
             //this section collect id of drive to be deleted
             let array=[]
-         
             for(let i=0; i<data[0].bookDetails.length; i++){
             
                 if(data[0].bookDetails[i].driveID){
@@ -364,6 +360,7 @@ function deleteAllPostFromBook(){
                     }
                 }
             }
+
             allImg.updateMany({_id:data[0]._id},{ $set: {bookDetails: []}},function(err, affected){
                  if(err){
                      console.log(err)
@@ -376,10 +373,6 @@ function deleteAllPostFromBook(){
         }
     })
 }
-
-
-
-
 
 async function deleteDriveFile(id){
     const oauth2Client=new google.auth.OAuth2(
@@ -408,6 +401,18 @@ function deleteAllAccomodationPost(){
             console.log(err)
         }
         else{
+            let array=[]
+            for(let i=0; i<data[0].AccomodationImg.length; i++){
+            
+                if(data[0].AccomodationImg[i].driveID){
+                    array.push(data[0].AccomodationImg[i].driveID)
+                }
+                if(i===data[0].AccomodationImg.length-1){
+                    for(let j=0; j<array.length; j++){
+                        deleteDriveFile(array[j])
+                    }
+                }
+            }
             allImg.updateMany({_id:data[0]._id},{ $set: {AccomodationImg: []}},function(err, affected){
                  if(err){
                      console.log(err)
@@ -480,6 +485,7 @@ function deletePostFromAccomodationCollection(name){
                
                 if(va.unique==name){
                     if(va.driveURL){
+                        console.log("chinaza chinaza v chinaza chinaza chinaza")
                         deleteDriveFile(va.driveURL)  
                     }
                 }
