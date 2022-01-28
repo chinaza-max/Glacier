@@ -166,7 +166,6 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
     })
 })
 
-
 router.get("/deleteAllBook",(req,res)=>{
 
    // deleteAllFiles()
@@ -477,8 +476,15 @@ function deletePostFromAccomodationCollection(name){
             console.log(err)
         }
         else if(user.length!==0){
-            let obj=await user[0].AccomodationImg.find((va)=>{    
+            let obj=await user[0].AccomodationImg.find((va)=>{  
+               
+                if(va.unique==name){
+                    if(va.driveURL){
+                        deleteDriveFile(va.driveURL)  
+                    }
+                }
                 return  va.unique==name
+
             })
             if(obj){
                 await allImg.findOneAndUpdate({_id:user[0]._id},
