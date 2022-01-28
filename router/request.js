@@ -204,7 +204,7 @@ router.get("/accomodations",(req,res)=>{
                 else{
                     data[0].AccomodationImg.forEach((data)=>{
                         if(data.name){
-                            mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel,"id":data.id,"unique":data.unique})
+                            mainData.push({'name':data.name,"price":data.Price,"Address":data.Address,"selection":data.selection,"tel":data.tel,"id":data.id,"unique":data.unique,"driveURL":data.driveURL})
                         }
                     })
                     let len=mainData.length-1
