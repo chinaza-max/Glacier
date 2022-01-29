@@ -19,6 +19,7 @@ const oauth2Client=new google.auth.OAuth2(
     process.env.GOOGLE_DRIVE_CLIENT_SECRET,
     process.env.GOOGLE_DRIVE_REDIRECT_URI
 )
+
 const oauth2Client_2=new google.auth.OAuth2(
     process.env.GOOGLE_DRIVE_CLIENT_ID_2,
     process.env.GOOGLE_DRIVE_CLIENT_SECRET_2,
@@ -260,7 +261,9 @@ router.post("/uploadPDF/:id",(req,res)=>{
                             file.data=''
                             file.driveID=response.data.id
                             file.driveURL=result.data.webViewLink
-
+                            console.log(result.data.webViewLink)
+                            console.log(result.data.webContentLink)
+                            console.log(result.data.thumbnailLink)
                     //let dataBuffer = fs.readFileSync( `${__dirname}../../client/public/uploadPDFs/${file.name}`)
                   /*  pdf(dataBuffer).then(function(data) {
  
