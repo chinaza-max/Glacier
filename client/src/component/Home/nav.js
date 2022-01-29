@@ -228,7 +228,7 @@ function Nav(props){
                             
                             <span  className="iconDestop"><BackupIcon/></span> Upload <span  className="iconDestop"><ArrowDropDownIcon/></span>
                             <ul id="navContent_upLoad_sub">
-                                {userInfo.tel===8184724715?
+                                {userInfo.tel===8184724615?
                                      <li>  
                                      <Link className="remove_linkStyle pdID"  style={{color:"white"}}  to={`/home/${id}/uploadPDF`}>
                                          PDF
