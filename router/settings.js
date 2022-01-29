@@ -12,12 +12,13 @@ const {google} = require('googleapis');
 
 
 
-router.get('/deleteAllAcc/:AdminId',(req,res)=>{
+router.get('/deleteAllAcc/:AdminId/:id',(req,res)=>{
    // deleteAllFiles()
 
    deleteAllPostFromNotificattion()
-    
+   let id=req.params.id
    let array=[]
+   let array2=[]
     allImg.find((err,data)=>{
         if(err){
             console.log(err)
@@ -37,16 +38,36 @@ router.get('/deleteAllAcc/:AdminId',(req,res)=>{
                             array.push(data[0].AccomodationImg[j].driveID)
                         }
                         if(j==data[0].AccomodationImg.length-1){
-                            removeCollection()
-                            for(let k=0;k<array.length;k++){
-                                deleteDriveFile(array[k])
-                            }
+                            User.findById(id,async(err,user)=>{
+                                if(err){
+                                    return console.log(err)
+                                }
+                                else{
+                                     for(let k=0; k<user.pdfs.length; k++){
+                                       array2.push(user.pdfs[k].driveID)
+                                       if(k==user.pdfs.length-1){
+                                            for(let l=0; l<array2.length; l++){
+                                                deleteDriveFile_2(array2[l])
+                                                if(l==array2.length-1){
+                                                    for(let m=0;m<array.length;m++){
+                                                        deleteDriveFile(array[m])
+                                                        if(m==array.length-1){
+                                                            removeCollection()
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                       }
+                                    }
+                                }
+                            })
                         }
                     }
                 }
             }
         }
     })
+
     function removeCollection(){
         if(req.params.AdminId===process.env.AdminId){
             connection.db.listCollections().toArray((err,names)=>{
@@ -116,16 +137,41 @@ router.get("/deleteSingleAcc/:name",(req,res)=>{
 
 router.get("/deleteAllPDF/:id",(req,res)=>{
     
-    deleteAllPostFromNotificattion()
-    User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
+
+    let id=req.params.id
+    let array=[]
+    User.findById(id,async(err,user)=>{
         if(err){
-            console.log(err)
+            return console.log(err)
         }
         else{
-            console.log(affected)
-            res.send({express:"All PDF removed"})
+             for(let i=0; i<user.pdfs.length; i++ ){
+               array.push(user.pdfs[i].driveID )
+               if(i==user.pdfs.length-1){
+                    for(let j=0; j<array.length; j++){
+                        deleteDriveFile_2(array[i])
+                        if(j==array.length-1){
+                            deletePDFmongo()
+                        }
+                    }
+               }
+            }
         }
     })
+
+    deleteAllPostFromNotificattion()
+    function deletePDFmongo(){
+        User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
+            if(err){
+                console.log(err)
+            }
+            else{
+                console.log(affected)
+                res.send({express:"All PDF removed"})
+            }
+        })
+    }
+ 
 })
 
 router.get('/DropSinglePDF/:name/:id',(req,res)=>{
@@ -151,8 +197,7 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
                     try{
                         await User.findOneAndUpdate({_id:req.params.id},
                         {$pull:{pdfs:obj}})
-                    
-                  
+
                         res.send({express:"succefully Deleted"})
                     }
                     catch(err){
