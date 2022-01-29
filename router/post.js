@@ -19,6 +19,11 @@ const oauth2Client=new google.auth.OAuth2(
     process.env.GOOGLE_DRIVE_CLIENT_SECRET,
     process.env.GOOGLE_DRIVE_REDIRECT_URI
 )
+const oauth2Client_2=new google.auth.OAuth2(
+    process.env.GOOGLE_DRIVE_CLIENT_ID_2,
+    process.env.GOOGLE_DRIVE_CLIENT_SECRET_2,
+    process.env.GOOGLE_DRIVE_REDIRECT_URI
+)
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
@@ -214,9 +219,50 @@ router.post("/uploadPDF/:id",(req,res)=>{
             if(filename){
                 file.name=filename
                 file.courseCode=req.body.courseCode.toLowerCase()
-                file.mv( `${__dirname}../../client/public/uploadPDFs/${file.name}`,async(err)=>{
-                    let dataBuffer = fs.readFileSync( `${__dirname}../../client/public/uploadPDFs/${file.name}`)
-                    pdf(dataBuffer).then(function(data) {
+
+                     //part handles upload to google drive
+                     oauth2Client_2.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN_2})
+                     const drive_2=google.drive({
+                         version:'v3',
+                         auth:oauth2Client_2
+                     })
+                     function bufferToStream(myBuuffer) {
+                         let tmp = new Duplex();
+                         tmp.push(myBuuffer);
+                         tmp.push(null);
+                         return tmp;
+                     }
+                     async function uploadFile(buffer){
+                        try{
+                            const response=await drive_2.files.create({
+                                requestBody:{
+                                    name:file.name,
+                                    mimeType:file.mimetype
+                                },
+                                media:{
+                                    mimeType:file.mimetype,
+                                    body:bufferToStream(buffer)
+                                }
+                            
+                            })
+                            await drive_2.permissions.create({
+                                    fileId:response.data.id,
+                                    requestBody:{
+                                        role:"reader",
+                                        type:"anyone"
+                                    }
+                            })
+                            const result= await drive_2.files.get({
+                                fileId:response.data.id,
+                                fields:'webViewLink, webContentLink, thumbnailLink'
+                            })
+                         
+                            file.data=''
+                            file.driveID=response.data.id
+                            file.driveURL=result.data.webViewLink
+
+                    //let dataBuffer = fs.readFileSync( `${__dirname}../../client/public/uploadPDFs/${file.name}`)
+                  /*  pdf(dataBuffer).then(function(data) {
  
                         // number of pages
                        // console.log(data.numpages);
@@ -233,20 +279,25 @@ router.post("/uploadPDF/:id",(req,res)=>{
                        // console.log(data.text); 
                             
                     });
-
+                        */
                     if(err){
                         console.log(err)
                         return res.status(500).send(err)
                     }
                     else{
                         
-                       console.log(file.size)
                        uploadRequest2(req.body.courseCode,"PDF",filename,id)
                     
                         res.json({message:"success"})
                         await User.findOneAndUpdate({_id:id},{$push:{pdfs:file}})
                     }
-                })
+               
+                    }catch(error){
+
+                        console.log(error.message)
+                    }
+                }
+                uploadFile(file.data)
             }
         })
     }
@@ -279,18 +330,6 @@ router.post('/uploadBook/:id',(req,res)=>{
                     file.Description=req.body.Description.toLowerCase()
                     file.tel=req.body.tel
                     file.date=Time().year + "-" + Time().month + "-" +Time().date
-
-
-                 /*   if (!fs.existsSync(`${__dirname}../../client/public/uploads`)){
-                        fs.mkdirSync(`${__dirname}../../client/public/uploads`,{ recursive: true });
-                    }
-                   file.mv( `${__dirname}../../client/public/uploads/${file.name}`,async(err)=>{
-                        if(err){
-                            console.log(err)
-                            return res.status(500).send(err)
-                        }
-                        })*/
-
 
                         
                         //part handles upload to google drive
@@ -375,7 +414,6 @@ router.post('/uploadBook/:id',(req,res)=>{
                             }
                         }
                         uploadFile(file.data)
-
                 }
             }
            
@@ -599,7 +637,6 @@ async function deleteDriveFile(id){
         auth:oauth2Client
     })
     try{
-        console.log(id)
         await drive.files.delete({
             fileId:id
         })

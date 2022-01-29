@@ -11,9 +11,9 @@ function DownloadPDF(props){
              <Uploadnav  history={props.history} idP={""}/>
              <div className="downloadPDF-body">
                 
-                <object  data= {"/uploadPDFs/"+name} type="application/pdf" width="100%" height="600px">
+                <object  data= {name} type="application/pdf" width="100%" height="600px">
                 <p className="">Your web browser doesn't have a PDF plugin to view details of PDF, before download.
-                <a href={"/uploadPDFs/"+name} download> <br/>click here to
+                <a href={name} download> <br/>click here to
                 download the PDF file directly.</a>
                 </p>
                 </object>

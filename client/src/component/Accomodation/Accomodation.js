@@ -178,7 +178,7 @@ function Accomodation(props){
                                 <div className="info2">
                                     <div className="remove_container">
                             
-                                        {data.id===id ? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:" "}
+                                        {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:" "}
                                        
                                     </div>
                                     <div className="price_container">
@@ -248,7 +248,7 @@ function Accomodation(props){
                         <div className="info2">
                             <div className="remove_container">
                     
-                                {data.id===id? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
+                                {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
                             
                             </div>
                             <div className="price_container">

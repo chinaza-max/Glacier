@@ -485,7 +485,6 @@ function deletePostFromAccomodationCollection(name){
                
                 if(va.unique==name){
                     if(va.driveURL){
-                        console.log("chinaza chinaza v chinaza chinaza chinaza")
                         deleteDriveFile(va.driveURL)  
                     }
                 }

@@ -36,7 +36,7 @@ function Filler(props){
 
 
     let data=PDFs.map((data)=>{
-        console.log(props.searchString)
+
         if(data.courseCode.indexOf(props.searchString2.toLowerCase())===-1){
             return '';
         }
@@ -44,7 +44,7 @@ function Filler(props){
             return(
                 <div key={data.name} className=".mainBody-sub-filler">
                     <div className='PDF'>
-                          <Link   className="fillerImg"  download to={"/downloadPDF/"+data.name}>
+                          <Link   className="fillerImg"  download to={"/downloadPDF/"+data.driveURL}>
                                 <h2>PDF</h2>
                                 <p>DOWNLOAD</p>
                                 <FileDownloadTwoToneIcon/>
