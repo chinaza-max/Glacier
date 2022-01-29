@@ -141,17 +141,18 @@ router.get('/DropSinglePDF/:name/:id',(req,res)=>{
             if(user){
                 
                 let obj=user.pdfs.find((va)=>{    
+                    if(va.name==imgName){
+                        deleteDriveFile_2(va.driveID)
+                    }
                     return  va.name==imgName
                 })
               
                 if(obj){
-                    await User.findOneAndUpdate({_id:req.params.id},
+                    try{
+                        await User.findOneAndUpdate({_id:req.params.id},
                         {$pull:{pdfs:obj}})
                     
-                    try{
-                        
-                        fs.unlinkSync("./client/public/uploadPDFs/"+imgName)
-                        console.log("response")
+                  
                         res.send({express:"succefully Deleted"})
                     }
                     catch(err){
@@ -374,6 +375,26 @@ function deleteAllPostFromBook(){
     })
 }
 
+async function deleteDriveFile_2(id){
+    const oauth2Client_2=new google.auth.OAuth2(
+        process.env.GOOGLE_DRIVE_CLIENT_ID_2,
+        process.env.GOOGLE_DRIVE_CLIENT_SECRET_2,
+        process.env.GOOGLE_DRIVE_REDIRECT_URI
+    )
+    oauth2Client_2.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN_2})
+    const drive_2=google.drive({
+        version:'v3',
+        auth:oauth2Client_2
+    })
+    try{
+        await drive_2.files.delete({
+            fileId:id
+        })
+    }
+    catch(err){
+        console.log(err.message)
+    }
+}
 async function deleteDriveFile(id){
     const oauth2Client=new google.auth.OAuth2(
         process.env.GOOGLE_DRIVE_CLIENT_ID,
