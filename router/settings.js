@@ -115,7 +115,7 @@ router.get("/deleteSingleAcc/:name",(req,res)=>{
 })
 
 router.get("/deleteAllPDF/:id",(req,res)=>{
-    deleteAllPDFFiles()
+    
     deleteAllPostFromNotificattion()
     User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
         if(err){
