@@ -8,7 +8,7 @@ const router=express.Router();
 
 
 router.get('/phone/:id',(req,res)=>{
-    console.log("data")
+    
         User.findById({_id:req.params.id},async(err,data)=>{
             if(err){
                 return console.log(err)
@@ -229,7 +229,6 @@ router.get("/accomodations",(req,res)=>{
 
 router.get("/notifications",(req,res)=>{
     //deleteAllPostFromNotificattion()
- 
  
      let mainData=[]
      let reArrangeMainData=[]

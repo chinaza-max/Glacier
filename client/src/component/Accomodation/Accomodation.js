@@ -15,6 +15,7 @@ function Accomodation(props){
     const[accomodation,setaccomodation]=useState([]);
     const[search,setsearch]=useState([]);
     const[search2,setsearch2]=useState("All");
+    const[tel,setTel]=useState("All");
     const {id}=useParams(); 
     const navigate=useNavigate()
     let searchResult="filled";
@@ -115,6 +116,19 @@ function Accomodation(props){
             catch(err){
               //  console.log(err)
             }
+            try{
+                await axios.get(`/phone/${id}`,{
+                }).then((res)=>{
+                        setTel(res.data.express)
+                
+                })
+                .catch((error)=>{
+                // console.log(error.response.data.express)
+                })
+            }
+            catch(err){
+              //  console.log(err)
+            }
         }
         init()
        
@@ -202,7 +216,7 @@ function Accomodation(props){
                         <div className="info2">
                             <div className="remove_container">
                     
-                                {data.id===id? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
+                                {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
                             
                             </div>
                             <div className="price_container">
@@ -212,6 +226,7 @@ function Accomodation(props){
                     </div>
                 )
             }
+
             else if(data.selection.toLowerCase()===search2.toLowerCase()){
                 searchResult="filled";
                 return(
