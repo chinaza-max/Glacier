@@ -44,7 +44,7 @@ function Filler(props){
             return(
                 <div key={data.name} className=".mainBody-sub-filler">
                     <div className='PDF'>
-                          <Link   className="fillerImg"  download to={"/downloadPDF/"+data.driveURL}>
+                          <Link target="_blank"  className="fillerImg"  download to={data.driveURL}>
                                 <h2>PDF</h2>
                                 <p>DOWNLOAD</p>
                                 <FileDownloadTwoToneIcon/>

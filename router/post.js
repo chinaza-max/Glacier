@@ -263,7 +263,6 @@ router.post("/uploadPDF/:id",(req,res)=>{
                             file.driveURL=result.data.webViewLink
                             console.log(result.data.webViewLink)
                             console.log(result.data.webContentLink)
-                            console.log(result.data.thumbnailLink)
                     //let dataBuffer = fs.readFileSync( `${__dirname}../../client/public/uploadPDFs/${file.name}`)
                   /*  pdf(dataBuffer).then(function(data) {
  
@@ -273,7 +272,7 @@ router.post("/uploadPDF/:id",(req,res)=>{
                         //console.log(data.numrender);
                         // PDF info
                        // console.log(data.info);
-                        // PDF metadata
+                        // PDF metadata 
                        // console.log(data.metadata);
                         // PDF.js version
                         // check https://mozilla.github.io/pdf.js/getting_started/
