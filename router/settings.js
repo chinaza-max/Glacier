@@ -41,20 +41,15 @@ router.get('/deleteAllAcc/:AdminId/:id',(req,res)=>{
         if(err){
             console.log(err)
         }
-       
         else{
             if(data){
                     for(let i=0; i < data[0].bookDetails.length; i++){
-                        if(data[0].bookDetails[i]=="test"){
-                        }
-                        else{
+                        if(data[0].bookDetails[i].driveID){
                             array.push(data[0].bookDetails[i].driveID)
                         }
                     }
                     for(let j=0; j < data[0].AccomodationImg.length; j++){
-                        if(data[0].AccomodationImg[j]=="test"){
-                        }
-                        else{
+                        if(data[0].AccomodationImg[j].driveID){
                             array.push(data[0].AccomodationImg[j].driveID)
                         }
                     }
@@ -65,29 +60,29 @@ router.get('/deleteAllAcc/:AdminId/:id',(req,res)=>{
         }
     })
 
-        if(req.params.AdminId===process.env.AdminId){
-            connection.db.listCollections().toArray((err,names)=>{
-                if(err){
-                    console.log("check route deleteAllAcc")
-                    console.log(err)
-                }
-                else{
-                       
-                    for(i=0;i<names.length; i++){
-                            mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
-                                    if (err) {
-                                        console.log(err)
-                                    }
-                        })
+    if(req.params.AdminId===process.env.AdminId){
+        connection.db.listCollections().toArray((err,names)=>{
+            if(err){
+                console.log("check route deleteAllAcc")
+                console.log(err)
+            }
+            else{
                     
-                        if(i==names.length-1){
-                            console.log("names")
-                            res.send({express:"all account has been deleted"})
-                        }
+                for(i=0;i<names.length; i++){
+                        mongoConnection.connection.db.dropCollection(names[i].name, function (err, result) {
+                                if (err) {
+                                    console.log(err)
+                                }
+                    })
+                
+                    if(i==names.length-1){
+                        console.log("names")
+                        res.send({express:"all account has been deleted"})
                     }
                 }
-            })
-        }
+            }
+        })
+    }
 })
 
 router.get("/deleteSingleAcc/:name",(req,res)=>{
@@ -148,8 +143,6 @@ router.get("/deleteAllPDF/:id",(req,res)=>{
                             deleteDriveFile_2(array[j])
                             console.log(array[j])
                             if(j==array.length-1){
-                                console.log(array)
-                                console.log("completed completed completed completed")
                                 deletePDFmongo()
                             }
                         }
@@ -168,7 +161,6 @@ router.get("/deleteAllPDF/:id",(req,res)=>{
                 console.log(err)
             }
             else{
-                console.log(affected)
                 res.send({express:"All PDF removed"})
             }
         })
@@ -469,15 +461,15 @@ function deleteAllAccomodationPost(){
             console.log(err)
         }
         else{
-            let array=[]
+            let array=[] 
             for(let i=0; i<data[0].AccomodationImg.length; i++){
-            
                 if(data[0].AccomodationImg[i].driveID){
                     array.push(data[0].AccomodationImg[i].driveID)
                 }
                 if(i===data[0].AccomodationImg.length-1){
                     for(let j=0; j<array.length; j++){
                         deleteDriveFile(array[j])
+                        console.log(array)
                     }
                 }
             }
