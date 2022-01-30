@@ -149,8 +149,8 @@ router.get("/deleteAllPDF/:id",(req,res)=>{
                array.push(user.pdfs[i].driveID )
                if(i==user.pdfs.length-1){
                     for(let j=0; j<array.length; j++){
-                        deleteDriveFile_2(array[i])
-                        console.log(array[i])
+                        deleteDriveFile_2(array[j])
+                        console.log(array[j])
                         if(j==array.length-1){
                             console.log(array)
                             deletePDFmongo()
@@ -160,7 +160,6 @@ router.get("/deleteAllPDF/:id",(req,res)=>{
             }
         }
     })
-
     deleteAllPostFromNotificattion()
     function deletePDFmongo(){
         User.updateMany({_id:req.params.id},{ $set: { pdfs: [] }},function(err, affected){
