@@ -162,7 +162,7 @@ function Accomodation(props){
                         return( 
                             <div key={data.unique} className="accomodation_body">
                                 <div className="img_container">
-                                    <img className="bodyImg" src={data.driveURL} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}} /> 
+                                    <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}} /> 
                                 </div>
                                 <div className="info1">
                                     <div className="accomodation_type">
@@ -200,7 +200,7 @@ function Accomodation(props){
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={data.driveURL} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
+                            <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
@@ -232,7 +232,7 @@ function Accomodation(props){
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={data.driveURL} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
+                            <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
