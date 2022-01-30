@@ -19,56 +19,52 @@ router.get('/deleteAllAcc/:AdminId/:id',(req,res)=>{
    let id=req.params.id
    let array=[]
    let array2=[]
-    allImg.find((err,data)=>{
+    
+    User.findById(id,async(err,user)=>{
         if(err){
-            console.log(err)
+            return console.log(err)
         }
         else{
-            for(let i=0; i < data[0].bookDetails.length; i++){
-                if(data[0].bookDetails[i]=="test"){
-                }
-                else{
-                    array.push(data[0].bookDetails[i].driveID)
-                }
-                if(i==data[0].bookDetails.length-1){
-                    for(let j=0; j < data[0].AccomodationImg.length; j++){
-                        if(data[0].AccomodationImg[j]=="test"){
-                        }
-                        else{
-                            array.push(data[0].AccomodationImg[j].driveID)
-                        }
-                        if(j==data[0].AccomodationImg.length-1){
-                            User.findById(id,async(err,user)=>{
-                                if(err){
-                                    return console.log(err)
-                                }
-                                else{
-                                     for(let k=0; k<user.pdfs.length; k++){
-                                       array2.push(user.pdfs[k].driveID)
-                                       if(k==user.pdfs.length-1){
-                                            for(let l=0; l<array2.length; l++){
-                                                deleteDriveFile_2(array2[l])
-                                                if(l==array2.length-1){
-                                                    for(let m=0;m<array.length;m++){
-                                                        deleteDriveFile(array[m])
-                                                        if(m==array.length-1){
-                                                            removeCollection()
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                       }
-                                    }
-                                }
-                            })
+            if(user){
+                for(let k=0; k<user.pdfs.length; k++){
+                    array2.push(user.pdfs[k].driveID)
+                    if(k==user.pdfs.length-1){
+                        for(let l=0; l<array2.length; l++){
+                            deleteDriveFile_2(array2[l])
                         }
                     }
                 }
             }
         }
     })
+    allImg.find((err,data)=>{
+        if(err){
+            console.log(err)
+        }
+       
+        else{
+            if(data){
+                    for(let i=0; i < data[0].bookDetails.length; i++){
+                        if(data[0].bookDetails[i]=="test"){
+                        }
+                        else{
+                            array.push(data[0].bookDetails[i].driveID)
+                        }
+                    }
+                    for(let j=0; j < data[0].AccomodationImg.length; j++){
+                        if(data[0].AccomodationImg[j]=="test"){
+                        }
+                        else{
+                            array.push(data[0].AccomodationImg[j].driveID)
+                        }
+                    }
+                    for(let m=0;m<array.length;m++){
+                        deleteDriveFile(array[m])
+                    }
+            }   
+        }
+    })
 
-    function removeCollection(){
         if(req.params.AdminId===process.env.AdminId){
             connection.db.listCollections().toArray((err,names)=>{
                 if(err){
@@ -92,7 +88,6 @@ router.get('/deleteAllAcc/:AdminId/:id',(req,res)=>{
                 }
             })
         }
-    }
 })
 
 router.get("/deleteSingleAcc/:name",(req,res)=>{
@@ -145,19 +140,25 @@ router.get("/deleteAllPDF/:id",(req,res)=>{
             return console.log(err)
         }
         else{
-             for(let i=0; i<user.pdfs.length; i++ ){
-               array.push(user.pdfs[i].driveID )
-               if(i==user.pdfs.length-1){
-                    for(let j=0; j<array.length; j++){
-                        deleteDriveFile_2(array[j])
-                        console.log(array[j])
-                        if(j==array.length-1){
-                            console.log(array)
-                            deletePDFmongo()
+           if(user.pdfs.length!=0){
+                for(let i=0; i<user.pdfs.length; i++ ){
+                    array.push(user.pdfs[i].driveID )
+                    if(i==user.pdfs.length-1){
+                        for(let j=0; j<array.length; j++){
+                            deleteDriveFile_2(array[j])
+                            console.log(array[j])
+                            if(j==array.length-1){
+                                console.log(array)
+                                console.log("completed completed completed completed")
+                                deletePDFmongo()
+                            }
                         }
                     }
-               }
-            }
+                }
+           }
+           else{
+            res.send({express:"No PDF To remove"})
+           }
         }
     })
     deleteAllPostFromNotificattion()
