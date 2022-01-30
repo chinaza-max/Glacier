@@ -87,7 +87,7 @@ async   function init(){
                     <div  key={data.notificationID} className="notificationBodyContent">
                         <h4>New PDF uploaded</h4>
                         <p className="notificationBodyContentRequest">course code: {data.title}</p>
-                       <h5> <Link to={"/downloadPDF/"+data.bookURL} className="view">view</Link></h5>
+                       <h5> <a target="_blank"  href={data.driveURL} className="view">view</a></h5>
                         <div className="notificationTime">
                             <div className="duration"><p>remaining {data.expiringDate}</p></div>
                             <div className="dateposted"><p>{data.monthPosted+"  "+data.datePosted}</p></div>

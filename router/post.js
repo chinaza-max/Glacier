@@ -191,14 +191,12 @@ router.post('/Accomodation_upload/:id',async(req,res)=>{
                         uploadFile(file.data)
                     }
                 }
-            
             })
         }
         else{
             res.json({fileName:'',filePath:'',errMessage:'file extension not supported '});
         }
     }
-    
 })
 
 router.post("/uploadPDF/:id",(req,res)=>{
