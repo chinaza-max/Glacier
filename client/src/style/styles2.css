@@ -18,14 +18,19 @@
     height: 16px;
     margin-left: 70px;
 }
-button.sc-iBPRYJ.epbijV.rec.rec-dot.rec.rec-dot_active {
-    background-color:#007BFF;
-}
-.sc-fubCfw.VHmVZ.rec.rec-pagination button:hover{
+
+.sc-fubCfw.irPtrP.rec.rec-pagination button:hover{
     border:3px solid #007BFF;
     box-shadow: none;
 }
-button.sc-gsTCUz.jsaYsO.rec.rec-arrow.rec.rec-arrow-right:hover{
+button.sc-iBPRYJ.bKSpso.rec.rec-dot.rec.rec-dot_active{
+    background-color:#007BFF;
+}
+ 
+button.sc-gsTCUz.iCLbQl.rec.rec-arrow.rec.rec-arrow-right:hover{
+    background-color:#007BFF ;
+}
+button.sc-gsTCUz.iCLbQl.rec.rec-arrow.rec.rec-arrow-left:hover{
     background-color:#007BFF ;
 }
 .sc-pFZIQ.gbgfMs{
