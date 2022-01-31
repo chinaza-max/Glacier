@@ -24,7 +24,6 @@ function HomeContainer(){
   
     function updateNavName(value){
         setHomeAtri({navName:value,view:value})
-        setFilterText(value)
     }
 
     return(
