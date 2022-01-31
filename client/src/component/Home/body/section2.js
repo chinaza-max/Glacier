@@ -31,7 +31,6 @@ function Section2(props){
             return '' 
        }
        else{
-       
             if(data.name.indexOf(props.searchString2.toLowerCase())===-1 && data.title.indexOf(props.searchString2.toLowerCase())===-1 && data.author.indexOf(props.searchString2.toLowerCase())===-1 && data.faculty.indexOf(props.searchString2.toLowerCase())===-1){
                 return ' '
             }
