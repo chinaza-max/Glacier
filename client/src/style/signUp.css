@@ -36,6 +36,9 @@
     margin-top: 15px;
     min-width: 75%;
  }
+ .accountContainerCenter  div .accountContainerCenter__google:hover{
+    cursor: pointer;
+}
  /*.accountContainerCenter  div .accountContainerCenter__google a{
     text-decoration: none;
  }*/
