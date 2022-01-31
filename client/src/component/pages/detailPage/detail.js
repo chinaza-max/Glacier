@@ -46,7 +46,7 @@ function Detail(props){
                                       <div className="callContainer">
                                           <a   className="call" style={{textDecoration:"none"}} href={"tel:"+data.tel}>call now</a>
                                       </div>
-                                      <div>
+                                      <div className="detailBodyDescription">
                                           <h5 className="color2">Description</h5>
                                           <p className="color">{data.description}</p>
                                       </div>
