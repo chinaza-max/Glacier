@@ -7,6 +7,9 @@
     height:100vh;
     background-color: rgb(14, 12, 12);
     padding-top: 40px;
+    background-image: url("../imgs/Detail.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .detailBody{
     padding-top: 30px;
@@ -30,6 +33,7 @@
     flex: 1;
     color: white;
 }
+
 .detailBodyDescription{
     width: 90%;
     word-break: break-all;
@@ -65,8 +69,10 @@
 .firstDetailBody .detailNav{
     height: 40px;
     list-style: none;
+    padding: 0;
+    padding-left: 8px;
+    padding-top: 3px;
 }
-
 .detailNavItemBack:hover{
     cursor: pointer;
 }
