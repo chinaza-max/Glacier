@@ -63,11 +63,11 @@ function Nav(props){
     }
     function fillerFunc(){
          if(props.navNameP==='Filler'){
-                // this.props.mainFillerFuncP('Book')
+                props.filterTextFunP("")
                 props.updateNavNameP("Book")
          }
          else{
-            //this.props.mainFillerFuncP('Filler')
+            props.filterTextFunP("")
             props.updateNavNameP("Filler")
          }
     }

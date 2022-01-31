@@ -18,11 +18,21 @@
     height: 16px;
     margin-left: 70px;
 }
-button.rec-dot{
-    box-shadow: 0 0 1px 3px  #0000FF;
-  }
-  .sc-gsTCUz:focus {
+button.sc-iBPRYJ.epbijV.rec.rec-dot.rec.rec-dot_active {
+    background-color:#007BFF;
+}
+.sc-fubCfw.VHmVZ.rec.rec-pagination button:hover{
+    border:3px solid #007BFF;
+    box-shadow: none;
+}
+button.sc-gsTCUz.jsaYsO.rec.rec-arrow.rec.rec-arrow-right:hover{
+    background-color:#007BFF ;
+}
+.sc-gsTCUz:focus {
     outline: none;
+}
+.cIKpxU{
+    box-shadow: none;
 }
 @media(max-width:1024px){
     div.sc-fubCfw.eBAoSG{

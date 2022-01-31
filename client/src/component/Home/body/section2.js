@@ -26,15 +26,18 @@ function Section2(props){
       return ()=> aboutController.abort()
     },[])
     let data=books.map((data)=>{
+  
        if(data==='test'){
             return '' 
        }
        else{
-            if(data.name.indexOf(props.searchString2)===-1 && data.title.indexOf(props.searchString2)===-1 && data.author.indexOf(props.searchString2)===-1 && data.faculty.indexOf(props.searchString2)===-1){
+       
+            if(data.name.indexOf(props.searchString2.toLowerCase())===-1 && data.title.indexOf(props.searchString2.toLowerCase())===-1 && data.author.indexOf(props.searchString2.toLowerCase())===-1 && data.faculty.indexOf(props.searchString2.toLowerCase())===-1){
                 return ' '
             }
         
             else{
+    
                 return(
                     <div key={data.name} className="mainBody-sub">
                         
