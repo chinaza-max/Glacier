@@ -2,6 +2,9 @@
     width: 100vw;
     height: 100vh;
     padding-top: 40vh;
+    background-image: url("../imgs/verifiedimage.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .verifyContainer form{
     width: 70%;
@@ -17,6 +20,7 @@
     border: none;
     border-bottom: 2px solid black;
     width: 250px;
+    background-color: transparent;
 }
 .verifyContainer form input:nth-child(2){
     border: 3px solid black;
