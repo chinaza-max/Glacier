@@ -37,7 +37,7 @@ function HomeContainer(){
                 <Body updateNavNameP={updateNavName}   id={id} searchString={filterText} viewP={HomeAtri.view} />
                 <Footer/>   
             </div>
-            <a  className="firstBody-whatsApp" href="https://api.whatsapp.com/send?phone=08184724615&text=you%20welcome!"> <WhatsAppIcon style={{"fontSize":"60px"}}/></a>
+            <a  className="firstBody-whatsApp" href="whatsapp://send?text=Hello World!&phone=+08184724615"> <WhatsAppIcon style={{"fontSize":"60px"}}/></a>
         </div> 
     )
 }
