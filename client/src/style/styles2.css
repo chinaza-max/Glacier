@@ -28,6 +28,9 @@ button.sc-iBPRYJ.epbijV.rec.rec-dot.rec.rec-dot_active {
 button.sc-gsTCUz.jsaYsO.rec.rec-arrow.rec.rec-arrow-right:hover{
     background-color:#007BFF ;
 }
+.sc-pFZIQ.gbgfMs{
+    background-color: transparent;
+}
 .sc-gsTCUz:focus {
     outline: none;
 }
