@@ -190,13 +190,13 @@ function Accomodation(props){
                     }
                 }
                 else{
-                    searchResult="empty"
+                 //   searchResult="empty"
                     return ''
                 }
             }
             else if(search2.toLowerCase()==="All".toLowerCase()){
                 
-                searchResult="empty";
+              //  searchResult="empty";
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
@@ -228,7 +228,7 @@ function Accomodation(props){
             }
 
             else if(data.selection.toLowerCase()===search2.toLowerCase()){
-                searchResult="filled";
+              //  searchResult="filled";
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
@@ -259,7 +259,8 @@ function Accomodation(props){
                 )
             }
             else{
-                return  searchResult="empty"
+                 // searchResult="empty"
+                  return''
             }
         }
         return ''
