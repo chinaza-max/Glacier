@@ -62,6 +62,9 @@
   line-height: 40px;
   font-size: 16px;
 }
+.h3Categories:hover{
+  cursor: pointer;
+ }
 @media(min-width:640px) {
     .detailSliderContainer {
       font-family: sans-serif;
