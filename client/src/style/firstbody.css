@@ -553,6 +553,14 @@
         
     }
 }
+
+@media(max-width:1000px){
+    .firstBody-whatsApp{
+        position: fixed;
+        bottom: 14px;
+        right: 10px;
+    }
+}
 @media(max-width:300px){
     .firstBody{
         min-width: 300px;
