@@ -25,13 +25,13 @@ const sendMail=(email,subject,text,id,cb)=>{
         subject,
         text,
         html:`     <div style="width: 90%; margin: 0 auto;">
-                        <div style="text-align: center;">----------------------------------------- </div>
-                            <h2 style="text-align: center;">Glacier</h2>
-                        <div style="text-align: center;">----------------------------------------- </div>
-                    
-                        <p style="text-align: center;">your are welcome click on reset to change password </p>
-                        <div style="text-align: center;"><a href=http://localhost:3000/resetPassword/${id}> RESET</a> </div>
-                    </div>
+                    <div style="text-align: center;">----------------------------------------- </div>
+                        <h2 style="text-align: center;">Glacier</h2>
+                    <div style="text-align: center;">----------------------------------------- </div>
+                
+                    <p style="text-align: center;">your are welcome click on reset to change password </p>
+                    <div style="text-align: center;"><a href=https://glacier-file.herokuapp.com/resetPassword/${id}> RESET</a> </div>
+                </div>
                     `
     }
     
