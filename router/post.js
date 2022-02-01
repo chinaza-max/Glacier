@@ -366,29 +366,15 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 })
                                 const result= await drive.files.get({
                                     fileId:response.data.id,
-                                    fields:'webViewLink, webContentLink, thumbnailLink, iconLink'
+                                    fields:'webViewLink, webContentLink, thumbnailLink'
                                 })
                              
                                 file.data=''
                                 file.driveID=response.data.id
                                 file.driveURL=`https://drive.google.com/uc?export=view&id=${response.data.id}`
-                     
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               
-                               response
-                               
-                               `)
+
+                               console.log(response.data)
+                
                                 uploadRequest2(req.body.title,req.body.faculty,filename,id)
                                 
                                 await User.findOneAndUpdate({_id:id},{$push:{details:file}})
