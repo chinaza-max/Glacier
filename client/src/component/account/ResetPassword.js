@@ -67,7 +67,7 @@ function ResetPassword(){
                 </ul>
                 <input type="submit"></input>
 
-                <div>    <a href='https://glacier-file.herokuapp.com/login'>back to login page</a></div>
+                <div>    <a href='/login'>back to login page</a></div>
             </form>
         </div>
     )

@@ -201,6 +201,9 @@ function Accomodation_Upload(props){
             form.addEventListener('submit', function() {
             // Disable the submit button
             submitButton.setAttribute('disabled', true);
+            input.forEach((ele)=>{
+                ele.setAttribute('disabled', true);
+            })
             // Change the "Submit" text
             submitButton.value = 'Please wait...';             
             }, false);
@@ -221,26 +224,26 @@ function Accomodation_Upload(props){
                 <div className="body_of_Accomodation_Upload">
                     <form onSubmit={(e)=>{onSubmit(e); return false}}  id="formID"  encType="multipart/form-data">
                         <div className="custom-file mt-4">
-                            <input type="file" name="file" className="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={onChange} />
+                            <input type="file" name="file" className="custom-file-input input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={onChange} />
                             <label className="custom-file-label" htmlFor="inputGroupFile03">{filename} *Optional</label>
                         </div>
                         {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
                         <div className="price">  
                             <label>Price (NGN):</label>
-                            <input type="tel" name="Price"  id="price" onChange={handleChange} placeholder="12000..." minLength={5} maxLength={7} required/>
+                            <input type="tel" name="Price"  id="price" className="input" onChange={handleChange} placeholder="12000..." minLength={5} maxLength={7} required/>
                         </div>
                     
                         <div className='Address'>  
                             <label>Address_Description :</label>
-                            <textarea type="text"  name="Address" id="Address" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
+                            <textarea type="text"  name="Address" id="Address" className="input" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
                         </div> 
                         <div className='tel'>  
                             <label>tel :</label>
-                            <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
+                            <input type="tel" id="tel" name="tel" className="input" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
                         </div>
                         <div className='selection_container'>  
                             <label>select :</label>
-                            <select name="selection" id="select" onChange={handleChange} required>
+                            <select name="selection" id="select" className="input" onChange={handleChange} required>
                                 <option name="Lodge">LODGE</option>
                                 <option name="Hostel">HOSTEL</option>
                             </select>

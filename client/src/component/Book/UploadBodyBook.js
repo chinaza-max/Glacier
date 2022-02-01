@@ -127,7 +127,7 @@ const UploadBodyBook=(props)=>{
           }
     }
     const onPayment=async ()=>{
-        console.log("paid")
+
         const formData=new FormData();
         formData.append('file',file);
         formData.append('author',author);
@@ -164,7 +164,6 @@ const UploadBodyBook=(props)=>{
     const onSubmit=async (e)=>{
         e.preventDefault();
         if(freeUpload){
-          console.log("free")
             const formData=new FormData();
             formData.append('file',file);
             formData.append('author',author);
@@ -219,7 +218,6 @@ const UploadBodyBook=(props)=>{
                 await axios.get(`/checkValue/${8184724615}`,{
             }).then((res)=>{ 
                 setFreeUpload(res.data.express)
-                console.log(res.data.express)
                 setApikey(res.data.express2)
             })
             .catch((error)=>{
@@ -239,11 +237,14 @@ const UploadBodyBook=(props)=>{
             function handleForm(event) { event.preventDefault(); } 
             form.addEventListener('submit', handleForm);
             let submitButton = document.getElementById('submitID');
-    
+            let input=document.querySelectorAll(".input")
             //this listener disable button when there is multiple click
             form.addEventListener('submit', function() {
             // Disable the submit button
             submitButton.setAttribute('disabled', true);
+            input.forEach((ele)=>{
+                ele.setAttribute('disabled', true);
+            })
             // Change the "Submit" text
             submitButton.value = 'Please wait...';             
             }, false);
@@ -256,30 +257,30 @@ const UploadBodyBook=(props)=>{
     
                 <form onSubmit={(e)=>{onSubmit(e); return false}}   id="myForm" encType="multipart/form-data" >
                     <div className="custom-file mt-4">
-                        <input type="file" name="file" className="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={onChange} required/>
+                        <input type="file" name="file" className="custom-file-input input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={onChange} required/>
                         <label className="custom-file-label" htmlFor="inputGroupFile03">{filename}</label>
                     </div>
                     {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
                     <div className="Author">  
                         <label>Book Author :</label>
                         
-                        <input type="text" name="author" id="author" onChange={handleChange} maxLength={30} required/>
+                        <input type="text" name="author" id="author" className='input' onChange={handleChange} maxLength={30} required/>
                     </div>
                     <div className='title1'>  
                         <label>Title : </label>
-                        <input type="text"  name="title" id="title" onChange={handleChange} maxLength={30} required />
+                        <input type="text"  name="title" id="title" className='input' onChange={handleChange} maxLength={30} required />
                     </div>
                     <div className='Book-faculty'>  
                         <label>Book-faculty :</label>
-                        <input type="text"  name="faculty" id="faculty" onChange={handleChange} maxLength={30} required/>
+                        <input type="text"  name="faculty" id="faculty" className='input' onChange={handleChange} maxLength={30} required/>
                     </div>
                     <div className='Description'>  
                         <label>Description :</label>
-                        <textarea type="text" id="Description" placeholder="tell us little about the book to attract buyers" name="Description" onChange={handleChange} maxLength={250} required/>
+                        <textarea type="text" id="Description" className='input' placeholder="tell us little about the book to attract buyers" name="Description" onChange={handleChange} maxLength={250} required/>
                     </div>
                     <div className='tel'>  
                         <label>tel :</label>
-                        <input type="tel" id="tel" name="tel" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
+                        <input type="tel" id="tel" name="tel" className='input' placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
                     </div>
                     <div className='container_tel'>{errorPhone}</div>
 
