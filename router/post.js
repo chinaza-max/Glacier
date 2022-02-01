@@ -371,10 +371,8 @@ router.post('/uploadBook/:id',(req,res)=>{
                              
                                 file.data=''
                                 file.driveID=response.data.id
-                                file.driveURL=result.data.thumbnailLink
-                                console.log(result.data)
-                               console.log(result.data.iconLink)
-                               console.log(`response.data          
+                                file.driveURL=`https://drive.google.com/uc?export=view&id=${response.data.id}`
+                     
                                
                                
                                
