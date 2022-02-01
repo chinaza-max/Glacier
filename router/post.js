@@ -366,7 +366,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 })
                                 const result= await drive.files.get({
                                     fileId:response.data.id,
-                                    fields:'webViewLink, webContentLink, thumbnailLink'
+                                    fields:'webViewLink, webContentLink, thumbnailLink, iconLink'
                                 })
                              
                                 file.data=''
