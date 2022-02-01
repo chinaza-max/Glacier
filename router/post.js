@@ -143,7 +143,7 @@ router.post('/Accomodation_upload/:id',async(req,res)=>{
                                  
                                     file.data=''
                                     file.driveID=response.data.id
-                                    file.driveURL=result.data.thumbnailLink
+                                    file.driveURL=`https://drive.google.com/uc?export=view&id=${response.data.id}`
     
                                    
                             await User.findOneAndUpdate({_id:id},{$push:{AccomodationImg:file}})
