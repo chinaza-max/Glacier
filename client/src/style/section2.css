@@ -26,6 +26,8 @@
 }
 .books{
     margin-top: 20px;
+    width: 200px;
+    height: 100%;
 }
 .bodyImg{
     width: 100%;
