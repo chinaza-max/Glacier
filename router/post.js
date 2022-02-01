@@ -373,7 +373,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 file.driveID=response.data.id
                                 file.driveURL=result.data.thumbnailLink
 
-                               console.log(response.data)
+                               console.log(response.data.iconLink)
                                console.log(`response.data          
                                
                                
