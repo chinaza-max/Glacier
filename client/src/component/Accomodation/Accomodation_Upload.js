@@ -84,9 +84,13 @@ function Accomodation_Upload(props){
                         timer: 2100
                       }).then(()=>{
                           if(freeUpload){
+                                let input=document.querySelectorAll(".input")
                                 let submitButton = document.getElementById('submitID');
                                 // enable the submit button
                                 submitButton.disabled = false;
+                                input.forEach((ele)=>{
+                                    ele.disabled = false;
+                                })
                           }
                       
                       })

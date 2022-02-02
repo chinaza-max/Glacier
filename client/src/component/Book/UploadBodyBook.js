@@ -114,8 +114,12 @@ const UploadBodyBook=(props)=>{
                       }).then(()=>{
                           if(freeUpload){
                             let submitButton = document.getElementById('submitID');
+                            let input=document.querySelectorAll(".input")
                             // enable the submit button
                             submitButton.disabled = false;
+                            input.forEach((ele)=>{
+                                ele.disabled = false;;
+                            })
                           }
                        
                         emptyInput();

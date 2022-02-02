@@ -61,7 +61,7 @@ if(process.env.NOde_ENV==="production"){
 app.listen(port ,()=>console.log(`server started.... ${port}`))
 //chinaza100*
 /*
- "scripts": {
+ "scripts":    {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server",
     "client": "cd client && npm start",
