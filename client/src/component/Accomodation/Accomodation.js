@@ -150,7 +150,6 @@ function Accomodation(props){
     const resultFound=accomodation.map((data)=>{
         
         if(data==='test'){
-         
              return '' 
         }
         else{
