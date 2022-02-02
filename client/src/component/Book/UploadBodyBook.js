@@ -7,7 +7,8 @@ import Swal from 'sweetalert2';
 //import componentProps from "../reUse/Payment"
 import { PaystackButton } from "react-paystack"
 import "../../style/Payment.css"
-
+let array=[]
+let fileINC=0
 
 const UploadBodyBook=(props)=>{
     const [file,setFile]=useState('');
@@ -15,10 +16,12 @@ const UploadBodyBook=(props)=>{
     const [uploadedFile,setUploadedFile]=useState({});
     const [eventInfo,setEventInfo]=useState({author:'',title:'',faculty:'',Description:'',tel:''});
     const [errorPhone,setErrorPhone]=useState('')
+    const [uploadStatus,setUploadStatus]=useState(false)
     const [freeUpload,setFreeUpload]=useState(true)
     const [apikeys,setApikey]=useState("")
     const [email,setEmail]=useState("")
-    
+  
+
 
     const componentProps = {
         email,
@@ -31,7 +34,6 @@ const UploadBodyBook=(props)=>{
         },
         onClose: () => alert("Wait! You need this oil, don't go!!!!"),
       }
-
     const{author,title,faculty,Description,tel}=eventInfo
     let i=0;
     
@@ -40,19 +42,49 @@ const UploadBodyBook=(props)=>{
             setFile(e.target.files[0]);
             setFilename(e.target.files[0].name);
         }
-    }
-    
-    const handleChange=(event)=>{
-        const {name,value}=event.target
-        setEventInfo({...eventInfo,[name]:value})
-        if(name==="tel"){
-            if(validateTel(value)==="true") {return}
-            else{
-                setErrorPhone(validateTel(value))
+
+        if(fileINC===0){
+            fileINC++
+            if(showButton(e.target.files[0].name)){
+                setUploadStatus(true)
             }
         }
     }
     
+    const handleChange=(event)=>{
+       
+        const {name,value}=event.target
+        setEventInfo({...eventInfo,[name]:value})
+        if(name==="tel"){
+            if(validateTel(value)===true){
+                setErrorPhone("")
+                if(showButton(name)){
+                   
+                    setUploadStatus(true)
+                }
+                return
+            }
+            else{
+                setErrorPhone(validateTel(value))
+            }
+        }
+        if(showButton(name)){
+            setUploadStatus(true)
+        }
+    }
+    const showButton=(name)=>{
+        let inArray=array.includes(name)
+        if(inArray===false){
+            array.push(name)
+        }
+
+        if(array.length>=6){
+            return true
+        }
+        else{
+            return false
+        }
+    }
     const validateTel=(value)=>{
         const number=/^[0-9]+$/
         if(value){
@@ -71,7 +103,7 @@ const UploadBodyBook=(props)=>{
         }
     }
     const emptyInput=()=>{
-        setFilename('Choose file')
+        setFilename('upload Book Cover')
         let elem1 = document.getElementById("inputGroupFile03");
         let elem2 = document.getElementById("author");
         let elem3 = document.getElementById("title");
@@ -131,7 +163,6 @@ const UploadBodyBook=(props)=>{
           }
     }
     const onPayment=async ()=>{
-
         const formData=new FormData();
         formData.append('file',file);
         formData.append('author',author);
@@ -142,7 +173,7 @@ const UploadBodyBook=(props)=>{
 
         try{
           
-            const res=await axios.post('https://glacier-file.herokuapp.com/uploadBook/'+props.id,formData,{
+            const res=await axios.post('/uploadBook/'+props.id,formData,{
                 headers:{
                     'Content-Type':'multipart/form-data'
                 }
@@ -168,6 +199,7 @@ const UploadBodyBook=(props)=>{
     const onSubmit=async (e)=>{
         e.preventDefault();
         if(freeUpload){
+          
             const formData=new FormData();
             formData.append('file',file);
             formData.append('author',author);
@@ -177,7 +209,7 @@ const UploadBodyBook=(props)=>{
             formData.append('tel',tel);
             try{
               
-                const res=await axios.post('https://glacier-file.herokuapp.com/uploadBook/'+props.id,formData,{
+                const res=await axios.post('/uploadBook/'+props.id,formData,{
                     headers:{
                         'Content-Type':'multipart/form-data'
                     }
@@ -268,15 +300,15 @@ const UploadBodyBook=(props)=>{
                     <div className="Author">  
                         <label>Book Author :</label>
                         
-                        <input type="text" name="author" id="author" className='input' onChange={handleChange} maxLength={30} required/>
+                        <input type="text" name="author" className='input' id="author" onChange={handleChange} maxLength={30} required/>
                     </div>
                     <div className='title1'>  
                         <label>Title : </label>
-                        <input type="text"  name="title" id="title" className='input' onChange={handleChange} maxLength={30} required />
+                        <input type="text"  name="title" className='input' id="title" onChange={handleChange} maxLength={30} required />
                     </div>
                     <div className='Book-faculty'>  
                         <label>Book-faculty :</label>
-                        <input type="text"  name="faculty" id="faculty" className='input' onChange={handleChange} maxLength={30} required/>
+                        <input type="text"  name="faculty" className='input' id="faculty" onChange={handleChange} maxLength={30} required/>
                     </div>
                     <div className='Description'>  
                         <label>Description :</label>
@@ -288,12 +320,14 @@ const UploadBodyBook=(props)=>{
                     </div>
                     <div className='container_tel'>{errorPhone}</div>
 
-                    {freeUpload===false?
-                     <PaystackButton className="paystack-button" {...componentProps} />
-                    :
-                    <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
-
+                    {
+                        freeUpload===false?
+                        uploadStatus?<PaystackButton className="paystack-button" {...componentProps} />:
+                            ""
+                            :
+                        <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
                     }
+                  
                 </form>
                 <div id="myProgress">
                     <div id="myBar"></div>

@@ -3,6 +3,7 @@ import '../../../style/section1.css';
 import Item from "./item2";
 import "../../../style/styles2.css";
 import { Link } from "react-router-dom";
+import { Link  as Scroll} from 'react-scroll';
 import MyCarousel from '../../Carousel';
 
 
@@ -35,10 +36,10 @@ function Section1(props){
           <div  className='section1'>
               <MyCarousel breakPoints={breakPoints} autoPlaySpeed={5000} >
                   <Item style={{height:160,width:250,}}>
-                    <div id="section1Book"  className="divCategory"><h3 className="h3Categories" onClick={()=>changeView("Filler")}>Books</h3>  </div>
+                    <div id="section1Book"  className="divCategory"> <Scroll  to="filler" spy={true} smooth={true} offset={50} duration={500}><h3 className="h3Categories" onClick={()=>changeView("Filler")}>Books</h3>  </Scroll> </div>
                   </Item>
                   <Item style={{height:160,width:250,}}>
-                      <div id="section1Filler"  className="divCategory"><h4 className="h3Categories" onClick={()=>changeView("Book")}>School Filler</h4>  </div>
+                      <div id="section1Filler"  className="divCategory"> <Scroll  to="filler" spy={true} smooth={true} offset={50} duration={500}><h4 className="h3Categories" onClick={()=>changeView("Book")}>School Filler</h4> </Scroll> </div>
                   </Item>
                   <Item style={{height:160,width:250,}} >
                       <div id="section1Accomodation"  className="divCategory">

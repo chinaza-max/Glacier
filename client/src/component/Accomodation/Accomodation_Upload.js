@@ -5,7 +5,7 @@ import axios from 'axios'
 import AccomodationUploadNav from "../reUse/setingsNav"
 import Swal from 'sweetalert2';
 import { PaystackButton } from "react-paystack"
-
+let array=[]
 
 
 function Accomodation_Upload(props){
@@ -15,8 +15,11 @@ function Accomodation_Upload(props){
     const [eventInfo,setEventInfo]=useState({Price:0,Address:'',selection:'LODGE',tel:''});
     const {Price,Address,selection,tel}=eventInfo
     const [freeUpload,setFreeUpload]=useState(true)
+    const [errorPhone,setErrorPhone]=useState('')
     const [apikeys,setApikey]=useState("")
     const [email,setEmail]=useState("")
+    const [uploadStatus,setUploadStatus]=useState(false)
+    const [errorPrice,setErrorPrice]=useState('')
     const {id}=useParams()
     let i=0;
 
@@ -29,7 +32,7 @@ function Accomodation_Upload(props){
         alert("Thanks for doing business with us! Come back soon!!")
         onPayment()
         },
-        onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+        onClose: () => alert("Wait! You need this book, don't go!!!!"),
     }
 
     const onChange=(e)=>{
@@ -42,8 +45,80 @@ function Accomodation_Upload(props){
     const handleChange=(event)=>{
         const {name,value}=event.target
         setEventInfo({...eventInfo,[name]:value})
-    }
 
+        if(name==="tel"){
+            if(validateTel(value)===true){
+                setErrorPhone("")
+                if(showButton(name)){
+                    setUploadStatus(true)
+                }
+             
+            }
+            else{
+                setUploadStatus(false)
+                setErrorPhone(validateTel(value))
+            }
+            return
+        }
+        if(name==="Price"){
+            if(validatePrice(value)===true){
+                setErrorPrice("")
+                if(showButton(name)){
+                    setUploadStatus(true)
+                }
+            }
+            else{
+                setUploadStatus(false)
+                setErrorPrice(validatePrice(value))
+               
+            }
+            return
+        }
+        if(showButton(name)){
+            setUploadStatus(true)
+        }
+    }
+    const showButton=(name)=>{
+        let inArray=array.includes(name)
+        if(inArray===false){
+            array.push(name)
+        }
+
+        if(array.length>=3){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+    const validatePrice=(value)=>{
+        const number=/^[0-9]+$/
+        if(value){
+                if(!value.match(number)){
+                    return "numeric character only Re-enter no"
+                }
+                else{
+                    return true;
+                }
+        }
+    }
+    const validateTel=(value)=>{
+        const number=/^[0-9]+$/
+        if(value){
+                if(!value.match(number)){
+                    return "numeric character only Re-enter no"
+                }
+                else if(value.length<11){
+                    return "incomplete number Re-enter no";
+                }
+                else if(value.length>11){
+                    return "exceded limit Re-enter no";
+                }
+                else{
+                    return true;
+                }
+        }
+    }
     const emptyInput=()=>{
         setFilename('Choose file')
         let elem1 = document.getElementById("inputGroupFile03");
@@ -122,10 +197,10 @@ function Accomodation_Upload(props){
         }
         catch(err){
             if(err){
-                console.log(err)
+             //   console.log(err)
             }
             else{
-                console.log(err.response.data.msg)
+              //  console.log(err.response.data.msg)
             }
         }
     }
@@ -176,7 +251,7 @@ function Accomodation_Upload(props){
         })
         }
         catch(err){
-            console.log(err)
+           // console.log(err)
         }
         
         //for updating check box
@@ -191,7 +266,7 @@ function Accomodation_Upload(props){
         })
         }
         catch(err){
-            console.log(err)
+          //  console.log(err)
         }
     }
 
@@ -236,15 +311,17 @@ function Accomodation_Upload(props){
                         <div className="price">  
                             <label>Price (NGN):</label>
                             <input type="tel" name="Price"  id="price" className="input" onChange={handleChange} placeholder="12000..." minLength={5} maxLength={7} required/>
+                           <div style={{color:"red"}}> {errorPrice}</div>
                         </div>
                     
                         <div className='Address'>  
                             <label>Address_Description :</label>
-                            <textarea type="text"  name="Address" id="Address" className="input" className="Address_textarea" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
+                            <textarea type="text"  name="Address" id="Address"  className="Address_textarea input" placeholder="Location of building.." onChange={handleChange} maxLength={250} required/>
                         </div> 
                         <div className='tel'>  
                             <label>tel :</label>
                             <input type="tel" id="tel" name="tel" className="input" placeholder="your phone NO" onChange={handleChange} minLength={11} maxLength={11} required/>
+                            <div style={{color:"red"}}> {errorPhone}</div>
                         </div>
                         <div className='selection_container'>  
                             <label>select :</label>
@@ -254,7 +331,9 @@ function Accomodation_Upload(props){
                             </select>
                         </div>
                         {freeUpload===false?
+                            uploadStatus === true?
                             <PaystackButton className="paystack-button" {...componentProps} />
+                            :''
                             :
                             <input type="submit" value="Upload" id="submitID"  disabled={false}  className="btn btn-primary btn-block  mt-4"/>
                         }
