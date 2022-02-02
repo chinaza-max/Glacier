@@ -15,6 +15,7 @@ function Accomodation(props){
     const[accomodation,setaccomodation]=useState([]);
     const[search,setsearch]=useState([]);
     const[search2,setsearch2]=useState("All");
+    const[tel,setTel]=useState("All");
     const {id}=useParams(); 
     const navigate=useNavigate()
     let searchResult="filled";
@@ -115,6 +116,19 @@ function Accomodation(props){
             catch(err){
               //  console.log(err)
             }
+            try{
+                await axios.get(`/phone/${id}`,{
+                }).then((res)=>{
+                        setTel(res.data.express)
+                
+                })
+                .catch((error)=>{
+                // console.log(error.response.data.express)
+                })
+            }
+            catch(err){
+              //  console.log(err)
+            }
         }
         init()
        
@@ -137,7 +151,7 @@ function Accomodation(props){
         
         if(data==='test'){
          
-             return  
+             return '' 
         }
         else{
            
@@ -148,7 +162,7 @@ function Accomodation(props){
                         return( 
                             <div key={data.unique} className="accomodation_body">
                                 <div className="img_container">
-                                    <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.name,data.Address,data.selection)}} /> 
+                                    <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}} /> 
                                 </div>
                                 <div className="info1">
                                     <div className="accomodation_type">
@@ -164,7 +178,7 @@ function Accomodation(props){
                                 <div className="info2">
                                     <div className="remove_container">
                             
-                                        {data.id===id ? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:" "}
+                                        {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:" "}
                                        
                                     </div>
                                     <div className="price_container">
@@ -176,17 +190,17 @@ function Accomodation(props){
                     }
                 }
                 else{
-                   // searchResult="empty"
+                 //   searchResult="empty"
                     return 
                 }
             }
             else if(search2.toLowerCase()==="All".toLowerCase()){
                 
-               // searchResult="empty";
+              //  searchResult="empty";
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.name,data.Address,data.selection)}}/> 
+                            <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
@@ -202,7 +216,7 @@ function Accomodation(props){
                         <div className="info2">
                             <div className="remove_container">
                     
-                                {data.id===id? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
+                                {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
                             
                             </div>
                             <div className="price_container">
@@ -212,12 +226,13 @@ function Accomodation(props){
                     </div>
                 )
             }
+
             else if(data.selection.toLowerCase()===search2.toLowerCase()){
               //  searchResult="filled";
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
-                            <img className="bodyImg" src={data.name} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.name,data.Address,data.selection)}}/> 
+                            <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
                         </div>
                         <div className="info1">
                             <div className="accomodation_type">
@@ -233,7 +248,7 @@ function Accomodation(props){
                         <div className="info2">
                             <div className="remove_container">
                     
-                                {data.id===id? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
+                                {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
                             
                             </div>
                             <div className="price_container">
@@ -244,16 +259,16 @@ function Accomodation(props){
                 )
             }
             else{
-                   // searchResult="empty"
-                return 
+                 // searchResult="empty"
+                  return
             }
         }
-        
     })
   
     return(
-      
+    
         <div className="Accomodation">
+
             <AccomodationNav filterFunc={filterFunc} accomodationFunc={accomodationFunc} history={props.history}/>
             <div className="accomodation_body_container">
                 <div  className="accomodation_body_container_sub">
