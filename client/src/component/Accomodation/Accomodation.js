@@ -254,7 +254,6 @@ function Accomodation(props){
     return(
       
         <div className="Accomodation">
-            {console.log(resultFound)}
             <AccomodationNav filterFunc={filterFunc} accomodationFunc={accomodationFunc} history={props.history}/>
             <div className="accomodation_body_container">
                 <div  className="accomodation_body_container_sub">
