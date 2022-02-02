@@ -202,6 +202,7 @@ function Accomodation_Upload(props){
             
             let form = document.getElementById('formID');
             let submitButton = document.getElementById('submitID');
+            let input =document.querySelectorAll(".input")
             form.addEventListener('submit', function() {
             // Disable the submit button
             submitButton.setAttribute('disabled', true);
