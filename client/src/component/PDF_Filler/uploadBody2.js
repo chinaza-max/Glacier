@@ -66,8 +66,12 @@ const UploadBody=(props)=>{
                         timer: 1500
                       }).then(()=>{
                         let submitButton = document.getElementById('submitID');
+                        let input =document.querySelectorAll("input")
                         // enable the submit button
                         submitButton.disabled = false;
+                        input.forEach((ele)=>{
+                            ele.disabled=false
+                        })
                       })
                       emptyInput();
                 }
@@ -107,9 +111,13 @@ const UploadBody=(props)=>{
     useEffect(()=>{
         let form = document.getElementById('formID');
         let submitButton = document.getElementById('submitID');
+        let input=document.querySelectorAll(".input")
         form.addEventListener('submit', function() {
         // Disable the submit button
         submitButton.setAttribute('disabled', true);
+        input.forEach((ele)=>{
+            ele.setAttribute('disabled', true);
+        })
         // Change the "Submit" text
         submitButton.value = 'Please wait...';             
         }, false)
@@ -118,6 +126,7 @@ const UploadBody=(props)=>{
             window.removeEventListener('submit', function() {
                 // Disable the submit button
                 submitButton.setAttribute('disabled', true);
+           
                 // Change the "Submit" text
                 submitButton.value = 'Please wait...';             
             })
@@ -129,14 +138,14 @@ const UploadBody=(props)=>{
     
                 <form onSubmit={onSubmit} id="formID" encType="multipart/form-data">
                     <div className="custom-file mt-4">
-                        <input type="file" name="file" className="custom-file-input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={(e)=>onChange(e)} required/>
+                        <input type="file" name="file" className="custom-file-input input" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" onChange={(e)=>onChange(e)} required/>
                         <label className="custom-file-label" htmlFor="inputGroupFile03">{filename}</label>
                     </div>
                     {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
                     <div className="Author"> 
                     
                         <label>course code :</label>
-                        <input type="text" name="courseCode" id="courseCode" onChange={handleChange} required/>
+                        <input type="text" name="courseCode" className='input' id="courseCode" onChange={handleChange} required/>
                     </div>
                     <input type="submit" value="Upload"  id="submitID"  className="btn btn-primary btn-block  mt-4"/>
                 </form>
