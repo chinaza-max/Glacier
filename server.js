@@ -66,4 +66,8 @@ app.listen(port ,()=>console.log(`server started.... ${port}`))
     "server": "nodemon server",
     "client": "cd client && npm start",
     "dev": "concurrently -n 'server,client' \"nodemon server.js\" \"npm run client\""
+    when i ran into this error: failed to push some refs heroku
+    did 
+    *git push heroku master
+    *git push heroku main
   }*/
