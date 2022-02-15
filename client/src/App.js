@@ -24,6 +24,10 @@ import ResetPassword from "./component/account/ResetPassword"
 import "./style/firstbody.css";
 
 
+
+
+
+
 function App() {
 
     return (

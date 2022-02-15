@@ -13,7 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import ReactGA from "react-ga4";
 
 
 
@@ -93,6 +93,11 @@ function Nav(props){
 
 
     useEffect(()=>{
+
+
+
+        ReactGA.initialize(process.env.REACT_APP_MEASUREMENT_ID);
+        ReactGA.send({ hitType: "pageview", page: "/home" });
         let menu_position=document.getElementById("menu_position")
         let menu_position4= document.getElementById("menu_position4")
         let upload2= document.getElementById("upload2")
