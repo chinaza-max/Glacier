@@ -388,12 +388,12 @@ function Nav(props){
                                 </li>
                                 <li style={{color:"white"}}>
                                     <Link className="remove_linkStyle"   to={`/home/${id}/Accomodation_UploadRequest`}>
-                                        Notifica
+                                        Notification
                                     </Link> 
                                   </li>
                                 <li id="dropDown_accomodation"> 
                                     <Link className="remove_linkStyle"   to={`/home/${id}/Accomodation_Upload`}>
-                                        Accomo
+                                        Accomodation
                                     </Link> 
                                 </li>
                             </ul>
