@@ -414,13 +414,12 @@
     }
     .dropDown_class{
         height: 0px;
-        overflow-y: hidden;
+        list-style: none;
         transition: height 0.15s ease-in;
     }
     .toggle1{
-       height: auto;
-        list-style: none;
-        transition: height 0.25s ease-out;
+        height: 110px;
+        display: block;
         padding: 20px 0px 0px 0px ;
         width: 100%;
     }

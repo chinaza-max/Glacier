@@ -77,8 +77,8 @@ function Nav(props){
      
     }
     function toggle2(){
-         let element=document.getElementById("dropDown")
-         element.classList.toggle("toggle1")
+        let element=document.getElementById("dropDown")
+        element.classList.toggle("toggle1")
     }
     function handleClick(e){
          if(node.current){
