@@ -264,12 +264,6 @@
 }
 
 @media(max-width:1024px){
-    .first{
-        padding-top: 25px;
-        padding-left: 5px;
-        font-size: 15px;
-        font-family: Neonderthaw;
-    }
     .signupMobile{
         color: white;
     }
@@ -414,14 +408,14 @@
     }
     .dropDown_class{
         height: 0px;
-        list-style: none;
+        overflow-y: hidden;
         transition: height 0.15s ease-in;
     }
     .toggle1{
-        height: 110px;
-        display: block;
+        height: 174px;
+        list-style: none;
+        transition: height 0.25s ease-out;
         padding: 20px 0px 0px 0px ;
-        width: 100%;
     }
     .toggle1 li{
         padding-top: 15px;
@@ -436,7 +430,7 @@
 @media(max-width:500px){
     
     .toggle1{
-      /*  height: 164px;*/
+        height: 164px;
         list-style: none;
         transition: height 0.25s ease-out;
         padding: 20px 0px 0px 0px ;
@@ -468,7 +462,7 @@
         height: 30px
     }
     #menu_position {
-        padding-top: 20px;
+        padding-top: 5px;
     }
     #menu_position div{
         background-color: black;
@@ -508,8 +502,6 @@
     }
     .menu{
         display: inline;
-        width: 42px;
-        margin-right: 10px;
     }
     #small-siz-naz{
         position: fixed;
