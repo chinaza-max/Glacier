@@ -278,6 +278,10 @@
     }
     .iconMobile{
         padding-right: 5px;
+        height: fit-content;
+    }
+    .iconMobileDropDown{
+        height: fit-content;
     }
     .last{
         padding-bottom: 40px;
@@ -358,6 +362,9 @@
     #upload2{
         padding-bottom: 0px;
     }
+    #upload2{
+        padding-bottom: 0px;
+    }
     .filler2{
         padding: 15px 15px 15px 3px;
     }
@@ -412,10 +419,11 @@
         transition: height 0.15s ease-in;
     }
     .toggle1{
-        height: 174px;
+        height: fit-content;
         list-style: none;
         transition: height 0.25s ease-out;
         padding: 20px 0px 0px 0px ;
+        margin-left: -57px;
     }
     .toggle1 li{
         padding-top: 15px;
@@ -430,10 +438,11 @@
 @media(max-width:500px){
     
     .toggle1{
-        height: 164px;
+        height: fit-content;
         list-style: none;
         transition: height 0.25s ease-out;
         padding: 20px 0px 0px 0px ;
+        margin-left: -55px;
     }
     .firstBody{
         height: 100vh;

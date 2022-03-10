@@ -373,7 +373,6 @@ router.post('/uploadBook/:id',(req,res)=>{
                                 file.driveID=response.data.id
                                 file.driveURL=`https://drive.google.com/uc?export=view&id=${response.data.id}`
 
-                               console.log(response.data)
                 
                                 uploadRequest2(req.body.title,req.body.faculty,filename,id)
                                 
