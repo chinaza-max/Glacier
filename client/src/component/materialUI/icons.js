@@ -1,18 +1,10 @@
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import React,{useState,useEffect} from 'react';
+import {useRef,useEffect,useState} from "react";
 //import { makeStyles } from '@material-ui/core/styles';
 import Badge from '@material-ui/core/Badge';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-/*
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(2),
-    },
-  },
-}));
-*/
+
 const defaultProps = {
   color: 'secondary',
   children: <NotificationsIcon />,
@@ -20,24 +12,45 @@ const defaultProps = {
 
 function BadgeMax() {
   const[alert,setalert]=useState()
+  let intervaID = useRef(0);
+
 
   useEffect(()=>{
+  
     const aboutController=new AbortController()
     const signal=aboutController.signal
 
  async   function setNotificationAlert(){
-            const responsePDF=await fetch("/pdfAPI")
-            const bodyPDF=await responsePDF.json()
-            localStorage.setItem('numberOfPDF', JSON.stringify(bodyPDF.express.length))
-            
-            
-            const responseBook=await fetch("/Books")
-            const bodyBook=await responseBook.json()
-            localStorage.setItem('numberOfBook', JSON.stringify(bodyBook.express.length))
 
-            const responseNotifications=await fetch("/notifications",{signal:signal})
-            const bodyNotifications=await responseNotifications.json()
-
+              fetch('/pdfAPI')
+              .then(responsePDF => {
+                if (!responsePDF.ok) {
+                  throw new Error(responsePDF.statusText)
+                }
+                const bodyPDF= responsePDF.json()
+                localStorage.setItem('numberOfPDF', JSON.stringify(bodyPDF.express.length))
+              }).catch(err=>{
+              console.log(err)
+            })
+            
+            fetch('/Books')
+            .then(responseBook => {
+              if (!responseBook.ok) {
+                throw new Error(responseBook.statusText)
+              }
+              const bodyBook= responseBook.json()
+              localStorage.setItem('numberOfBook', JSON.stringify(bodyBook.express.length))
+            }).catch(err=>{
+            console.log(err)
+          })
+           
+              fetch('/notifications')
+              .then(responseNotifications => {
+                if (!responseNotifications.ok) {
+                  throw new Error(responseNotifications.statusText)
+                }
+                const bodyNotifications= responseNotifications.json()
+                
             let numberOfBook=JSON.parse(localStorage.getItem('numberOfBook'))
             let numberOfPDF=JSON.parse(localStorage.getItem('numberOfPDF'))
             let preTotal=JSON.parse(localStorage.getItem('notificationNumber'))
@@ -66,14 +79,18 @@ function BadgeMax() {
                 }
               
             }
+
+              }).catch(err=>{
+              console.log(err)
+            })
         }
-       /* 
-    const intervaID=setInterval(() => {
+        
+     intervaID.current=setInterval(() => {
      setNotificationAlert()
     }, 6000);
     
-    return()=> { clearInterval(intervaID); }
-    */
+    return()=> { clearInterval(  intervaID.current); }
+    
  
   },[])
   
@@ -82,7 +99,11 @@ function BadgeMax() {
   
   return (
     <span >
-      <Badge badgeContent={alert} max={999} {...defaultProps} color="error"/>
+      {alert<1?
+        <Badge badgeContent={0} max={999} {...defaultProps} color="error"/>
+        :
+        <Badge badgeContent={alert} max={999} {...defaultProps} color="error"/>
+        }
     </span>
   );
 }

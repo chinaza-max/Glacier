@@ -1,7 +1,7 @@
 import React from "react";
-import img1 from "../sub-components/img/about.jpeg"
-import img2 from "../sub-components/img/background.jpg"
-import img3 from "../sub-components/img/profile-image1.jpg"
+import img1 from "../sub-components/img/text-book.jpg"
+import img2 from "../sub-components/img/lodge.jpg"
+import img3 from "../sub-components/img/text-book2.jpg"
 import "../../style/slide.css";
 //import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 
@@ -27,22 +27,22 @@ filterTextFun(value){
                     <div className="carousel-item active">
                     <img src={img1} className="d-block w-100" alt="..."/>
                     <div className="carousel-caption  d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <h5>We have collections of reusable text </h5>
+                        <p>Search for text book from our collection.</p>
                     </div>
                     </div>
                     <div className="carousel-item">
                     <img src={img2} className="d-block w-100" alt="..."/>
                     <div className="carousel-caption d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h5>Get Accomodation</h5>
+                        <p>Available accommodation around enugu and Nssuka.</p>
                     </div>
                     </div>
                     <div className="carousel-item">
                     <img src={img3} className="d-block w-100" alt="..."/>
                     <div className="carousel-caption  d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                        <h5>Resale your text book</h5>
+                        <p>Sale your text book half the prize.</p>
                     </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import axios from 'axios'
 import {useNavigate ,Link} from "react-router-dom";
-import GoogleIcon from '@mui/icons-material/Google';
+import GoogleButton from 'react-google-button'
 import "../../style/signUp.css";
 
 function Login(){
@@ -71,7 +71,9 @@ function Login(){
 
 
                             <Link to={"/verifyEmail"} className='accountContainerCenter__forgotPassword'>forgot  password</Link>
-                            <div className='accountContainerCenter__google'> <span  onClick={()=>{googleSignUp()}}> <GoogleIcon  style={{"color":"blue"}}/>sign in with google</span></div>
+                            <div className='accountContainerCenter__google'> 
+                                <GoogleButton  className='accountContainerCenter__google_button' onClick={(e) => {googleSignUp(e) }}/>
+                            </div>                            
                             <div className='accountContainerCenter__error'>   {error?error:""}</div>
                             <div className='accountContainerCenter__logo'>Glac</div>
                         </form>
