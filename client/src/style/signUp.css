@@ -30,8 +30,6 @@
 .accountContainerCenter  div .accountContainerCenter__google{
     width: 70%;
     height: 30px;
-    box-shadow: 1px 1px  3px rgb(194, 192, 192);
-    background-color: rgb(233, 224, 247);
     margin: 0 auto;
     margin-top: 15px;
     min-width: 75%;
