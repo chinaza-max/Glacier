@@ -95,7 +95,7 @@ function BadgeMax() {
         }
         
      intervaID.current=setInterval(() => {
-     setNotificationAlert()
+     //setNotificationAlert()
     }, 6000);
     
     return()=> { clearInterval(  intervaID.current); }
