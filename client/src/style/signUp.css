@@ -28,13 +28,15 @@
     background-size: cover;
 }
 .accountContainerCenter  div .accountContainerCenter__google{
-    width: 70%;
+    width: fit-content;
     height: 30px;
     margin: 0 auto;
     margin-top: 15px;
-    min-width: 75%;
  }
- .accountContainerCenter  div .accountContainerCenter__google:hover{
+ .accountContainerCenter  div .accountContainerCenter__google .accountContainerCenter__google_button{
+    margin: 0 auto;
+}
+ .accountContainerCenter  div .accountContainerCenter__google .accountContainerCenter__google_button:hover{
     cursor: pointer;
 }
  /*.accountContainerCenter  div .accountContainerCenter__google a{
