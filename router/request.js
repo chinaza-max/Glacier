@@ -177,11 +177,12 @@ router.get('/pdfAPI',(req,res)=>{
                         }   
                     }
                     else{
-                        res.send({express:reArrangeMainData})
+                        res.send({express:[]})
                     }
                }
                else{
-                    res.send({express:reArrangeMainData})
+        
+                    res.send({express:[]})
                }
         }
     })

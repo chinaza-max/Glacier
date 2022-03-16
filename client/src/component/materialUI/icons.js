@@ -28,7 +28,11 @@ function BadgeMax() {
                   throw new Error(responsePDF.statusText)
                 }
                 const bodyPDF= responsePDF.json()
-                localStorage.setItem('numberOfPDF', JSON.stringify(bodyPDF.express.length))
+
+                bodyPDF.then((bodyPDFP)=>{
+                    localStorage.setItem('numberOfPDF', JSON.stringify(bodyPDFP.express.length))
+                })
+            
               }).catch(err=>{
               console.log(err)
             })
@@ -39,7 +43,12 @@ function BadgeMax() {
                 throw new Error(responseBook.statusText)
               }
               const bodyBook= responseBook.json()
-              localStorage.setItem('numberOfBook', JSON.stringify(bodyBook.express.length))
+             
+            
+              bodyBook.then((bodyBookP)=>{
+                localStorage.setItem('numberOfBook', JSON.stringify(bodyBookP.express.length))
+              })
+
             }).catch(err=>{
             console.log(err)
           })
@@ -50,7 +59,9 @@ function BadgeMax() {
                   throw new Error(responseNotifications.statusText)
                 }
                 const bodyNotifications= responseNotifications.json()
-                
+                bodyNotifications.then((bodyNotificationsp)=>{
+                  localStorage.setItem('numberOfBook', JSON.stringify(bodyNotificationsp.express.length))
+                })
             let numberOfBook=JSON.parse(localStorage.getItem('numberOfBook'))
             let numberOfPDF=JSON.parse(localStorage.getItem('numberOfPDF'))
             let preTotal=JSON.parse(localStorage.getItem('notificationNumber'))
