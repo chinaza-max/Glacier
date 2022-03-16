@@ -346,6 +346,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                         }
                         async function uploadFile(buffer){
                             try{
+                                console.log("step1")
                                 const response=await drive.files.create({
                                     requestBody:{
                                         name:file.name,
@@ -368,7 +369,7 @@ router.post('/uploadBook/:id',(req,res)=>{
                                     fileId:response.data.id,
                                     fields:'webViewLink, webContentLink, thumbnailLink'
                                 })
-                             
+                                console.log("step2")
                                 file.data=''
                                 file.driveID=response.data.id
                                 file.driveURL=`https://drive.google.com/uc?export=view&id=${response.data.id}`

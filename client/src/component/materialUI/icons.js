@@ -21,7 +21,7 @@ function BadgeMax() {
     const signal=aboutController.signal
 
  async   function setNotificationAlert(){
-
+      
               fetch('/pdfAPI')
               .then(responsePDF => {
                 if (!responsePDF.ok) {
@@ -57,9 +57,9 @@ function BadgeMax() {
                 throw new Error(responseNotifications.statusText)
               }
               const bodyNotifications= responseNotifications.json()
-              bodyNotifications.then((bodyNotificationsp)=>{
-                localStorage.setItem('numberOfBook', JSON.stringify(bodyNotificationsp.express.length))
-              })
+             
+              localStorage.setItem('numberOfBook', JSON.stringify(bodyNotifications.express.length))
+            
             let numberOfBook=JSON.parse(localStorage.getItem('numberOfBook'))
             let numberOfPDF=JSON.parse(localStorage.getItem('numberOfPDF'))
             let preTotal=JSON.parse(localStorage.getItem('notificationNumber'))
