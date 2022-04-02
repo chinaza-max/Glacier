@@ -7,6 +7,7 @@ const Notification=require("../mongodb/schema/notificationSchema")
 const pdf = require('pdf-parse');
 const fileUpload = require('express-fileupload');
 const fs=require('fs');
+var axios = require("axios").default;
 const router=express.Router();
 const crypto=require("crypto");
 const {google} = require('googleapis');
@@ -14,6 +15,7 @@ app.use(fileUpload());
 const Time=require("../Time");
 const {Duplex} = require('stream');
 const { file } = require('googleapis/build/src/apis/file');
+
 const oauth2Client=new google.auth.OAuth2(
     process.env.GOOGLE_DRIVE_CLIENT_ID,
     process.env.GOOGLE_DRIVE_CLIENT_SECRET,
@@ -25,6 +27,8 @@ const oauth2Client_2=new google.auth.OAuth2(
     process.env.GOOGLE_DRIVE_CLIENT_SECRET_2,
     process.env.GOOGLE_DRIVE_REDIRECT_URI
 )
+
+
 
 router.post('/Accomodation_upload/:id',async(req,res)=>{
     let id=req.params.id
@@ -331,7 +335,13 @@ router.post('/uploadBook/:id',(req,res)=>{
                     file.tel=req.body.tel
                     file.date=Time().year + "-" + Time().month + "-" +Time().date
 
-                        
+                    oauth2Client.on('tokens', (tokens) => {
+                        if (tokens.refresh_token) {
+                          // store the refresh_token in my database!
+                          console.log(tokens.refresh_token);
+                        }
+                        console.log(tokens.access_token);
+                      });
                         //part handles upload to google drive
                         oauth2Client.setCredentials({refresh_token:process.env.GOOGLE_DRIVE_REFRESH_TOKEN})
                         const drive=google.drive({
@@ -648,6 +658,9 @@ async function deleteDriveFile(id){
 }
 
 
-module.exports=router
+
+
+
+module.exports=router;
 
 

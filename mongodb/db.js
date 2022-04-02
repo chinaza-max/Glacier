@@ -14,5 +14,4 @@ module.exports=mongoose.connect(process.env.MONGODB_URI||"mongodb+srv://chinaza:
       }
     }
 )
-
 require("./schema/userSchema")

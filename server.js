@@ -7,7 +7,7 @@ if(process.env.NODE_ENV !=='production'){
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cookieSession = require('cookie-session')
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 const path = require('path');
 const port=process.env.PORT||5000;

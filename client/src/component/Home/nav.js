@@ -96,8 +96,8 @@ function Nav(props){
 
 
 
-        //ReactGA.initialize(process.env.REACT_APP_MEASUREMENT_ID);
-        //ReactGA.send(window.location.pathname + window.location.search);
+        ReactGA.initialize(process.env.REACT_APP_MEASUREMENT_ID);
+        ReactGA.send(window.location.pathname + window.location.search);
         let menu_position=document.getElementById("menu_position")
         let menu_position4= document.getElementById("menu_position4")
         let upload2= document.getElementById("upload2")
