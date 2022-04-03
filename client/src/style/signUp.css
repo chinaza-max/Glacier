@@ -5,6 +5,7 @@
     background-image: url("../accountImg/water.webp");
     background-repeat: no-repeat;
     background-size: cover;
+    overflow: hidden;
 }
 .accountContainerCenter{
     margin: 0 auto;
