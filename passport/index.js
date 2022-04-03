@@ -13,7 +13,6 @@ passport.deserializeUser((id,done)=>{
         if(err){return done(err)}
         done(null,user)
     })
-    //return done(null,getUserById(id))
 })
 
 

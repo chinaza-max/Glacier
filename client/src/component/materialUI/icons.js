@@ -56,40 +56,41 @@ function BadgeMax() {
               if (!responseNotifications.ok) {
                 throw new Error(responseNotifications.statusText)
               }
-              const bodyNotifications= responseNotifications.json()
-             
-              localStorage.setItem('numberOfBook', JSON.stringify(bodyNotifications.express.length))
+                return responseNotifications.json()
             
-            let numberOfBook=JSON.parse(localStorage.getItem('numberOfBook'))
-            let numberOfPDF=JSON.parse(localStorage.getItem('numberOfPDF'))
-            let preTotal=JSON.parse(localStorage.getItem('notificationNumber'))
-            let total=numberOfPDF+numberOfBook
-        
-            if(total===preTotal){
-                setalert(0)
-            }
-            else if(bodyNotifications.express2===0){
-                setalert(0)
-            }
-            else{
-                if(preTotal===null){
-               
-                    setalert(bodyNotifications.express2)
+              }).then((bodyNotifications)=>{
+                localStorage.setItem('numberOfBook', JSON.stringify(bodyNotifications.express.length))
+              
+                let numberOfBook=JSON.parse(localStorage.getItem('numberOfBook'))
+                let numberOfPDF=JSON.parse(localStorage.getItem('numberOfPDF'))
+                let preTotal=JSON.parse(localStorage.getItem('notificationNumber'))
+                let total=numberOfPDF+numberOfBook
+          
+                if(total===preTotal){
+                    setalert(0)
+                }
+                else if(bodyNotifications.express2===0){
+                    setalert(0)
                 }
                 else{
-                    let newTotal=total-preTotal
-                    if(newTotal>bodyNotifications.express2){
-                      setalert(bodyNotifications.express2)
+                    if(preTotal===null){
+                  
+                        setalert(bodyNotifications.express2)
                     }
                     else{
-                      setalert(newTotal)
+                        let newTotal=total-preTotal
+                        if(newTotal>bodyNotifications.express2){
+                          setalert(bodyNotifications.express2)
+                        }
+                        else{
+                          setalert(newTotal)
+                        }
+                      
                     }
-                   
+                  
                 }
-              
-            }
-
-              }).catch(err=>{
+                })
+              .catch(err=>{
               console.log(err)
             })
         }
