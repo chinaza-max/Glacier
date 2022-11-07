@@ -14,7 +14,7 @@
     "heroku-postbuild": "npm run install-client && npm run build",
     "server": "nodemon server",
     "client": "cd client && npm start",
-    "dev": "concurrently -n 'server,client' \"nodemon server.js\" \"npm run client\""
+    "dev": "concurrently -n 'server,client' \"nodemon server.js\" \"npm run install-client\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
