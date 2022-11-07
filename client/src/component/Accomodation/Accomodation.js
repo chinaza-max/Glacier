@@ -18,7 +18,7 @@ function Accomodation(props){
     const[tel,setTel]=useState("All");
     const {id}=useParams(); 
     const navigate=useNavigate()
-    let searchResult="filled";
+    const[loaderStatus,setLoaderStatus]=useState(true)
     
 
 
@@ -92,6 +92,8 @@ function Accomodation(props){
     }
     useEffect(()=>{
     
+
+        setLoaderStatus(true)
 //this condition help check help if the user is properly login
             if(id==="undefined"){
                 navigate("/login")
@@ -106,6 +108,7 @@ function Accomodation(props){
                         setaccomodation([])
                     }
                     else{
+                        setLoaderStatus(false)
                         setaccomodation(res.data.express)
                     }
                 })
@@ -147,11 +150,10 @@ function Accomodation(props){
             </div>
         )
     }
-    const resultFound=accomodation.map((data)=>{
+    let resultFound=accomodation.filter((data)=>{
         
         if(data==='test'){
-         
-             return '' 
+             return false
         }
         else{
            
@@ -159,76 +161,33 @@ function Accomodation(props){
                 if(isNumeric(search) && search.length>0){
                     let convertedNum=Number(search)
                     if( convertedNum<=data.price){
-                        return( 
-                            <div key={data.unique} className="accomodation_body">
-                                <div className="img_container">
-                                    <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"cant get img"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}} /> 
-                                </div>
-                                <div className="info1">
-                                    <div className="accomodation_type">
-                                        <h3>{data.selection}</h3>
-                                    </div>
-                                    <div className="address_display">
-                                        {data.Address}
-                                    </div>
-                                    <div className="tel_display">
-                                        {data.tel}
-                                    </div>
-                                </div>
-                                <div className="info2">
-                                    <div className="remove_container">
-                            
-                                        {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:" "}
-                                       
-                                    </div>
-                                    <div className="price_container">
-                                        <h5>price (NGN):{data.price}</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        )
+                        return true
                     }
                 }
                 else{
                  //   searchResult="empty"
-                    return 
+                    return  false
                 }
             }
             else if(search2.toLowerCase()==="All".toLowerCase()){
                 
               //  searchResult="empty";
-                return(
-                    <div key={data.unique} className="accomodation_body">
-                        <div className="img_container">
-                            <img className="bodyImg" src={data.driveURL?data.driveURL:"/accomodationImg/firstImg.jpg"} alt={"/accomodationImg/firstImg.jpg"} onClick={()=>{ShowImage(data.driveURL?data.driveURL:data.name,data.Address,data.selection)}}/> 
-                        </div>
-                        <div className="info1">
-                            <div className="accomodation_type">
-                                <h3>{data.selection}</h3>
-                            </div>
-                            <div className="address_display">
-                                {data.Address}
-                            </div>
-                            <div className="tel_display">
-                                {data.tel}
-                            </div>
-                        </div>
-                        <div className="info2">
-                            <div className="remove_container">
-                    
-                                {data.id===id||tel===8184724615? <button onClick={()=>removeAccomodation(data.unique)}>remove</button>:null}
-                            
-                            </div>
-                            <div className="price_container">
-                                <h5>price (NGN):{data.price}</h5>
-                            </div>
-                        </div>
-                    </div>
-                )
+                return true
             }
 
             else if(data.selection.toLowerCase()===search2.toLowerCase()){
               //  searchResult="filled";
+                return true
+            }
+            else{
+                 // searchResult="empty"
+                  return false
+            }
+        }
+    })
+
+    resultFound=resultFound.map((data)=>{
+        
                 return(
                     <div key={data.unique} className="accomodation_body">
                         <div className="img_container">
@@ -257,12 +216,7 @@ function Accomodation(props){
                         </div>
                     </div>
                 )
-            }
-            else{
-                 // searchResult="empty"
-                  return
-            }
-        }
+
     })
   
     return(
@@ -272,9 +226,15 @@ function Accomodation(props){
             <AccomodationNav filterFunc={filterFunc} accomodationFunc={accomodationFunc} history={props.history}/>
             <div className="accomodation_body_container">
                 <div  className="accomodation_body_container_sub">
-                  {accomodation.length>0? (resultFound[0]==='')?<NoResultFound/>:resultFound
-                  :
-                  <NoResultFound/>}
+
+
+                {loaderStatus?<h4 style={{"textAlign":"center","marginTop":"30px"}}>LOADING .... </h4>:
+                
+                accomodation.length>0? (resultFound[0]==='')?<NoResultFound/>:resultFound
+                :
+                <NoResultFound/>
+                }
+  
                 </div>
             </div>
             <ScrollTop/>

@@ -120,6 +120,7 @@ function Nav(props){
            
 
         const init=async ()=>{
+
             const  response= fetch("https://glacier-file.herokuapp.com/names/"+id)
             let body=await response.then(res=>res.json())
      

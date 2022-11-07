@@ -310,7 +310,7 @@ function Accomodation_Upload(props){
                         {uploadedFile.errMessage ? <h6 className='error'>{uploadedFile.errMessage}</h6>:null}
                         <div className="price">  
                             <label>Price (NGN):</label>
-                            <input type="tel" name="Price"  id="price" className="input" onChange={handleChange} placeholder="12000..." minLength={5} maxLength={7} required/>
+                            <input type="number" name="Price"  id="price" className="input" onChange={handleChange} placeholder="12000..." minLength={5} maxLength={7} required/>
                            <div style={{color:"red"}}> {errorPrice}</div>
                         </div>
                     

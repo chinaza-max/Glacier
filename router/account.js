@@ -24,7 +24,6 @@ router.post('/login', (req, res, next)=>{
             }
 
             user.isAuthenticated=true;
-            console.log(user)
             return res.status(200).json({express:user})
         })
     })(req, res, next);
@@ -51,8 +50,9 @@ router.get("/auth/google/callback",(req, res, next)=>{
         if (err) {
             return res.status(400).json({express:err})
         }
-    
             user.isAuthenticated=true;
+            //return res.redirect(301,`http://localhost:3000/home/${user._id}`)
+
             return res.redirect(301,`https://glacier-file.herokuapp.com/home/${user._id}`)
         
     })(req, res, next)

@@ -5,12 +5,12 @@ const User=require("../mongodb/schema/userSchema")
 const allImg=require("../mongodb/schema/allImg")
 const Notification=require("../mongodb/schema/notificationSchema")
 const pdf = require('pdf-parse');
-const fileUpload = require('express-fileupload');
 const fs=require('fs');
 var axios = require("axios").default;
 const router=express.Router();
 const crypto=require("crypto");
 const {google} = require('googleapis');
+const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 const Time=require("../Time");
 const {Duplex} = require('stream');

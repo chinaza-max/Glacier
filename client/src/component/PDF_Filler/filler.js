@@ -5,10 +5,13 @@ import "../../style/filler.css"
 
 function Filler(props){
     const[PDFs,setPDF]=useState([])
+    const[loaderStatus,setLoaderStatus]=useState(true)
+
 
     useEffect(()=>{
         const aboutController=new AbortController()
         const signal=aboutController.signal
+        setLoaderStatus(true)
 
         try{
             const init=async()=>{
@@ -19,6 +22,7 @@ function Filler(props){
                      }
                   })
                 const body=await response.json()
+                setLoaderStatus(false)
                 if(body.express.length===0){
                     return;
                 }
@@ -35,8 +39,7 @@ function Filler(props){
     },[])
 
 
-    let data=PDFs.map((data)=>{
-
+    let data=PDFs.filter((data)=>{
         if(data.courseCode.indexOf(props.searchString2.toLowerCase())===-1){
             return '';
         }
@@ -57,10 +60,29 @@ function Filler(props){
     
     })
 
+    
+    data=data.map((data)=>{
+
+            return(
+                <div key={data.name} className=".mainBody-sub-filler">
+                    <div className='PDF'>
+                          <a target="_blank" rel="noreferrer" className="fillerImg"   href={data.driveURL}>
+                                <h2>PDF</h2>
+                                <p>DOWNLOAD</p>
+                                <FileDownloadTwoToneIcon/>
+                                <h5>{data.courseCode}</h5>
+                          </a>
+                    </div>
+                </div>
+            )
+    
+    })
+
+
     return(
             <div className="mainBody-container-filler" id="filler">
                 <div className="mainBody-filler">
-                {data}
+                {loaderStatus?<h4 style={{"textAlign":"center","marginTop":"30px"}}>LOADING .... </h4>:data}
                 </div>
             </div>
     
